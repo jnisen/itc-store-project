@@ -7,3 +7,9 @@ var User = /** @class */ (function () {
     }
     return User;
 }());
+var allUsers = /** @class */ (function () {
+    function allUsers(allUsers) {
+        //
+    }
+    return allUsers;
+}());

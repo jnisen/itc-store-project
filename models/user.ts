@@ -11,3 +11,13 @@ class User {
         this.cart = []
     }
 }
+
+
+
+class allUsers{
+    allUsers: Array<User>;
+
+    constructor(allUsers: Array<User>){
+        //
+    }
+}

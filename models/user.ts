@@ -1,14 +1,16 @@
 class User {
     email: string;
+    role: string;
     password: string;
     username: string;
-    cart: Array<Cart>
+    cart?: Array<Cart>; //want to be optional
 
-    constructor(email: string, password: string, username: string, cart: Array<Cart>) {
+    constructor(email: string,  role:string, password: string, username: string, cart?: Array<Cart>) {
         this.email = email;
+        this.role = role;
         this.password = password;
         this.username = username;
-        this.cart = []
+        this.cart = cart
     }
 }
 

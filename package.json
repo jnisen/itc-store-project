@@ -1,0 +1,30 @@
+{
+  "name": "itc-store-project",
+  "version": "1.0.0",
+  "description": "store project",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jnisen/itc-store-project.git"
+  },
+  "author": "jony nisen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jnisen/itc-store-project/issues"
+  },
+  "homepage": "https://github.com/jnisen/itc-store-project#readme",
+  "dependencies": {
+    "cookie-parse": "^0.4.0",
+    "express": "^4.17.1",
+    "fs": "0.0.1-security",
+    "uuidv4": "^6.2.12"
+  },
+  "devDependencies": {
+    "@types/node": "^16.7.1",
+    "typescript": "^4.3.5"
+  }
+}

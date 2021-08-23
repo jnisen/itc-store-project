@@ -13,14 +13,15 @@ export function validateRegister(schema) {
     return (req, res, next) => {
 
         const valid = ajv.validate(schema, req.body);
-        console.log(valid)
         if (!valid) {
             let propError = ajv.errors[0].instancePath.replace('/', '')
             propError = propError.charAt(0).toUpperCase() + propError.slice(1)
-            res.status(404).send({ error: `${propError}: ${ajv.errors[0].message}` })
+            res.status(404).send({ error: `${propError}: ${ajv.errors[0]['message']}` })
         }
         else
             next()
 
     }
 }
+
+//req.hash = hash

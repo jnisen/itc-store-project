@@ -10,14 +10,14 @@ ajvErrors(ajv);
 function validateRegister(schema) {
     return function (req, res, next) {
         var valid = ajv.validate(schema, req.body);
-        console.log(valid);
         if (!valid) {
             var propError = ajv.errors[0].instancePath.replace('/', '');
             propError = propError.charAt(0).toUpperCase() + propError.slice(1);
-            res.status(404).send({ error: propError + ": " + ajv.errors[0].message });
+            res.status(404).send({ error: propError + ": " + ajv.errors[0]['message'] });
         }
         else
             next();
     };
 }
 exports.validateRegister = validateRegister;
+//req.hash = hash

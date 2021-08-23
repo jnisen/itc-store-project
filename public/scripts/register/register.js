@@ -41,27 +41,38 @@ btnReturn.addEventListener("click", returnHomePage);
 form.addEventListener("submit", addNewUser);
 function addNewUser(ev) {
     return __awaiter(this, void 0, void 0, function () {
-        var _a, username, email, password, newUser, response, ok;
+        var _a, username, email, password, repassword, newUser, response, ok, e_1;
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
                     ev.preventDefault();
-                    _a = ev.target.elements, username = _a.username, email = _a.email, password = _a.password;
+                    _b.label = 1;
+                case 1:
+                    _b.trys.push([1, 3, , 4]);
+                    _a = ev.target.elements, username = _a.username, email = _a.email, password = _a.password, repassword = _a.repassword;
                     username = isNaN(username.value) ? username.value : parseInt(username.value);
                     email = email.value;
                     password = password.value;
+                    repassword = repassword.value;
+                    if (password !== repassword)
+                        throw new Error("Your password and repassword are not the same");
                     newUser = {
                         username: username,
                         email: email,
                         password: password
                     };
                     return [4 /*yield*/, addRegisterPromise(newUser)];
-                case 1:
+                case 2:
                     response = _b.sent();
                     ok = response.ok;
                     alert(ok);
                     window.location.href = 'login.html';
-                    return [2 /*return*/];
+                    return [3 /*break*/, 4];
+                case 3:
+                    e_1 = _b.sent();
+                    alert(e_1);
+                    return [3 /*break*/, 4];
+                case 4: return [2 /*return*/];
             }
         });
     });

@@ -1,1 +1,16 @@
-[]
+[
+    {
+        "username": "jnisen",
+        "email": "jnisen@gmail.com",
+        "password": "a123",
+        "role": "admin",
+        "id": "17ecbda5-30c0-4613-903d-7e239891e763"
+    },
+    {
+        "username": "jnisena",
+        "email": "jnisena@gmail.com",
+        "password": "a1234",
+        "role": "admin",
+        "id": "48baf0d1-07b7-4613-b30d-0ce09fce3713"
+    }
+]

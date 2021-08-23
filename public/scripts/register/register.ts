@@ -9,23 +9,30 @@ form.addEventListener("submit", addNewUser)
 
 async function addNewUser(ev) {
     ev.preventDefault();
-    let { username, email, password } = ev.target.elements
-    username = isNaN(username.value) ? username.value : parseInt(username.value)
-    email = email.value
-    password = password.value
+    try {
+        let { username, email, password, repassword } = ev.target.elements
+        username = isNaN(username.value) ? username.value : parseInt(username.value)
+        email = email.value
+        password = password.value
+        repassword = repassword.value
 
-    const newUser = {
-        username: username,
-        email: email,
-        password: password,
+        if(password !== repassword) throw new Error("Your password and repassword are not the same")
+
+        const newUser = {
+            username: username,
+            email: email,
+            password: password
+        }
+
+
+        const response: any = await addRegisterPromise(newUser)
+        const { ok } = response
+        alert(ok)
+
+        window.location.href = 'login.html'
+    } catch (e) {
+        alert(e)
     }
-
-    const response: any = await addRegisterPromise(newUser)
-    const { ok } = response
-    alert(ok)
-
-    window.location.href = 'login.html'
-
 }
 
 

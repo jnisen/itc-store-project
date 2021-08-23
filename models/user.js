@@ -1,11 +1,11 @@
 "use strict";
 exports.__esModule = true;
-exports.Users = exports.User = void 0;
+exports.Users = exports.User = exports.readAllUsers = void 0;
 var fs = require("fs");
 var path = require("path");
 var allUsersJson = path.resolve(__dirname, "./data/users.json");
 var uuidv4 = require("uuid").v4;
-var readAllUsers = function () {
+exports.readAllUsers = function () {
     try {
         var users = fs.readFileSync(allUsersJson);
         return JSON.parse(users);
@@ -16,18 +16,18 @@ var readAllUsers = function () {
 };
 var User = /** @class */ (function () {
     function User(username, email, password, role) {
-        this.id = uuidv4();
         this.username = username;
         this.email = email;
         this.password = password;
         this.role = role;
+        this.id = uuidv4();
     }
     return User;
 }());
 exports.User = User;
 var Users = /** @class */ (function () {
     function Users() {
-        this.allUsers = readAllUsers();
+        this.allUsers = exports.readAllUsers();
     }
     Users.prototype.addNewUser = function (user) {
         this.allUsers.push(user);

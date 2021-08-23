@@ -41,13 +41,26 @@ btnReturn.addEventListener("click", returnHomePage);
 form.addEventListener("submit", enterToMainStores);
 function enterToMainStores(ev) {
     return __awaiter(this, void 0, void 0, function () {
-        var _a, email, password;
+        var _a, email, password, user, response, ok;
         return __generator(this, function (_b) {
-            ev.preventDefault();
-            _a = ev.target.elements, email = _a.email, password = _a.password;
-            email = email.value;
-            password = password.value;
-            return [2 /*return*/];
+            switch (_b.label) {
+                case 0:
+                    ev.preventDefault();
+                    _a = ev.target.elements, email = _a.email, password = _a.password;
+                    email = email.value;
+                    password = password.value;
+                    user = {
+                        email: email,
+                        password: password
+                    };
+                    return [4 /*yield*/, enterPromiseLogin(user)];
+                case 1:
+                    response = _b.sent();
+                    ok = response.ok;
+                    alert(ok);
+                    window.location.href = 'stores.html';
+                    return [2 /*return*/];
+            }
         });
     });
 }

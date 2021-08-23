@@ -13,6 +13,17 @@ async function enterToMainStores(ev){
     password = password.value
 
     //verificar si es Admin
+
+    const user = {
+        email:email, 
+        password:password
+    }
+
+    const response: any = await enterPromiseLogin(user)
+    const { ok } = response
+    alert(ok)
+
+    window.location.href = 'stores.html'
 }
 
 

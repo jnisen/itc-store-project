@@ -14,12 +14,11 @@ var readAllUsers = function () {
     }
 };
 var User = /** @class */ (function () {
-    function User(email, role, password, username) {
-        this.email = email;
-        this.role = role;
-        this.password = password;
+    function User(username, email, password, role) {
         this.username = username;
-        this.cart = [];
+        this.email = email;
+        this.password = password;
+        this.role = role;
     }
     return User;
 }());

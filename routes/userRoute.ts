@@ -3,7 +3,12 @@ const router = express.Router();
 
 import {addNewUser} from '../controllers/userControllers';
 
-router.post('/addNewUser', addNewUser);
+import {validateRegister} from '../middleware/validateRegister'
+
+import {schemaRegister} from '../schema/registrationSchema';
+
+
+router.post('/addNewUser', validateRegister(schemaRegister), addNewUser);
 
 
 module.exports = router

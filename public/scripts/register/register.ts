@@ -7,10 +7,10 @@ form.addEventListener("submit", addNewUser)
 
 
 
-async function addNewUser(ev){
+async function addNewUser(ev) {
     ev.preventDefault();
-    let {username, email, password} = ev.target.elements
-    username = username.value
+    let { username, email, password } = ev.target.elements
+    username = isNaN(username.value) ? username.value : parseInt(username.value)
     email = email.value
     password = password.value
 
@@ -19,16 +19,15 @@ async function addNewUser(ev){
         email: email,
         password: password,
     }
-    
-    const response:any = await addRegisterPromise(newUser)
-    const {ok} = response
-    alert(ok)
+
+    const response: any = await addRegisterPromise(newUser)
+    console.log(response)
+    // const { ok } = response
+    // alert(ok)
 
 
 
 }
-
-
 
 
 

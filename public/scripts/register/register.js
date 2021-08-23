@@ -41,13 +41,13 @@ btnReturn.addEventListener("click", returnHomePage);
 form.addEventListener("submit", addNewUser);
 function addNewUser(ev) {
     return __awaiter(this, void 0, void 0, function () {
-        var _a, username, email, password, newUser, response, ok;
+        var _a, username, email, password, newUser, response;
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
                     ev.preventDefault();
                     _a = ev.target.elements, username = _a.username, email = _a.email, password = _a.password;
-                    username = username.value;
+                    username = isNaN(username.value) ? username.value : parseInt(username.value);
                     email = email.value;
                     password = password.value;
                     newUser = {
@@ -58,8 +58,7 @@ function addNewUser(ev) {
                     return [4 /*yield*/, addRegisterPromise(newUser)];
                 case 1:
                     response = _b.sent();
-                    ok = response.ok;
-                    alert(ok);
+                    console.log(response);
                     return [2 /*return*/];
             }
         });

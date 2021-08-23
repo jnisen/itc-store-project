@@ -15,18 +15,18 @@ const readAllUsers = () => {
 
 
 export class User {
-    email: string;
-    role: string;
-    password: string;
     username: string;
+    email: string;
+    password: string;
+    role: string;
     cart?: Array<Cart>; //want to be optional
 
-    constructor(email: string,  role:string, password: string, username: string) {
+    constructor(username: string,email: string, password: string , role:string, ) {
+      this.username = username;  
         this.email = email;
-        this.role = role;
         this.password = password;
-        this.username = username;
-        this.cart = [];
+        this.role = role;
+        
     }
 }
 
@@ -39,7 +39,7 @@ export class Users{
         this.allUsers = readAllUsers();
     }
 
-    addNewUser(user){
+    addNewUser(user:User){
       this.allUsers.push(user);
       this.writeAllUsers();
     }

@@ -6,24 +6,29 @@ btnReturn.addEventListener("click", returnHomePage)
 form.addEventListener("submit", enterToMainStores)
 
 
-async function enterToMainStores(ev){
+async function enterToMainStores(ev) {
     ev.preventDefault()
-    let {email, password} = ev.target.elements
-    email = email.value
-    password = password.value
+    try {
+        let { email, password, repassword } = ev.target.elements
+        email = email.value
+        password = password.value
+        repassword = repassword.value
 
-    //verificar si es Admin
+        if (password !== repassword) throw new Error("Your password and repassword are not the same")
 
-    const user = {
-        email:email, 
-        password:password
+        const user = {
+            email: email,
+            password: password
+        }
+
+        const response: any = await enterPromiseLogin(user)
+        const { ok } = response
+        alert(ok)
+
+        window.location.href = `stores.html?email=${email}`
+    } catch (e) {
+        alert(e)
     }
-
-    const response: any = await enterPromiseLogin(user)
-    const { ok } = response
-    alert(ok)
-
-    window.location.href = 'stores.html'
 }
 
 

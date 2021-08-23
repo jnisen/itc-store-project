@@ -33,6 +33,10 @@ var Users = /** @class */ (function () {
         this.allUsers.push(user);
         this.writeAllUsers();
     };
+    Users.prototype.findUserById = function (id) {
+        var user = this.allUsers.find(function (user) { return user.id === id; });
+        return user;
+    };
     Users.prototype.writeAllUsers = function () {
         fs.writeFileSync(allUsersJson, JSON.stringify(this.allUsers));
     };

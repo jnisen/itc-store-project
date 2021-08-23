@@ -5,7 +5,6 @@ import { secret } from './secrets/secret';
 const jwt = require('jwt-simple');
 
 export function addNewUser(req, res) {
-    console.log(req.body)
     const user = new User(req.body.username, req.body.email, req.body.password, 'admin')
     //user.cart = []
     const allUsers = new Users();
@@ -16,7 +15,7 @@ export function addNewUser(req, res) {
 
 export function sendCookie(req, res) {
     try {
-        const allUsers: any = readAllUsers() //is necessary?
+        const allUsers: any = readAllUsers() 
         const findUser = allUsers.find(user => (user.email === req.body.email))
         const idUser = findUser.id
         const tokenUser = jwt.encode(idUser, secret)
@@ -27,8 +26,13 @@ export function sendCookie(req, res) {
     }
 }
 
-//repasswrod
-//app.morgan('tiny')
+export function addSection(req,res){
+   const allUsers = new Users();
+   const user = allUsers.findUserById(req.id)
+   user.store = req.body.store
+   res.send({ok:`Welcome to the store ${req.body.store}`})
+}
+
 
 
 // export function getCookie(req, res) {

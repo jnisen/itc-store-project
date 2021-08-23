@@ -21,9 +21,10 @@ export class User {
     password: string;
     id: string;
     role: string;
+    store: string
     cart?: Array<Cart>; //want to be optional
 
-    constructor(username: string,email: string, password: string , role:string) {
+    constructor(username: string,email: string, password: string, role:string) {
         this.username = username;  
         this.email = email;
         this.password = password;
@@ -45,6 +46,11 @@ export class Users{
     addNewUser(user:User){
       this.allUsers.push(user);
       this.writeAllUsers();
+    }
+
+    findUserById(id:string){
+      const user = this.allUsers.find(user=>user.id === id);
+      return user
     }
 
     writeAllUsers(){

@@ -36,45 +36,47 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 //btn
 var btnReturn = document.querySelector("#btn-return");
-var form = document.querySelector("#form-login");
-btnReturn.addEventListener("click", returnHomePage);
-form.addEventListener("submit", enterToMainStores);
-function enterToMainStores(ev) {
+//const clickFootball = <HTMLElement>document.querySelector(".container__store__1")
+var clickContainer = document.querySelector(".container");
+//addEventListener
+btnReturn.addEventListener("click", returnLoginPage);
+//clickFootball.addEventListener("click", sendToMainFootball)
+clickContainer.addEventListener("click", sendToMainSports);
+// async function sendToMainFootball(ev){
+//     ev.preventDefault()
+//     const response = await axios.post('/user/addSection', {store:'football'})
+//     const data = response.data
+//     alert(data.ok)
+//     const params = new URLSearchParams(window.location.search);
+//     const emailUser = params.get('email');
+//     window.location.href = `main.html?email=${emailUser}/football`
+// }
+function sendToMainSports(ev) {
     return __awaiter(this, void 0, void 0, function () {
-        var _a, email, password, repassword, user, response, ok, e_1;
-        return __generator(this, function (_b) {
-            switch (_b.label) {
+        var store, response, data, params, emailUser;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
                 case 0:
                     ev.preventDefault();
-                    _b.label = 1;
+                    if (ev.target.className === 'container__store__1 container__store') {
+                        store = { store: "football" };
+                    }
+                    else {
+                        store = { store: "tennis" };
+                    }
+                    return [4 /*yield*/, axios.post('/user/addSection', store)];
                 case 1:
-                    _b.trys.push([1, 3, , 4]);
-                    _a = ev.target.elements, email = _a.email, password = _a.password, repassword = _a.repassword;
-                    email = email.value;
-                    password = password.value;
-                    repassword = repassword.value;
-                    if (password !== repassword)
-                        throw new Error("Your password and repassword are not the same");
-                    user = {
-                        email: email,
-                        password: password
-                    };
-                    return [4 /*yield*/, enterPromiseLogin(user)];
-                case 2:
-                    response = _b.sent();
-                    ok = response.ok;
-                    alert(ok);
-                    window.location.href = "stores.html?email=" + email;
-                    return [3 /*break*/, 4];
-                case 3:
-                    e_1 = _b.sent();
-                    alert(e_1);
-                    return [3 /*break*/, 4];
-                case 4: return [2 /*return*/];
+                    response = _a.sent();
+                    data = response.data;
+                    alert(data.ok);
+                    params = new URLSearchParams(window.location.search);
+                    emailUser = params.get('email');
+                    window.location.href = "main.html?email=" + emailUser + "/" + store.store;
+                    return [2 /*return*/];
             }
         });
     });
 }
-function returnHomePage() {
-    window.location.href = 'index.html';
+function returnLoginPage() {
+    window.location.href = 'login.html';
 }

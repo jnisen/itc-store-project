@@ -1,11 +1,10 @@
 "use strict";
 exports.__esModule = true;
-exports.sendCookie = exports.addNewUser = void 0;
+exports.addSection = exports.sendCookie = exports.addNewUser = void 0;
 var user_1 = require("../models/user");
 var secret_1 = require("./secrets/secret");
 var jwt = require('jwt-simple');
 function addNewUser(req, res) {
-    console.log(req.body);
     var user = new user_1.User(req.body.username, req.body.email, req.body.password, 'admin');
     //user.cart = []
     var allUsers = new user_1.Users();
@@ -15,7 +14,7 @@ function addNewUser(req, res) {
 exports.addNewUser = addNewUser;
 function sendCookie(req, res) {
     try {
-        var allUsers = user_1.readAllUsers(); //is necessary?
+        var allUsers = user_1.readAllUsers();
         var findUser = allUsers.find(function (user) { return (user.email === req.body.email); });
         var idUser = findUser.id;
         var tokenUser = jwt.encode(idUser, secret_1.secret);
@@ -27,8 +26,13 @@ function sendCookie(req, res) {
     }
 }
 exports.sendCookie = sendCookie;
-//repasswrod
-//app.morgan('tiny')
+function addSection(req, res) {
+    var allUsers = new user_1.Users();
+    var user = allUsers.findUserById(req.id);
+    user.store = req.body.store;
+    res.send({ ok: "Welcome to the store " + req.body.store });
+}
+exports.addSection = addSection;
 // export function getCookie(req, res) {
 //     try {
 //         const { cookieName } = req.cookies

@@ -36,21 +36,10 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 //btn
 var btnReturn = document.querySelector("#btn-return");
-//const clickFootball = <HTMLElement>document.querySelector(".container__store__1")
 var clickContainer = document.querySelector(".container");
 //addEventListener
 btnReturn.addEventListener("click", returnLoginPage);
-//clickFootball.addEventListener("click", sendToMainFootball)
 clickContainer.addEventListener("click", sendToMainSports);
-// async function sendToMainFootball(ev){
-//     ev.preventDefault()
-//     const response = await axios.post('/user/addSection', {store:'football'})
-//     const data = response.data
-//     alert(data.ok)
-//     const params = new URLSearchParams(window.location.search);
-//     const emailUser = params.get('email');
-//     window.location.href = `main.html?email=${emailUser}/football`
-// }
 function sendToMainSports(ev) {
     return __awaiter(this, void 0, void 0, function () {
         var store, response, data, params, emailUser;

@@ -30,6 +30,7 @@ export function addSection(req,res){
    const allUsers = new Users();
    const user = allUsers.findUserById(req.id)
    user.store = req.body.store
+   allUsers.writeAllUsers()
    res.send({ok:`Welcome to the store ${req.body.store}`})
 }
 

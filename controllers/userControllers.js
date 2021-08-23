@@ -30,6 +30,7 @@ function addSection(req, res) {
     var allUsers = new user_1.Users();
     var user = allUsers.findUserById(req.id);
     user.store = req.body.store;
+    allUsers.writeAllUsers();
     res.send({ ok: "Welcome to the store " + req.body.store });
 }
 exports.addSection = addSection;

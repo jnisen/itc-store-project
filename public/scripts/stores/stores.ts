@@ -6,10 +6,14 @@ const clickContainer  = <HTMLElement>document.querySelector(".container")
 btnReturn.addEventListener("click", returnLoginPage)
 clickContainer.addEventListener("click", sendToMainSports)
 
+
 async function sendToMainSports(ev){
     ev.preventDefault();
 
     let store;
+
+    
+    if (ev.target.className.indexOf('container__store_') === -1) return
 
     if(ev.target.className === 'container__store__1 container__store'){
          store = {store:"football"}

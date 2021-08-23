@@ -1,1 +1,18 @@
-[]
+[
+    {
+        "username": "jnisen",
+        "email": "jnisen@gmail.com",
+        "password": "a1234",
+        "role": "admin",
+        "id": "bc005aee-3d10-49f6-b7aa-aea2a2811c6a",
+        "store": "tennis"
+    },
+    {
+        "username": "leo",
+        "email": "leo@gmail.com",
+        "password": "a1234",
+        "role": "admin",
+        "id": "796f8359-1112-4078-9a82-239ba588aea3",
+        "store": "football"
+    }
+]

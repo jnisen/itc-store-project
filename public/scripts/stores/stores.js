@@ -47,6 +47,8 @@ function sendToMainSports(ev) {
             switch (_a.label) {
                 case 0:
                     ev.preventDefault();
+                    if (ev.target.className.indexOf('container__store_') === -1)
+                        return [2 /*return*/];
                     if (ev.target.className === 'container__store__1 container__store') {
                         store = { store: "football" };
                     }

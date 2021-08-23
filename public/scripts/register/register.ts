@@ -21,11 +21,10 @@ async function addNewUser(ev) {
     }
 
     const response: any = await addRegisterPromise(newUser)
-    console.log(response)
-    // const { ok } = response
-    // alert(ok)
+    const { ok } = response
+    alert(ok)
 
-
+    window.location.href = 'login.html'
 
 }
 

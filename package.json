@@ -19,6 +19,8 @@
   "homepage": "https://github.com/jnisen/itc-store-project#readme",
   "dependencies": {
     "ajv": "^8.6.2",
+    "ajv-errors": "^3.0.0",
+    "ajv-formats": "^2.1.1",
     "cookie-parser": "^1.4.5",
     "express": "^4.17.1",
     "fluent-json-schema": "^3.0.1",

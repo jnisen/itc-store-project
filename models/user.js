@@ -4,6 +4,7 @@ exports.Users = exports.User = void 0;
 var fs = require("fs");
 var path = require("path");
 var allUsersJson = path.resolve(__dirname, "./data/users.json");
+var uuidv4 = require("uuid").v4;
 var readAllUsers = function () {
     try {
         var users = fs.readFileSync(allUsersJson);
@@ -15,6 +16,7 @@ var readAllUsers = function () {
 };
 var User = /** @class */ (function () {
     function User(username, email, password, role) {
+        this.id = uuidv4();
         this.username = username;
         this.email = email;
         this.password = password;

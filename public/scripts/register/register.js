@@ -41,7 +41,7 @@ btnReturn.addEventListener("click", returnHomePage);
 form.addEventListener("submit", addNewUser);
 function addNewUser(ev) {
     return __awaiter(this, void 0, void 0, function () {
-        var _a, username, email, password, newUser, response;
+        var _a, username, email, password, newUser, response, ok;
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
@@ -58,7 +58,9 @@ function addNewUser(ev) {
                     return [4 /*yield*/, addRegisterPromise(newUser)];
                 case 1:
                     response = _b.sent();
-                    console.log(response);
+                    ok = response.ok;
+                    alert(ok);
+                    window.location.href = 'login.html';
                     return [2 /*return*/];
             }
         });

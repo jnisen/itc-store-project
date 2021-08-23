@@ -8,6 +8,6 @@ function addNewUser(req, res) {
     //user.cart = []
     var allUsers = new user_1.Users();
     allUsers.addNewUser(user);
-    res.send({ ok: "User Created" });
+    res.send({ ok: "Hi " + req.body.username + "!, now you can log in" });
 }
 exports.addNewUser = addNewUser;

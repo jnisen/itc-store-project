@@ -59,7 +59,8 @@ function addNewUser(ev) {
                     newUser = {
                         username: username,
                         email: email,
-                        password: password
+                        password: password,
+                        role: 'admin'
                     };
                     return [4 /*yield*/, addRegisterPromise(newUser)];
                 case 2:

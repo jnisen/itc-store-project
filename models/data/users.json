@@ -14,5 +14,21 @@
         "role": "admin",
         "id": "796f8359-1112-4078-9a82-239ba588aea3",
         "store": "football"
+    },
+    {
+        "username": "kevo",
+        "email": "kevo@gmail.com",
+        "password": "a1234",
+        "role": "admin",
+        "id": "1ff9eee6-acaa-420a-8c0f-c3bf85105f4f",
+        "store": "football"
+    },
+    {
+        "username": "tomi",
+        "email": "tomi@gmail.com",
+        "password": "a1234",
+        "role": "admin",
+        "id": "a699a887-415b-4a07-ac53-38807633ab88",
+        "store": "tennis"
     }
 ]

@@ -5,8 +5,10 @@ var user_1 = require("../models/user");
 var secret_1 = require("./secrets/secret");
 var jwt = require('jwt-simple');
 function addNewUser(req, res) {
-    var user = new user_1.User(req.body.username, req.body.email, req.body.password, 'admin');
-    //user.cart = []
+    var role = req.body.role === 'admin' ? 'admin' : 'public';
+    var user = new user_1.User(req.body.username, req.body.email, req.body.password, role);
+    if (role === 'public')
+        user.cart = [];
     var allUsers = new user_1.Users();
     allUsers.addNewUser(user);
     res.send({ ok: "Hi " + req.body.username + "!, now you can log in" });
@@ -19,7 +21,7 @@ function sendCookie(req, res) {
         var idUser = findUser.id;
         var tokenUser = jwt.encode(idUser, secret_1.secret);
         res.cookie('CookieName', tokenUser, { maxAge: 30000000, httpOnly: true });
-        res.send({ ok: "Welcome " + findUser.username });
+        res.send({ ok: "Welcome " + findUser.username, user: findUser });
     }
     catch (e) {
         res.status(500).send({ error: "" + e.message });

@@ -41,7 +41,7 @@ btnReturn.addEventListener("click", returnHomePage);
 form.addEventListener("submit", enterToMainStores);
 function enterToMainStores(ev) {
     return __awaiter(this, void 0, void 0, function () {
-        var _a, email, password, repassword, user, response, ok, e_1;
+        var _a, email, password, repassword, loginUser, response, ok, user, e_1;
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
@@ -55,16 +55,19 @@ function enterToMainStores(ev) {
                     repassword = repassword.value;
                     if (password !== repassword)
                         throw new Error("Your password and repassword are not the same");
-                    user = {
+                    loginUser = {
                         email: email,
                         password: password
                     };
-                    return [4 /*yield*/, enterPromiseLogin(user)];
+                    return [4 /*yield*/, enterPromiseLogin(loginUser)];
                 case 2:
                     response = _b.sent();
-                    ok = response.ok;
+                    ok = response.ok, user = response.user;
                     alert(ok);
-                    window.location.href = "stores.html?email=" + email;
+                    if (user.store)
+                        window.location.href = "main.html?email=" + email + "/" + user.store;
+                    else
+                        window.location.href = "stores.html?email=" + email;
                     return [3 /*break*/, 4];
                 case 3:
                     e_1 = _b.sent();

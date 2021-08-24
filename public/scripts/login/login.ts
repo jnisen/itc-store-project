@@ -16,16 +16,19 @@ async function enterToMainStores(ev) {
 
         if (password !== repassword) throw new Error("Your password and repassword are not the same")
 
-        const user = {
+        const loginUser = {
             email: email,
             password: password
         }
 
-        const response: any = await enterPromiseLogin(user)
-        const { ok } = response
-        alert(ok)
+        const response: any = await enterPromiseLogin(loginUser)
+        const {ok , user} = response
 
-        window.location.href = `stores.html?email=${email}`
+        alert(ok)
+        
+        if (user.store)  window.location.href = `main.html?email=${email}/${user.store}`
+        else window.location.href = `stores.html?email=${email}`
+
     } catch (e) {
         alert(e)
     }

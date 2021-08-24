@@ -1,5 +1,5 @@
-
 const form = <HTMLElement>document.querySelector('#main')
+const btnTrash = <HTMLElement>document.querySelector('.main__products__product--actions--trash')
 
 form.addEventListener('submit', addProductOnDom)
 
@@ -36,14 +36,12 @@ async function addProductOnDom(ev) {
 }
 
 
-async function getAllProducts(ev) {
-    ev.preventDefault()
+async function getAllProducts() {
     const store = location.search.substr(1).split("=")[2]
     const response = await axios.get(`/store/getStore/${store}`)
     const { data } = response
-    if (data.length === 0)return
-    else renderAllProducts(data.findStore.allProducts)
-    
+    if (data.allStores) renderAllProducts(data.allStores.allProducts)
+
 }
 
 
@@ -52,6 +50,8 @@ async function getAllProducts(ev) {
 function renderAllProducts(allProducts) {
     let html: string = "";
     const rootProducts = document.querySelector('#rootProducts')
+
+    console.log(allProducts)
 
     allProducts.forEach(products => {
         html += `
@@ -67,7 +67,7 @@ function renderAllProducts(allProducts) {
                          </div>
                          <div class="main__products__product--actions">
                          <i class="fas fa-user-edit main__products__product--actions--edit" onclick='editProduct("${products.id}")'></i>
-                         <i class="fas fa-trash main__products__product--actions--trash" onclick='editProduct("${products.id}}")'></i> 
+                         <i class="fas fa-trash main__products__product--actions--trash" onclick='deleteProduct("${products.id}")'></i> 
                          </div>
                      </div>
         </div>
@@ -75,4 +75,19 @@ function renderAllProducts(allProducts) {
     });
 
     rootProducts.innerHTML = html
+}
+
+
+async function deleteProduct(id) { 
+    try {
+        if (confirm("Do you want to delete this product?")) {
+            alert('Delete product')
+            await axios.delete(`product/deleteProduct/${id}`)
+            getAllProducts()
+        } else {
+            alert('Delete Cancelled!')
+        }
+    } catch (e) {
+        alert(e)
+    }
 }

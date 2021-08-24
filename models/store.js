@@ -11,7 +11,7 @@ var __rest = (this && this.__rest) || function (s, e) {
     return t;
 };
 exports.__esModule = true;
-exports.writeAllUsers = exports.addProductToStore = exports.readAllStores = void 0;
+exports.deleteProductToStore = exports.writeAllUsers = exports.addProductToStore = exports.readAllStores = void 0;
 var fs = require("fs");
 var path = require("path");
 var allStoresJSON = path.resolve(__dirname, "./data/stores.json");
@@ -47,3 +47,11 @@ function writeAllUsers(writeToJSON) {
     fs.writeFileSync(allStoresJSON, JSON.stringify(writeToJSON));
 }
 exports.writeAllUsers = writeAllUsers;
+function deleteProductToStore(id, findStore) {
+    var allStores = exports.readAllStores();
+    var store = allStores.find(function (store) { return store.store === findStore; });
+    var index = store.allProducts.findIndex(function (a) { return a.id === id; });
+    store.allProducts.splice(index, 1);
+    writeAllUsers(allStores);
+}
+exports.deleteProductToStore = deleteProductToStore;

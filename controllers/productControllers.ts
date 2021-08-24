@@ -1,12 +1,19 @@
 import { Product, Products, readAllProducts } from '../models/products'
-import { addProductToStore } from '../models/store'
+import { addProductToStore,deleteProductToStore } from '../models/store'
 
 
 export function addNewProduct(req, res) {
     const product = new Product(req.body.name, req.body.description, req.body.image, req.body.quantity, req.body.price, req.body.store)
     const allListProducts = new Products()
     allListProducts.addNewProduct(product)
-    addProductToStore(req.body)
+    addProductToStore(product)
     const allProducts = allListProducts.findStore(req.params.store)
     res.send({ok:"Product Added", allProducts:allProducts})
+}
+
+export function deleteProduct(req, res){
+    const allListProducts = new Products()
+    const store = allListProducts.deleteProduct(req.params.id)
+    deleteProductToStore(req.params.id, store)
+    res.send()
 }

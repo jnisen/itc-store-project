@@ -5,6 +5,6 @@ var store_1 = require("../models/store");
 function getStore(req, res) {
     var allStores = store_1.readAllStores();
     var findStore = allStores.find(function (store) { return store.store === req.params.store; });
-    res.send({ findStore: findStore });
+    res.send({ allStores: findStore });
 }
 exports.getStore = getStore;

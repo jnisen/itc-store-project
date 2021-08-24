@@ -35,6 +35,12 @@ var Products = /** @class */ (function () {
         this.allProducts.push(product);
         this.writeProduct();
     };
+    Products.prototype.deleteProduct = function (id) {
+        var store = this.allProducts.find(function (product) { return product.id === id; }).store;
+        this.allProducts = this.allProducts.filter(function (product) { return product.id !== id; });
+        this.writeProduct();
+        return store;
+    };
     Products.prototype.findProductById = function (id) {
         var product = this.allProducts.find(function (product) { return product.id === id; });
         return product;

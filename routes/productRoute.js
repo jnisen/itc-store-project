@@ -8,5 +8,5 @@ var productControllers_1 = require("../controllers/productControllers");
 // import {validateProduct} from '../middleware/validateRegister'
 //schema
 // import {schemaProduct} from '../schemas/allSchemas';
-router.post('/addNewProduct/:store', productControllers_1.addNewProduct);
+router.post('/addNewProduct/:store', productControllers_1.addNewProduct)["delete"]('/deleteProduct/:id', productControllers_1.deleteProduct);
 module.exports = router;

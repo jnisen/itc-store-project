@@ -47,3 +47,11 @@ export function writeAllUsers(writeToJSON) {
   fs.writeFileSync(allStoresJSON, JSON.stringify(writeToJSON));
 }
 
+export function deleteProductToStore(id:string, findStore:string){
+  let allStores: any = readAllStores()
+  const store = allStores.find(store => store.store === findStore)
+  const index = store.allProducts.findIndex(a=>a.id === id)
+  store.allProducts.splice(index,1)
+  writeAllUsers(allStores)
+}
+

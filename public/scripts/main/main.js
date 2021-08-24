@@ -35,6 +35,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 var form = document.querySelector('#main');
+var btnTrash = document.querySelector('.main__products__product--actions--trash');
 form.addEventListener('submit', addProductOnDom);
 function addProductOnDom(ev) {
     return __awaiter(this, void 0, void 0, function () {
@@ -70,22 +71,19 @@ function addProductOnDom(ev) {
         });
     });
 }
-function getAllProducts(ev) {
+function getAllProducts() {
     return __awaiter(this, void 0, void 0, function () {
         var store, response, data;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    ev.preventDefault();
                     store = location.search.substr(1).split("=")[2];
                     return [4 /*yield*/, axios.get("/store/getStore/" + store)];
                 case 1:
                     response = _a.sent();
                     data = response.data;
-                    if (data.length === 0)
-                        return [2 /*return*/];
-                    else
-                        renderAllProducts(data.findStore.allProducts);
+                    if (data.allStores)
+                        renderAllProducts(data.allStores.allProducts);
                     return [2 /*return*/];
             }
         });
@@ -94,8 +92,36 @@ function getAllProducts(ev) {
 function renderAllProducts(allProducts) {
     var html = "";
     var rootProducts = document.querySelector('#rootProducts');
+    console.log(allProducts);
     allProducts.forEach(function (products) {
-        html += "\n        <div class=\"main__products\">\n                     <div class=\"main__products__product\">\n                     <img src=\"" + products.image + "\" alt=\"" + products.name + "\"  style = \"width:200px; height:200px\">\n                         <div class = \"main__products__product--name\">\n                             <span>" + products.name + " - " + products.description + "</span>\n                         </div>\n                         <div class=\"main__products__product--numbers\">\n                             <span>Stock: " + products.quantity + "</span>\n                             <span>\u20AA " + products.price + "</span>\n                         </div>\n                         <div class=\"main__products__product--actions\">\n                         <i class=\"fas fa-user-edit main__products__product--actions--edit\" onclick='editProduct(\"" + products.id + "\")'></i>\n                         <i class=\"fas fa-trash main__products__product--actions--trash\" onclick='editProduct(\"" + products.id + "}\")'></i> \n                         </div>\n                     </div>\n        </div>\n                 ";
+        html += "\n        <div class=\"main__products\">\n                     <div class=\"main__products__product\">\n                     <img src=\"" + products.image + "\" alt=\"" + products.name + "\"  style = \"width:200px; height:200px\">\n                         <div class = \"main__products__product--name\">\n                             <span>" + products.name + " - " + products.description + "</span>\n                         </div>\n                         <div class=\"main__products__product--numbers\">\n                             <span>Stock: " + products.quantity + "</span>\n                             <span>\u20AA " + products.price + "</span>\n                         </div>\n                         <div class=\"main__products__product--actions\">\n                         <i class=\"fas fa-user-edit main__products__product--actions--edit\" onclick='editProduct(\"" + products.id + "\")'></i>\n                         <i class=\"fas fa-trash main__products__product--actions--trash\" onclick='deleteProduct(\"" + products.id + "\")'></i> \n                         </div>\n                     </div>\n        </div>\n                 ";
     });
     rootProducts.innerHTML = html;
+}
+function deleteProduct(id) {
+    return __awaiter(this, void 0, void 0, function () {
+        var e_1;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    _a.trys.push([0, 4, , 5]);
+                    if (!confirm("Do you want to delete this product?")) return [3 /*break*/, 2];
+                    alert('Delete product');
+                    return [4 /*yield*/, axios["delete"]("product/deleteProduct/" + id)];
+                case 1:
+                    _a.sent();
+                    getAllProducts();
+                    return [3 /*break*/, 3];
+                case 2:
+                    alert('Delete Cancelled!');
+                    _a.label = 3;
+                case 3: return [3 /*break*/, 5];
+                case 4:
+                    e_1 = _a.sent();
+                    alert(e_1);
+                    return [3 /*break*/, 5];
+                case 5: return [2 /*return*/];
+            }
+        });
+    });
 }

@@ -47,6 +47,13 @@ export class Products{
       this.writeProduct();
     }
 
+    deleteProduct(id:string):string{
+      const store = this.allProducts.find(product => product.id === id).store
+     this.allProducts = this.allProducts.filter(product => product.id !== id)
+      this.writeProduct();
+      return store
+    }
+
     findProductById(id:string){
       const product = this.allProducts.find(product=>product.id === id);
       return product

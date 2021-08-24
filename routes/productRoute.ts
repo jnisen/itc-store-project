@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 //controllers
-import {addNewProduct} from '../controllers/productControllers';
+import {addNewProduct,deleteProduct} from '../controllers/productControllers';
 
 //middleware
 // import {validateProduct} from '../middleware/validateRegister'
@@ -11,5 +11,6 @@ import {addNewProduct} from '../controllers/productControllers';
 // import {schemaProduct} from '../schemas/allSchemas';
 
 router.post('/addNewProduct/:store',addNewProduct)
+       .delete('/deleteProduct/:id', deleteProduct)
 
 module.exports = router

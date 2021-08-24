@@ -5,12 +5,12 @@ var router = express.Router();
 //controllers
 var userControllers_1 = require("../controllers/userControllers");
 //middleware
-var validateRegister_1 = require("../middleware/validateRegister");
-var userMiddleWare_1 = require("../middleware/userMiddleWare");
+var validationSchema_1 = require("../middleware/validationSchema");
+var validationJSON_1 = require("../middleware/validationJSON");
 var handleCookies_1 = require("../middleware/handleCookies");
 //schema
 var allSchemas_1 = require("../schemas/allSchemas");
-router.post('/addNewUser', validateRegister_1.validateRegister(allSchemas_1.schemaRegister), userMiddleWare_1.isUserExist, userControllers_1.addNewUser)
-    .post('/cookie', userMiddleWare_1.isUser, userControllers_1.sendCookie)
+router.post('/addNewUser', validationSchema_1.validateRegister(allSchemas_1.schemaRegister), validationJSON_1.isUserExist, userControllers_1.addNewUser)
+    .post('/cookie', validationJSON_1.isUser, userControllers_1.sendCookie)
     .post('/addSection', handleCookies_1.readCookie, userControllers_1.addSection);
 module.exports = router;

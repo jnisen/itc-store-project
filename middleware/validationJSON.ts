@@ -1,4 +1,5 @@
 import { readAllUsers } from '../models/user'
+import { readAllProducts } from '../models/products'
 
 export function isUser(req, res, next) {
     try {
@@ -22,6 +23,17 @@ export function isUserExist(req, res, next) {
     } catch (e) {
         res.status(400).send({ error: `${e}` }); //cliente error
     }
+}
 
+export function isProductExist(req, res, next) {
+    try {
+        const { image } = req.body;
+        const allProducts: any = readAllProducts()
+        const productExist = allProducts.find(product => product.image === image)
+        if (productExist) throw new Error('Product already exists')
+        next()
+    } catch (e) {
+        res.status(400).send({ error: `${e}` }); //cliente error
+    }
 
 }

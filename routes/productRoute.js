@@ -5,8 +5,9 @@ var router = express.Router();
 //controllers
 var productControllers_1 = require("../controllers/productControllers");
 //middleware
-// import {validateProduct} from '../middleware/validateRegister'
+var validationSchema_1 = require("../middleware/validationSchema");
+var validationJSON_1 = require("../middleware/validationJSON");
 //schema
-// import {schemaProduct} from '../schemas/allSchemas';
-router.post('/addNewProduct/:store', productControllers_1.addNewProduct)["delete"]('/deleteProduct/:id', productControllers_1.deleteProduct);
+var allSchemas_1 = require("../schemas/allSchemas");
+router.post('/addNewProduct/:store', validationSchema_1.validateProduct(allSchemas_1.schemaProduct), validationJSON_1.isProductExist, productControllers_1.addNewProduct)["delete"]('/deleteProduct/:id', productControllers_1.deleteProduct);
 module.exports = router;

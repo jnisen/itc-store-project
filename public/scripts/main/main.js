@@ -45,8 +45,8 @@ function addProductOnDom(ev) {
                 case 0:
                     ev.preventDefault();
                     _a = ev.target.elements, name = _a.name, description = _a.description, image = _a.image, quantity = _a.quantity, price = _a.price;
-                    name = name.value;
-                    description = description.value;
+                    name = isNaN(name.value) ? name.value : parseInt(name.value);
+                    description = isNaN(description.value) ? description.value : parseInt(description.value);
                     image = image.value;
                     quantity = quantity.valueAsNumber;
                     price = price.valueAsNumber;
@@ -122,6 +122,13 @@ function deleteProduct(id) {
                     return [3 /*break*/, 5];
                 case 5: return [2 /*return*/];
             }
+        });
+    });
+}
+function editProduct(id) {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            return [2 /*return*/];
         });
     });
 }

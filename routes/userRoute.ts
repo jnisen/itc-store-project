@@ -5,8 +5,8 @@ const router = express.Router();
 import {addNewUser, sendCookie, addSection} from '../controllers/userControllers';
 
 //middleware
-import {validateRegister} from '../middleware/validateRegister'
-import {isUser,isUserExist} from '../middleware/userMiddleWare'
+import {validateRegister} from '../middleware/validationSchema'
+import {isUser,isUserExist} from '../middleware/validationJSON'
 import {readCookie} from '../middleware/handleCookies'
 
 //schema

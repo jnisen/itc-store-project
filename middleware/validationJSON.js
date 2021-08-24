@@ -1,7 +1,8 @@
 "use strict";
 exports.__esModule = true;
-exports.isUserExist = exports.isUser = void 0;
+exports.isProductExist = exports.isUserExist = exports.isUser = void 0;
 var user_1 = require("../models/user");
+var products_1 = require("../models/products");
 function isUser(req, res, next) {
     try {
         var _a = req.body, email_1 = _a.email, password_1 = _a.password;
@@ -30,3 +31,17 @@ function isUserExist(req, res, next) {
     }
 }
 exports.isUserExist = isUserExist;
+function isProductExist(req, res, next) {
+    try {
+        var image_1 = req.body.image;
+        var allProducts = products_1.readAllProducts();
+        var productExist = allProducts.find(function (product) { return product.image === image_1; });
+        if (productExist)
+            throw new Error('Product already exists');
+        next();
+    }
+    catch (e) {
+        res.status(400).send({ error: "" + e }); //cliente error
+    }
+}
+exports.isProductExist = isProductExist;

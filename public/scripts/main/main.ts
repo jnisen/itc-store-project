@@ -9,9 +9,9 @@ async function addProductOnDom(ev) {
     ev.preventDefault();
 
     let { name, description, image, quantity, price } = ev.target.elements
-
-    name = name.value
-    description = description.value
+    
+    name = isNaN(name.value) ? name.value : parseInt(name.value)
+    description = isNaN(description.value) ? description.value : parseInt(description.value)
     image = image.value
     quantity = quantity.valueAsNumber
     price = price.valueAsNumber
@@ -90,4 +90,8 @@ async function deleteProduct(id) {
     } catch (e) {
         alert(e)
     }
+}
+
+async function editProduct(id){
+    //popup
 }

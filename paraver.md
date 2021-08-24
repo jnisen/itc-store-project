@@ -1,2 +1,3 @@
 1 - edit
-2 - si existe la url
+2 - search
+3 - details of the product

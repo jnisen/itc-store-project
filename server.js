@@ -11,4 +11,8 @@ app.use(express.json());
 app.use(morgan('tiny'));
 var userRoute = require('./routes/userRoute');
 app.use('/user', userRoute);
+var productRoute = require('./routes/productRoute');
+app.use('/product', productRoute);
+var storeRoute = require('./routes/storeRoute');
+app.use('/store', storeRoute);
 app.listen(port, function () { return console.log('app Listening on port', port); });

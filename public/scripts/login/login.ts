@@ -26,7 +26,7 @@ async function enterToMainStores(ev) {
 
         alert(ok)
         
-        if (user.store)  window.location.href = `main.html?email=${email}/${user.store}`
+        if (user.store)  window.location.href = `main.html?email=${email}?store=${user.store}`
         else window.location.href = `stores.html?email=${email}`
 
     } catch (e) {

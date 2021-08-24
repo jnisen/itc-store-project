@@ -4,9 +4,11 @@ exports.addSection = exports.sendCookie = exports.addNewUser = void 0;
 var user_1 = require("../models/user");
 var secret_1 = require("./secrets/secret");
 var jwt = require('jwt-simple');
+var adminsArray = ['jnisen@gmail.com', 'leo@gmail.com', 'salmon@gmail.com'];
 function addNewUser(req, res) {
-    var role = req.body.role === 'admin' ? 'admin' : 'public';
-    var user = new user_1.User(req.body.username, req.body.email, req.body.password, role);
+    var user = new user_1.User(req.body.username, req.body.email, req.body.password);
+    console.log(adminsArray);
+    var role = adminsArray.includes(req.body.email) ? user.role = 'admin' : user.role = 'public';
     if (role === 'public')
         user.cart = [];
     var allUsers = new user_1.Users();

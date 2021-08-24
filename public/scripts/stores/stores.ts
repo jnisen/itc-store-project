@@ -28,12 +28,8 @@ async function sendToMainSports(ev){
     const params = new URLSearchParams(window.location.search);
     const emailUser = params.get('email');
     
-    window.location.href = `main.html?email=${emailUser}/${store.store}`
+    window.location.href = `main.html?email=${emailUser}?store=${store.store}`
 }
-
-
-
-
 
 
 function returnLoginPage() {

@@ -65,7 +65,7 @@ function enterToMainStores(ev) {
                     ok = response.ok, user = response.user;
                     alert(ok);
                     if (user.store)
-                        window.location.href = "main.html?email=" + email + "/" + user.store;
+                        window.location.href = "main.html?email=" + email + "?store=" + user.store;
                     else
                         window.location.href = "stores.html?email=" + email;
                     return [3 /*break*/, 4];

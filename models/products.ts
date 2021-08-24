@@ -2,12 +2,12 @@ export {};
 
 const fs = require("fs");
 const path = require("path");
-const allUsersJson = path.resolve(__dirname, "./data/products.json");
+const allProductsJSON = path.resolve(__dirname, "./data/products.json");
 const { v4: uuidv4 } = require("uuid");
 
 export const readAllProducts = () => {
     try {
-      const products = fs.readFileSync(readAllProducts);
+      const products = fs.readFileSync(allProductsJSON);
       return JSON.parse(products);
     } catch (error) {
       console.error(error);
@@ -24,14 +24,14 @@ export class Product {
     quantity: number;
     store:string; 
 
-    constructor(id: string, name: string, description:string,image: string, price: number, quantity: number, store:string) {
-       this.id = id;
+    constructor(name: string, description:string,image: string, price: number, quantity: number, store:string) {
        this.name = name;
        this.description = description;
        this.image = image;
        this.price = price;
        this.quantity = quantity;
        this.store = store;
+       this.id = uuidv4();
     }
 }
 
@@ -42,7 +42,7 @@ export class Products{
         this.allProducts = readAllProducts();
     }
 
-    addNewUser(product:Product){
+    addNewProduct(product: Product){
       this.allProducts.push(product);
       this.writeProduct();
     }
@@ -52,7 +52,12 @@ export class Products{
       return product
     }
 
+    findStore(store:string){
+      const findStore = this.allProducts.filter(product=>product.store === store);
+      return findStore
+    }
+
     writeProduct(){
-      fs.writeFileSync(allUsersJson, JSON.stringify(this.allProducts));
+      fs.writeFileSync(allProductsJSON, JSON.stringify(this.allProducts));
     }
 }

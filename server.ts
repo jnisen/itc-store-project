@@ -18,4 +18,13 @@ const userRoute = require('./routes/userRoute')
 app.use('/user',userRoute)
 
 
+const productRoute = require('./routes/productRoute')
+app.use('/product',productRoute)
+
+
+const storeRoute = require('./routes/storeRoute')
+app.use('/store',storeRoute)
+
+
+
 app.listen(port, ()=> console.log('app Listening on port', port))

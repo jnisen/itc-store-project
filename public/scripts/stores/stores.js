@@ -62,7 +62,7 @@ function sendToMainSports(ev) {
                     alert(data.ok);
                     params = new URLSearchParams(window.location.search);
                     emailUser = params.get('email');
-                    window.location.href = "main.html?email=" + emailUser + "/" + store.store;
+                    window.location.href = "main.html?email=" + emailUser + "?store=" + store.store;
                     return [2 /*return*/];
             }
         });

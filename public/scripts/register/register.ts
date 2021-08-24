@@ -21,8 +21,7 @@ async function addNewUser(ev) {
         const newUser = {
             username: username,
             email: email,
-            password: password,
-            role: 'admin'
+            password: password
         }
 
 

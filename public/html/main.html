@@ -1,16 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Main Store</title> <!--Cambiar por el titulo-->
+    <link rel="stylesheet" href="../scss/main/main.min.css">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://kit.fontawesome.com/0415b59e2e.js" crossorigin="anonymous"></script>
+    <title>Main Store</title>
+    <!--Cambiar por el titulo-->
 </head>
-<body>
+
+<body id="body-main" onload="getAllProducts(event)">
     <header>
         <h1>Welcome to the Football Store</h1>
     </header>
-    <input type="button" value="Add Product" class = "btn-add">
-    <div class="rootProduct"></div>
+    <input type="button" value="Add Product" class="btn-add">
+    <div id="rootProducts" class="rootProducts" >
+    </div>
+
+    <div class="modal-bg">
+        <div class="modal">
+            <form id="main" class="main"> 
+                <label for="name">Name</label>
+                <input type="text" name="name" id="name" placeholder="Enter name">
+                <label for="description">Description</label>
+                <input type="text" name="description" id="description" placeholder="Enter description">
+                <label for="image">Image</label>
+                <input type="url" name="image" id="image" placeholder="Enter url">
+                <label for="quantity">Quantity</label>
+                <input type="number" name="quantity" id="quantity" min="1" value="1">
+                <label for="price">Price (in ₪)</label>
+                <input type="number" name="price" id="price" value='0.00' step="0.01" />
+                <button type="submit" class="btn-modal">Suscribe</button>
+            </form>
+            <span class="modal-close">X</span>
+        </div>
+    </div>
+    <script src="../scripts/main/helpers/addProductPromise.js"></script>
+    <script src="../scripts/main/main.js"></script>
+    <script src="../scripts/main/helpers/modal.js"></script>
 </body>
+
 </html>

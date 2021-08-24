@@ -15,11 +15,10 @@ exports.readAllUsers = function () {
     }
 };
 var User = /** @class */ (function () {
-    function User(username, email, password, role) {
+    function User(username, email, password) {
         this.username = username;
         this.email = email;
         this.password = password;
-        this.role = role;
         this.id = uuidv4();
     }
     return User;

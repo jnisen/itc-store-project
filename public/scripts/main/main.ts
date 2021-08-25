@@ -14,7 +14,7 @@ async function addProductOnDom(ev) {
     ev.preventDefault();
 
     let { name, description, image, quantity, price } = ev.target.elements
-    
+
     name = isNaN(name.value) ? name.value : parseInt(name.value)
     description = isNaN(description.value) ? description.value : parseInt(description.value)
     image = image.value
@@ -80,11 +80,13 @@ function renderAllProducts(allProducts) {
 }
 
 
-async function deleteProduct(id) { 
+async function deleteProduct(id) {
     try {
         if (confirm("Do you want to delete this product?")) {
-            alert('Delete product')
-            await axios.delete(`product/deleteProduct/${id}`)
+
+            const response = await axios.delete(`product/deleteProduct/${id}`)
+            const {data } = response
+            alert(data.ok)
             getAllProducts()
         } else {
             alert('Delete Cancelled!')
@@ -94,17 +96,17 @@ async function deleteProduct(id) {
     }
 }
 
-async function findProduct(id){
+async function findProduct(id) {
     //popup
-    const bgModal =  document.querySelector('.modal-bg')
+    const bgModal = document.querySelector('.modal-bg')
     const btnModalInput = <HTMLButtonElement>document.querySelector('.btn-modal')
-    
+
     bgModal.classList.add('bg-active')
     btnEdit.style.display = 'block'
     btnModalInput.style.display = 'none'
 
     const response = await axios.get(`product/getProduct/${id}`)
-    const {data} = response
+    const { data } = response
 
     //Inputs
     let inputName = document.querySelector('#name') as HTMLInputElement
@@ -113,12 +115,12 @@ async function findProduct(id){
     let inputStock = <HTMLElement>document.querySelector('#quantity') as HTMLInputElement
     let inputPrice = <HTMLElement>document.querySelector('#price') as HTMLInputElement
 
-    
+
     inputName.value = data.Product.name
-    inputDescription.value  = data.Product.description
-    inputImageURL.value  = data.Product.image
-    inputStock.value  = data.Product.quantity
-    inputPrice.value  = data.Product.price
+    inputDescription.value = data.Product.description
+    inputImageURL.value = data.Product.image
+    inputStock.value = data.Product.quantity
+    inputPrice.value = data.Product.price
 
     idProduct = id
 
@@ -126,7 +128,7 @@ async function findProduct(id){
 
 }
 
-async function editProduct(){
+async function editProduct() {
 
     const inputName = document.querySelector('#name') as HTMLInputElement
     const inputDescription = <HTMLElement>document.querySelector('#description') as HTMLInputElement
@@ -136,18 +138,20 @@ async function editProduct(){
 
 
     const editProduct = {
-        name:inputName.value,
-        description:inputDescription.value,
-        image:inputImageURL.value,
+        name: inputName.value,
+        description: inputDescription.value,
+        image: inputImageURL.value,
         quantity: inputStock.valueAsNumber,
         price: inputPrice.valueAsNumber,
     }
     const store = location.search.substr(1).split("=")[2]
 
-    await axios.put(`product/editProduct/${idProduct}/${store}`,editProduct)
-    
+    const response = await axios.put(`product/editProduct/${idProduct}/${store}`, editProduct)
+    const {data } = response
+    alert(data.ok)
+
     getAllProducts()
 
     bgModal.classList.remove('bg-active')
-    
+
 }

@@ -15,7 +15,7 @@ export function deleteProduct(req, res){
     const allListProducts = new Products()
     const store = allListProducts.deleteProduct(req.params.id)
     deleteProductToStore(req.params.id, store)
-    res.send()
+    res.send({ok:'Producto Eliminado'})
 }
 
 export function getProductToEdit(req, res){
@@ -28,6 +28,6 @@ export function editProduct(req ,res){
     const allListProducts = new Products()
     allListProducts.editProduct(req.params.idProduct, req.body)
     editProductToStore(req.params.idProduct, req.params.store, req.body )
-    res.send()
+    res.send({ok:'Producto Editado'})
 
 }

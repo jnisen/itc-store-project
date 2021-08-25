@@ -104,16 +104,17 @@ function renderAllProducts(allProducts) {
 }
 function deleteProduct(id) {
     return __awaiter(this, void 0, void 0, function () {
-        var e_1;
+        var response, data, e_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 4, , 5]);
                     if (!confirm("Do you want to delete this product?")) return [3 /*break*/, 2];
-                    alert('Delete product');
                     return [4 /*yield*/, axios["delete"]("product/deleteProduct/" + id)];
                 case 1:
-                    _a.sent();
+                    response = _a.sent();
+                    data = response.data;
+                    alert(data.ok);
                     getAllProducts();
                     return [3 /*break*/, 3];
                 case 2:
@@ -163,7 +164,7 @@ function findProduct(id) {
 }
 function editProduct() {
     return __awaiter(this, void 0, void 0, function () {
-        var inputName, inputDescription, inputImageURL, inputStock, inputPrice, editProduct, store;
+        var inputName, inputDescription, inputImageURL, inputStock, inputPrice, editProduct, store, response, data;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -182,7 +183,9 @@ function editProduct() {
                     store = location.search.substr(1).split("=")[2];
                     return [4 /*yield*/, axios.put("product/editProduct/" + idProduct + "/" + store, editProduct)];
                 case 1:
-                    _a.sent();
+                    response = _a.sent();
+                    data = response.data;
+                    alert(data.ok);
                     getAllProducts();
                     bgModal.classList.remove('bg-active');
                     return [2 /*return*/];

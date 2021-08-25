@@ -79,11 +79,16 @@ function addProductOnDom(ev) {
 }
 function getAllProducts() {
     return __awaiter(this, void 0, void 0, function () {
-        var store, response, data;
+        var h1, title, store, capitalizeStore, response, data;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
+                    h1 = document.querySelector('.h1');
+                    title = document.getElementsByTagName('title');
                     store = location.search.substr(1).split("=")[2];
+                    capitalizeStore = store.charAt(0).toUpperCase() + store.slice(1);
+                    h1.innerText = "Welcome to the " + capitalizeStore + " Store";
+                    title[0].innerHTML = capitalizeStore + " Store";
                     return [4 /*yield*/, axios.get("/store/getStore/" + store)];
                 case 1:
                     response = _a.sent();

@@ -43,7 +43,12 @@ async function addProductOnDom(ev) {
 
 
 async function getAllProducts() {
+    const h1 = document.querySelector('.h1') as HTMLElement
+    const title = document.getElementsByTagName('title')  as HTMLCollection
     const store = location.search.substr(1).split("=")[2]
+    const capitalizeStore = store.charAt(0).toUpperCase() + store.slice(1)
+    h1.innerText = `Welcome to the ${capitalizeStore} Store`
+    title[0].innerHTML = `${capitalizeStore} Store`
     const response = await axios.get(`/store/getStore/${store}`)
     const { data } = response
     if (data.allStores) renderAllProducts(data.allStores.allProducts)

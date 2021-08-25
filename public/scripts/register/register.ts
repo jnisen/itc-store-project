@@ -1,5 +1,5 @@
 //btn
-const btnReturn = <HTMLElement>document.querySelector("#btn-return")
+const btnReturn = <HTMLElement>document.querySelector("#a-return")
 const form = <HTMLElement>document.querySelector("#form-register")
 
 btnReturn.addEventListener("click", returnHomePage)

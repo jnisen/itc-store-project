@@ -17,7 +17,7 @@ body {
 .container {
   background: #0f0f0f;
   width: 350px;
-  height: 470px;
+  height: 450px;
   border-radius: 20px;
   display: flex;
   justify-content: center;
@@ -42,7 +42,7 @@ body {
 .container .box div {
   position: relative;
   width: 100%;
-  height: 35px;
+  height: 40px;
   margin: 0.5em 0;
 }
 
@@ -75,7 +75,7 @@ body {
   background: linear-gradient(to right, #ff416c, #ff4b2b);
 }
 
-.registerBtn {
+.loginBtn {
   width: 102%;
   height: 40px;
   border: none;
@@ -88,7 +88,7 @@ body {
   transition: all 0.4s;
 }
 
-.registerBtn:hover {
+.loginBtn:hover {
   transform: translate(-1%, 5%);
   box-shadow: 0 0 10px #ff416d65;
 }

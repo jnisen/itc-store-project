@@ -14,7 +14,7 @@ import {schemaProduct} from '../schemas/allSchemas';
 router.post('/addNewProduct/:store', validateProduct(schemaProduct),imageExist,isProductExist,addNewProduct)
        .delete('/deleteProduct/:id', deleteProduct)
        .get('/getProduct/:id',getProduct)
-       .put('/editProduct/:idProduct/:store',editProduct) //how to apply schema
+       .put('/editProduct/:idProduct/:store',validateProduct(schemaProduct),imageExist,isProductExist,editProduct)
        .get('/searchProduct/:store/:searchProduct', isThereProductOnDB, searchProduct)
 
 module.exports = router

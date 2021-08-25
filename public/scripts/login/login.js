@@ -35,7 +35,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 //btn
-var btnReturn = document.querySelector("#btn-return");
+var btnReturn = document.querySelector("#a-return");
 var form = document.querySelector("#form-login");
 btnReturn.addEventListener("click", returnHomePage);
 form.addEventListener("submit", enterToMainStores);
@@ -79,5 +79,5 @@ function enterToMainStores(ev) {
     });
 }
 function returnHomePage() {
-    window.location.href = 'index.html';
+    window.location.href = 'register.html';
 }

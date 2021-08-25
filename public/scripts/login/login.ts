@@ -1,6 +1,7 @@
 //btn
-const btnReturn = <HTMLElement>document.querySelector("#btn-return")
+const btnReturn = <HTMLElement>document.querySelector("#a-return")
 const form = <HTMLElement>document.querySelector("#form-login")
+
 
 btnReturn.addEventListener("click", returnHomePage)
 form.addEventListener("submit", enterToMainStores)
@@ -36,5 +37,5 @@ async function enterToMainStores(ev) {
 
 
 function returnHomePage() {
-    window.location.href = 'index.html'
+    window.location.href = 'register.html'
 }

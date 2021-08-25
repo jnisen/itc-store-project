@@ -18,7 +18,7 @@ export function deleteProduct(req, res){
     res.send({ok:'Producto Eliminado'})
 }
 
-export function getProductToEdit(req, res){
+export function getProduct(req, res){
     const allListProducts = new Products()
     const findProduct = allListProducts.findProductById(req.params.id)
     res.send({Product:findProduct})

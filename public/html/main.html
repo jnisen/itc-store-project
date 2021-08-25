@@ -28,7 +28,8 @@
                 <label for="description">Description</label>
                 <input type="text" name="description" id="description" placeholder="Enter description">
                 <label for="image">Image</label>
-                <input type="url" name="image" id="image" placeholder="Enter url">
+                <!--<input type="url" name="image" id="image" placeholder="Enter url">-->
+                <input type="file" name="image" id="image" onchange="readURL(this)";>
                 <label for="quantity">Quantity</label>
                 <input type="number" name="quantity" id="quantity" min="1" value="1">
                 <label for="price">Price (in ₪)</label>
@@ -39,6 +40,7 @@
             <span class="modal-close">X</span>
         </div>
     </div>
+
     <script src="../scripts/main/helpers/productPromise.js"></script>
     <script src="../scripts/main/main.js"></script>
     <script src="../scripts/main/helpers/modal.js"></script>

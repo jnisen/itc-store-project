@@ -5,8 +5,10 @@ export function isUser(req, res, next) {
     try {
         const { email, password } = req.body;
         const allUsers: any = readAllUsers()
-        const findUser = allUsers.some(user => (user.email === email) && (user.password === password))
-        if (!findUser) throw new Error("Check your email or password")
+        const findUser = allUsers.find(user => user.email === email)
+        if(!findUser) throw new Error("You're not in our database, go to register page")
+        const checkEmailAndPassword = allUsers.some(user => (user.email === email) && (user.password === password))
+        if (!checkEmailAndPassword) throw new Error("Check your email or password")
         next()
     } catch (e) {
         res.status(400).send({ error: `${e}` }); //cliente error

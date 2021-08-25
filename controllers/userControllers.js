@@ -1,6 +1,6 @@
 "use strict";
 exports.__esModule = true;
-exports.addSection = exports.sendCookie = exports.addNewUser = void 0;
+exports.getEmail = exports.addSection = exports.sendCookie = exports.addNewUser = void 0;
 var user_1 = require("../models/user");
 var secret_1 = require("./secrets/secret");
 var jwt = require('jwt-simple');
@@ -38,13 +38,9 @@ function addSection(req, res) {
     res.send({ ok: "Welcome to the store " + req.body.store });
 }
 exports.addSection = addSection;
-// export function getCookie(req, res) {
-//     try {
-//         const { cookieName } = req.cookies
-//         if (!cookieName) throw new Error("Nothing is on the cookie")
-//         const decoded = jwt.decode(cookieName, secret);
-//         res.send(decoded);
-//     } catch (e) {
-//         res.status(500).send({ error: `${e.message}` });
-//     }
-// };
+function getEmail(req, res) {
+    var allUsers = new user_1.Users();
+    var email = allUsers.findUserById(req.id).email;
+    res.send({ email: email });
+}
+exports.getEmail = getEmail;

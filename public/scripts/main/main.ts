@@ -12,16 +12,16 @@ let idProduct;
 
 async function addProductOnDom(ev) {
     ev.preventDefault();
-
+    const store = location.search.substr(1).split("=")[2]
     let { name, description, image, quantity, price } = ev.target.elements
 
     name = isNaN(name.value) ? name.value : parseInt(name.value)
     description = isNaN(description.value) ? description.value : parseInt(description.value)
-    image = image.value
+    image = `../images/${store}/${image.value.split('\\')[2]}`  
     quantity = quantity.valueAsNumber
     price = price.valueAsNumber
 
-    const store = location.search.substr(1).split("=")[2]
+    
 
     const addNewProduct = {
         name: name,
@@ -32,10 +32,11 @@ async function addProductOnDom(ev) {
         store: store,
     }
 
+
     const response: any = await addProductPromise(addNewProduct, store)
     const { ok, allProducts } = response
-    alert(ok)
-    renderAllProducts(allProducts)
+   alert(ok)
+   renderAllProducts(allProducts)
 
     bgModal.classList.remove('bg-active')
 }
@@ -58,7 +59,7 @@ function renderAllProducts(allProducts) {
     allProducts.forEach(products => {
         html += `
         <div class="main__products">
-                     <div class="main__products__product">
+                     <div class="main__products__product" onclick='sendProduct("${products.id}")'>
                      <img src="${products.image}" alt="${products.name}"  style = "width:200px; height:200px">
                          <div class = "main__products__product--name">
                              <span>${products.name} - ${products.description}</span>
@@ -68,10 +69,11 @@ function renderAllProducts(allProducts) {
                              <span>₪ ${products.price}</span>
                          </div>
                          <div class="main__products__product--actions">
-                         <i class="fas fa-user-edit main__products__product--actions--edit" onclick='findProduct("${products.id}")'></i>
-                         <i class="fas fa-trash main__products__product--actions--trash" onclick='deleteProduct("${products.id}")'></i> 
+                        
                          </div>
                      </div>
+                     <i class="fas fa-user-edit main__products__product--actions--edit" onclick='findProduct("${products.id}")'></i>
+                     <i class="fas fa-trash main__products__product--actions--trash" onclick='deleteProduct("${products.id}")'></i> 
         </div>
                  `
     });
@@ -124,7 +126,6 @@ async function findProduct(id) {
 
     idProduct = id
 
-    console.log(idProduct)
 
 }
 
@@ -154,4 +155,23 @@ async function editProduct() {
 
     bgModal.classList.remove('bg-active')
 
+}
+
+async function sendProduct(id:string){
+    const store = location.search.substr(1).split("=")[2]
+    window.location.href = `product.html?id=${id}?store=${store}`
+}
+
+
+//Read URL
+
+function readURL(input):void{
+    if(input.files && input.files[0]){
+        let reader: FileReader = new FileReader();
+
+        reader.onload = (e)=> {
+            return e.target.result
+        }
+        reader.readAsDataURL(input.files[0])
+    }
 }

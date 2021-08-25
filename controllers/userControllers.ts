@@ -38,17 +38,8 @@ export function addSection(req, res) {
     res.send({ ok: `Welcome to the store ${req.body.store}` })
 }
 
-
-
-// export function getCookie(req, res) {
-//     try {
-
-//         const { cookieName } = req.cookies
-//         if (!cookieName) throw new Error("Nothing is on the cookie")
-//         const decoded = jwt.decode(cookieName, secret);
-//         res.send(decoded);
-
-//     } catch (e) {
-//         res.status(500).send({ error: `${e.message}` });
-//     }
-// };
+export function getEmail(req, res){
+    const allUsers = new Users();
+    const email = allUsers.findUserById(req.id).email
+    res.send({email:email})
+}

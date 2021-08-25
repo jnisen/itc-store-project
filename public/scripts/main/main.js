@@ -44,18 +44,18 @@ btnEdit.addEventListener('click', editProduct);
 var idProduct;
 function addProductOnDom(ev) {
     return __awaiter(this, void 0, void 0, function () {
-        var _a, name, description, image, quantity, price, store, addNewProduct, response, ok, allProducts;
+        var store, _a, name, description, image, quantity, price, addNewProduct, response, ok, allProducts;
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
                     ev.preventDefault();
+                    store = location.search.substr(1).split("=")[2];
                     _a = ev.target.elements, name = _a.name, description = _a.description, image = _a.image, quantity = _a.quantity, price = _a.price;
                     name = isNaN(name.value) ? name.value : parseInt(name.value);
                     description = isNaN(description.value) ? description.value : parseInt(description.value);
-                    image = image.value;
+                    image = "../images/" + store + "/" + image.value.split('\\')[2];
                     quantity = quantity.valueAsNumber;
                     price = price.valueAsNumber;
-                    store = location.search.substr(1).split("=")[2];
                     addNewProduct = {
                         name: name,
                         description: description,
@@ -98,7 +98,7 @@ function renderAllProducts(allProducts) {
     var html = "";
     var rootProducts = document.querySelector('#rootProducts');
     allProducts.forEach(function (products) {
-        html += "\n        <div class=\"main__products\">\n                     <div class=\"main__products__product\">\n                     <img src=\"" + products.image + "\" alt=\"" + products.name + "\"  style = \"width:200px; height:200px\">\n                         <div class = \"main__products__product--name\">\n                             <span>" + products.name + " - " + products.description + "</span>\n                         </div>\n                         <div class=\"main__products__product--numbers\">\n                             <span>Stock: " + products.quantity + "</span>\n                             <span>\u20AA " + products.price + "</span>\n                         </div>\n                         <div class=\"main__products__product--actions\">\n                         <i class=\"fas fa-user-edit main__products__product--actions--edit\" onclick='findProduct(\"" + products.id + "\")'></i>\n                         <i class=\"fas fa-trash main__products__product--actions--trash\" onclick='deleteProduct(\"" + products.id + "\")'></i> \n                         </div>\n                     </div>\n        </div>\n                 ";
+        html += "\n        <div class=\"main__products\">\n                     <div class=\"main__products__product\" onclick='sendProduct(\"" + products.id + "\")'>\n                     <img src=\"" + products.image + "\" alt=\"" + products.name + "\"  style = \"width:200px; height:200px\">\n                         <div class = \"main__products__product--name\">\n                             <span>" + products.name + " - " + products.description + "</span>\n                         </div>\n                         <div class=\"main__products__product--numbers\">\n                             <span>Stock: " + products.quantity + "</span>\n                             <span>\u20AA " + products.price + "</span>\n                         </div>\n                         <div class=\"main__products__product--actions\">\n                        \n                         </div>\n                     </div>\n                     <i class=\"fas fa-user-edit main__products__product--actions--edit\" onclick='findProduct(\"" + products.id + "\")'></i>\n                     <i class=\"fas fa-trash main__products__product--actions--trash\" onclick='deleteProduct(\"" + products.id + "\")'></i> \n        </div>\n                 ";
     });
     rootProducts.innerHTML = html;
 }
@@ -156,7 +156,6 @@ function findProduct(id) {
                     inputStock.value = data.Product.quantity;
                     inputPrice.value = data.Product.price;
                     idProduct = id;
-                    console.log(idProduct);
                     return [2 /*return*/];
             }
         });
@@ -192,4 +191,24 @@ function editProduct() {
             }
         });
     });
+}
+function sendProduct(id) {
+    return __awaiter(this, void 0, void 0, function () {
+        var store;
+        return __generator(this, function (_a) {
+            store = location.search.substr(1).split("=")[2];
+            window.location.href = "product.html?id=" + id + "?store=" + store;
+            return [2 /*return*/];
+        });
+    });
+}
+//Read URL
+function readURL(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            return e.target.result;
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
 }

@@ -7,8 +7,11 @@ function isUser(req, res, next) {
     try {
         var _a = req.body, email_1 = _a.email, password_1 = _a.password;
         var allUsers = user_1.readAllUsers();
-        var findUser = allUsers.some(function (user) { return (user.email === email_1) && (user.password === password_1); });
+        var findUser = allUsers.find(function (user) { return user.email === email_1; });
         if (!findUser)
+            throw new Error("You're not in our database, go to register page");
+        var checkEmailAndPassword = allUsers.some(function (user) { return (user.email === email_1) && (user.password === password_1); });
+        if (!checkEmailAndPassword)
             throw new Error("Check your email or password");
         next();
     }

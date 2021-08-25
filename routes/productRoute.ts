@@ -15,6 +15,6 @@ router.post('/addNewProduct/:store', validateProduct(schemaProduct),imageExist,i
        .delete('/deleteProduct/:id', deleteProduct)
        .get('/getProduct/:id',getProduct)
        .put('/editProduct/:idProduct/:store',editProduct) //how to apply schema
-       .get('/searchProduct/:store', isThereProductOnDB, searchProduct)
+       .get('/searchProduct/:store/:searchProduct', isThereProductOnDB, searchProduct)
 
 module.exports = router

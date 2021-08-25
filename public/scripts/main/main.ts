@@ -19,7 +19,7 @@ async function addProductOnDom(ev) {
 
     name = isNaN(name.value) ? name.value : parseInt(name.value)
     description = isNaN(description.value) ? description.value : parseInt(description.value)
-    image = `../images/${store}/${image.value.split('\\')[2]}`  
+    image = `../images/${store}/${image.value.split('\\')[2]}`
     quantity = quantity.valueAsNumber
     price = price.valueAsNumber
 
@@ -37,8 +37,8 @@ async function addProductOnDom(ev) {
 
     const response: any = await addProductPromise(addNewProduct, store)
     const { ok, allProducts } = response
-   alert(ok)
-   renderAllProducts(allProducts)
+    alert(ok)
+    renderAllProducts(allProducts)
 
     bgModal.classList.remove('bg-active')
 }
@@ -46,11 +46,12 @@ async function addProductOnDom(ev) {
 
 async function getAllProducts() {
     const h1 = document.querySelector('.h1') as HTMLElement
-    const title = document.getElementsByTagName('title')  as HTMLCollection
+    const title = document.getElementsByTagName('title') as HTMLCollection
     const store = location.search.substr(1).split("=")[2]
     const capitalizeStore = store.charAt(0).toUpperCase() + store.slice(1)
     h1.innerText = `Welcome to the ${capitalizeStore} Store`
     title[0].innerHTML = `${capitalizeStore} Store`
+
     const response = await axios.get(`/store/getStore/${store}`)
     const { data } = response
     if (data.allStores) renderAllProducts(data.allStores.allProducts)
@@ -94,7 +95,7 @@ async function deleteProduct(id) {
         if (confirm("Do you want to delete this product?")) {
 
             const response = await axios.delete(`product/deleteProduct/${id}`)
-            const {data } = response
+            const { data } = response
             alert(data.ok)
             getAllProducts()
         } else {
@@ -129,7 +130,7 @@ async function findProduct(id) {
     inputDescription.value = data.Product.description
     inputStock.value = data.Product.quantity
     inputPrice.value = data.Product.price
-    
+
 
     idProduct = id
 
@@ -156,7 +157,7 @@ async function editProduct() {
     const store = location.search.substr(1).split("=")[2]
 
     const response = await axios.put(`product/editProduct/${idProduct}/${store}`, editProduct)
-    const {data } = response
+    const { data } = response
     alert(data.ok)
 
     getAllProducts()
@@ -165,16 +166,25 @@ async function editProduct() {
 
 }
 
-async function searchProduct(ev){
+async function searchProduct(ev) {
     ev.preventDefault()
     const store = location.search.substr(1).split("=")[2]
+
     const searchProduct = inputSearch.value
-    const allProductsOnStore = await axios.get(`product/searchProduct/${store}`)
-    //ver si existe algun producto
-    //renderProduct()
+
+    if (searchProduct.length > 0) {
+        const response = await axios.get(`product/searchProduct/${store}/${searchProduct}`)
+         if (response.data.length === 1) renderAllProducts([response.data.allProducts])
+        else renderAllProducts(response.data.allProducts)
+    }else{
+        getAllProducts()
+    }
+
+
+
 }
 
-async function sendProduct(id:string){
+async function sendProduct(id: string) {
     const store = location.search.substr(1).split("=")[2]
     window.location.href = `product.html?id=${id}?store=${store}`
 }
@@ -182,16 +192,16 @@ async function sendProduct(id:string){
 
 //Read URL
 
-function readURL(input):void{
+function readURL(input): void {
     const image = document.querySelector('#img') as HTMLImageElement
-    if(input.files && input.files[0]){
+    if (input.files && input.files[0]) {
         let reader: FileReader = new FileReader();
 
-        reader.onload = (e)=> {
-            try{
+        reader.onload = (e) => {
+            try {
 
                 image.setAttribute("src", `${e.target.result}`)
-            }catch(error){
+            } catch (error) {
                 console.error(error);
             }
             return e.target.result

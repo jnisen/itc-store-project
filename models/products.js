@@ -58,6 +58,10 @@ var Products = /** @class */ (function () {
         var findStore = this.allProducts.filter(function (product) { return product.store === store; });
         return findStore;
     };
+    Products.prototype.searchProduct = function (searchTermReg) {
+        var productName = this.allProducts.filter(function (elem) { return searchTermReg.test(elem.name); });
+        return productName;
+    };
     Products.prototype.writeProduct = function () {
         fs.writeFileSync(allProductsJSON, JSON.stringify(this.allProducts));
     };

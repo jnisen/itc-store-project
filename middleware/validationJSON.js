@@ -51,7 +51,10 @@ exports.isProductExist = isProductExist;
 function isThereProductOnDB(req, res, next) {
     try {
         var allProducts = products_1.readAllProducts();
-        //
+        var allProductsStore = allProducts.find(function (products) { return products.store === req.params.store; });
+        if (allProductsStore.length === 0)
+            throw new Error('No database of that store found');
+        next();
     }
     catch (e) {
         res.status(400).send({ error: "" + e }); //cliente error

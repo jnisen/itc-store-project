@@ -202,20 +202,26 @@ function editProduct() {
 }
 function searchProduct(ev) {
     return __awaiter(this, void 0, void 0, function () {
-        var store, searchProduct, allProductsOnStore;
+        var store, searchProduct, response;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     ev.preventDefault();
                     store = location.search.substr(1).split("=")[2];
                     searchProduct = inputSearch.value;
-                    return [4 /*yield*/, axios.get("product/searchProduct/" + store)
-                        //ver si existe algun producto
-                        //renderProduct()
-                    ];
+                    if (!(searchProduct.length > 0)) return [3 /*break*/, 2];
+                    return [4 /*yield*/, axios.get("product/searchProduct/" + store + "/" + searchProduct)];
                 case 1:
-                    allProductsOnStore = _a.sent();
-                    return [2 /*return*/];
+                    response = _a.sent();
+                    if (response.data.length === 1)
+                        renderAllProducts([response.data.allProducts]);
+                    else
+                        renderAllProducts(response.data.allProducts);
+                    return [3 /*break*/, 3];
+                case 2:
+                    getAllProducts();
+                    _a.label = 3;
+                case 3: return [2 /*return*/];
             }
         });
     });

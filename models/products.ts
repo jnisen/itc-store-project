@@ -75,6 +75,11 @@ export class Products {
     return findStore
   }
 
+  searchProduct(searchTermReg:any){
+    const productName = this.allProducts.filter(elem => searchTermReg.test(elem.name))
+    return productName
+  }
+
   writeProduct() {
     fs.writeFileSync(allProductsJSON, JSON.stringify(this.allProducts));
   }

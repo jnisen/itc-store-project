@@ -57,7 +57,7 @@ function editProductToStore(id, store, body) {
     var findProduct = findStore.allProducts.find(function (product) { return product.id === id; });
     findProduct.name = body.name;
     findProduct.description = body.description;
-    findProduct.image = body.image;
+    findProduct.image = "../images/" + store + "/" + body.image.split('\\')[2];
     findProduct.quantity = body.quantity;
     findProduct.price = body.price;
     writeAllUsers(allStores);

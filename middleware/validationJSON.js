@@ -1,6 +1,6 @@
 "use strict";
 exports.__esModule = true;
-exports.isProductExist = exports.isUserExist = exports.isUser = void 0;
+exports.isThereProductOnDB = exports.isProductExist = exports.isUserExist = exports.isUser = void 0;
 var user_1 = require("../models/user");
 var products_1 = require("../models/products");
 function isUser(req, res, next) {
@@ -48,3 +48,13 @@ function isProductExist(req, res, next) {
     }
 }
 exports.isProductExist = isProductExist;
+function isThereProductOnDB(req, res, next) {
+    try {
+        var allProducts = products_1.readAllProducts();
+        //
+    }
+    catch (e) {
+        res.status(400).send({ error: "" + e }); //cliente error
+    }
+}
+exports.isThereProductOnDB = isThereProductOnDB;

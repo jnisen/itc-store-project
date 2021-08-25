@@ -2,9 +2,11 @@ const form = <HTMLElement>document.querySelector('#main')
 const btnTrash = <HTMLElement>document.querySelector('.main__products__product--actions--trash')
 const btnOpenModalToEdit = <HTMLElement>document.querySelector('.main__products__product--actions--edit')
 const btnEdit = <HTMLButtonElement>document.querySelector('.btn-edit')
+const inputSearch = <HTMLInputElement>document.querySelector('#search')
 
 form.addEventListener('submit', addProductOnDom)
 btnEdit.addEventListener('click', editProduct)
+inputSearch.addEventListener('keyup', searchProduct)
 
 
 //
@@ -65,7 +67,7 @@ function renderAllProducts(allProducts) {
         html += `
         <div class="main__products">
                      <div class="main__products__product" onclick='sendProduct("${products.id}")'>
-                     <img src="${products.image}" alt="${products.name}"  style = "width:200px; height:200px">
+                     <img src="${products.image}" alt="${products.name}" style = "width:200px; height:200px">
                          <div class = "main__products__product--name">
                              <span>${products.name} - ${products.description}</span>
                          </div>
@@ -116,18 +118,18 @@ async function findProduct(id) {
     const { data } = response
 
     //Inputs
+    const image = document.querySelector('#img')
+    image.setAttribute("src", `${data.Product.image}`)
     let inputName = document.querySelector('#name') as HTMLInputElement
     let inputDescription = <HTMLElement>document.querySelector('#description') as HTMLInputElement
-    let inputImageURL = <HTMLElement>document.querySelector('#image') as HTMLInputElement
     let inputStock = <HTMLElement>document.querySelector('#quantity') as HTMLInputElement
     let inputPrice = <HTMLElement>document.querySelector('#price') as HTMLInputElement
 
-
     inputName.value = data.Product.name
     inputDescription.value = data.Product.description
-    inputImageURL.value = data.Product.image
     inputStock.value = data.Product.quantity
     inputPrice.value = data.Product.price
+    
 
     idProduct = id
 
@@ -138,17 +140,18 @@ async function editProduct() {
 
     const inputName = document.querySelector('#name') as HTMLInputElement
     const inputDescription = <HTMLElement>document.querySelector('#description') as HTMLInputElement
-    const inputImageURL = <HTMLElement>document.querySelector('#image') as HTMLInputElement
     const inputStock = <HTMLElement>document.querySelector('#quantity') as HTMLInputElement
     const inputPrice = <HTMLElement>document.querySelector('#price') as HTMLInputElement
+    const inputImage = <HTMLElement>document.querySelector('#image') as HTMLInputElement
 
 
     const editProduct = {
         name: inputName.value,
         description: inputDescription.value,
-        image: inputImageURL.value,
+        image: inputImage.value,
         quantity: inputStock.valueAsNumber,
         price: inputPrice.valueAsNumber,
+
     }
     const store = location.search.substr(1).split("=")[2]
 
@@ -162,6 +165,15 @@ async function editProduct() {
 
 }
 
+async function searchProduct(ev){
+    ev.preventDefault()
+    const store = location.search.substr(1).split("=")[2]
+    const searchProduct = inputSearch.value
+    const allProductsOnStore = await axios.get(`product/searchProduct/${store}`)
+    //ver si existe algun producto
+    //renderProduct()
+}
+
 async function sendProduct(id:string){
     const store = location.search.substr(1).split("=")[2]
     window.location.href = `product.html?id=${id}?store=${store}`
@@ -171,10 +183,17 @@ async function sendProduct(id:string){
 //Read URL
 
 function readURL(input):void{
+    const image = document.querySelector('#img') as HTMLImageElement
     if(input.files && input.files[0]){
         let reader: FileReader = new FileReader();
 
         reader.onload = (e)=> {
+            try{
+
+                image.setAttribute("src", `${e.target.result}`)
+            }catch(error){
+                console.error(error);
+            }
             return e.target.result
         }
         reader.readAsDataURL(input.files[0])

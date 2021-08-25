@@ -38,8 +38,10 @@ var form = document.querySelector('#main');
 var btnTrash = document.querySelector('.main__products__product--actions--trash');
 var btnOpenModalToEdit = document.querySelector('.main__products__product--actions--edit');
 var btnEdit = document.querySelector('.btn-edit');
+var inputSearch = document.querySelector('#search');
 form.addEventListener('submit', addProductOnDom);
 btnEdit.addEventListener('click', editProduct);
+inputSearch.addEventListener('keyup', searchProduct);
 //
 var idProduct;
 function addProductOnDom(ev) {
@@ -104,7 +106,7 @@ function renderAllProducts(allProducts) {
     var html = "";
     var rootProducts = document.querySelector('#rootProducts');
     allProducts.forEach(function (products) {
-        html += "\n        <div class=\"main__products\">\n                     <div class=\"main__products__product\" onclick='sendProduct(\"" + products.id + "\")'>\n                     <img src=\"" + products.image + "\" alt=\"" + products.name + "\"  style = \"width:200px; height:200px\">\n                         <div class = \"main__products__product--name\">\n                             <span>" + products.name + " - " + products.description + "</span>\n                         </div>\n                         <div class=\"main__products__product--numbers\">\n                             <span>Stock: " + products.quantity + "</span>\n                             <span>\u20AA " + products.price + "</span>\n                         </div>\n                         <div class=\"main__products__product--actions\">\n                        \n                         </div>\n                     </div>\n                     <i class=\"fas fa-user-edit main__products__product--actions--edit\" onclick='findProduct(\"" + products.id + "\")'></i>\n                     <i class=\"fas fa-trash main__products__product--actions--trash\" onclick='deleteProduct(\"" + products.id + "\")'></i> \n        </div>\n                 ";
+        html += "\n        <div class=\"main__products\">\n                     <div class=\"main__products__product\" onclick='sendProduct(\"" + products.id + "\")'>\n                     <img src=\"" + products.image + "\" alt=\"" + products.name + "\" style = \"width:200px; height:200px\">\n                         <div class = \"main__products__product--name\">\n                             <span>" + products.name + " - " + products.description + "</span>\n                         </div>\n                         <div class=\"main__products__product--numbers\">\n                             <span>Stock: " + products.quantity + "</span>\n                             <span>\u20AA " + products.price + "</span>\n                         </div>\n                         <div class=\"main__products__product--actions\">\n                        \n                         </div>\n                     </div>\n                     <i class=\"fas fa-user-edit main__products__product--actions--edit\" onclick='findProduct(\"" + products.id + "\")'></i>\n                     <i class=\"fas fa-trash main__products__product--actions--trash\" onclick='deleteProduct(\"" + products.id + "\")'></i> \n        </div>\n                 ";
     });
     rootProducts.innerHTML = html;
 }
@@ -138,7 +140,7 @@ function deleteProduct(id) {
 }
 function findProduct(id) {
     return __awaiter(this, void 0, void 0, function () {
-        var bgModal, btnModalInput, response, data, inputName, inputDescription, inputImageURL, inputStock, inputPrice;
+        var bgModal, btnModalInput, response, data, image, inputName, inputDescription, inputStock, inputPrice;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -151,14 +153,14 @@ function findProduct(id) {
                 case 1:
                     response = _a.sent();
                     data = response.data;
+                    image = document.querySelector('#img');
+                    image.setAttribute("src", "" + data.Product.image);
                     inputName = document.querySelector('#name');
                     inputDescription = document.querySelector('#description');
-                    inputImageURL = document.querySelector('#image');
                     inputStock = document.querySelector('#quantity');
                     inputPrice = document.querySelector('#price');
                     inputName.value = data.Product.name;
                     inputDescription.value = data.Product.description;
-                    inputImageURL.value = data.Product.image;
                     inputStock.value = data.Product.quantity;
                     inputPrice.value = data.Product.price;
                     idProduct = id;
@@ -169,19 +171,19 @@ function findProduct(id) {
 }
 function editProduct() {
     return __awaiter(this, void 0, void 0, function () {
-        var inputName, inputDescription, inputImageURL, inputStock, inputPrice, editProduct, store, response, data;
+        var inputName, inputDescription, inputStock, inputPrice, inputImage, editProduct, store, response, data;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     inputName = document.querySelector('#name');
                     inputDescription = document.querySelector('#description');
-                    inputImageURL = document.querySelector('#image');
                     inputStock = document.querySelector('#quantity');
                     inputPrice = document.querySelector('#price');
+                    inputImage = document.querySelector('#image');
                     editProduct = {
                         name: inputName.value,
                         description: inputDescription.value,
-                        image: inputImageURL.value,
+                        image: inputImage.value,
                         quantity: inputStock.valueAsNumber,
                         price: inputPrice.valueAsNumber
                     };
@@ -193,6 +195,26 @@ function editProduct() {
                     alert(data.ok);
                     getAllProducts();
                     bgModal.classList.remove('bg-active');
+                    return [2 /*return*/];
+            }
+        });
+    });
+}
+function searchProduct(ev) {
+    return __awaiter(this, void 0, void 0, function () {
+        var store, searchProduct, allProductsOnStore;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    ev.preventDefault();
+                    store = location.search.substr(1).split("=")[2];
+                    searchProduct = inputSearch.value;
+                    return [4 /*yield*/, axios.get("product/searchProduct/" + store)
+                        //ver si existe algun producto
+                        //renderProduct()
+                    ];
+                case 1:
+                    allProductsOnStore = _a.sent();
                     return [2 /*return*/];
             }
         });
@@ -210,9 +232,16 @@ function sendProduct(id) {
 }
 //Read URL
 function readURL(input) {
+    var image = document.querySelector('#img');
     if (input.files && input.files[0]) {
         var reader = new FileReader();
         reader.onload = function (e) {
+            try {
+                image.setAttribute("src", "" + e.target.result);
+            }
+            catch (error) {
+                console.error(error);
+            }
             return e.target.result;
         };
         reader.readAsDataURL(input.files[0]);

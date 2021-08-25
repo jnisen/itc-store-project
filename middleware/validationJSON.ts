@@ -39,3 +39,12 @@ export function isProductExist(req, res, next) {
     }
 
 }
+
+export function isThereProductOnDB(req, res, next){
+    try {
+        const allProducts: any = readAllProducts()
+        //
+    } catch (e) {
+        res.status(400).send({ error: `${e}` }); //cliente error
+    }
+}

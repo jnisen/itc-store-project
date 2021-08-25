@@ -26,8 +26,12 @@ export function getProduct(req, res){
 
 export function editProduct(req ,res){
     const allListProducts = new Products()
-    allListProducts.editProduct(req.params.idProduct, req.body)
+    allListProducts.editProduct(req.params.idProduct, req.params.store, req.body)
     editProductToStore(req.params.idProduct, req.params.store, req.body )
     res.send({ok:'Producto Editado'})
 
+}
+
+export function searchProduct(req, res){
+    //
 }

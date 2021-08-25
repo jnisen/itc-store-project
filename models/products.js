@@ -41,11 +41,11 @@ var Products = /** @class */ (function () {
         this.writeProduct();
         return store;
     };
-    Products.prototype.editProduct = function (id, body) {
+    Products.prototype.editProduct = function (id, store, body) {
         var product = this.findProductById(id);
         product.name = body.name;
         product.description = body.description;
-        product.image = body.image;
+        product.image = "../images/" + store + "/" + body.image.split('\\')[2];
         product.quantity = body.quantity;
         product.price = body.price;
         this.writeProduct();

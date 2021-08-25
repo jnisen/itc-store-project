@@ -54,11 +54,11 @@ export class Products {
     return store
   }
 
-  editProduct(id: string, body: Product) {
+  editProduct(id: string, store: string, body: Product) {
     const product = this.findProductById(id)
     product.name = body.name;
     product.description = body.description;
-    product.image = body.image;
+    product.image = `../images/${store}/${body.image.split('\\')[2]}` 
     product.quantity = body.quantity;
     product.price = body.price;
     this.writeProduct();

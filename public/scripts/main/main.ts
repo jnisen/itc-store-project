@@ -1,9 +1,14 @@
 const form = <HTMLElement>document.querySelector('#main')
 const btnTrash = <HTMLElement>document.querySelector('.main__products__product--actions--trash')
+const btnOpenModalToEdit = <HTMLElement>document.querySelector('.main__products__product--actions--edit')
+const btnEdit = <HTMLButtonElement>document.querySelector('.btn-edit')
 
 form.addEventListener('submit', addProductOnDom)
+btnEdit.addEventListener('click', editProduct)
 
 
+//
+let idProduct;
 
 async function addProductOnDom(ev) {
     ev.preventDefault();
@@ -46,12 +51,9 @@ async function getAllProducts() {
 
 
 
-
 function renderAllProducts(allProducts) {
     let html: string = "";
     const rootProducts = document.querySelector('#rootProducts')
-
-    console.log(allProducts)
 
     allProducts.forEach(products => {
         html += `
@@ -66,7 +68,7 @@ function renderAllProducts(allProducts) {
                              <span>₪ ${products.price}</span>
                          </div>
                          <div class="main__products__product--actions">
-                         <i class="fas fa-user-edit main__products__product--actions--edit" onclick='editProduct("${products.id}")'></i>
+                         <i class="fas fa-user-edit main__products__product--actions--edit" onclick='findProduct("${products.id}")'></i>
                          <i class="fas fa-trash main__products__product--actions--trash" onclick='deleteProduct("${products.id}")'></i> 
                          </div>
                      </div>
@@ -92,6 +94,60 @@ async function deleteProduct(id) {
     }
 }
 
-async function editProduct(id){
+async function findProduct(id){
     //popup
+    const bgModal =  document.querySelector('.modal-bg')
+    const btnModalInput = <HTMLButtonElement>document.querySelector('.btn-modal')
+    
+    bgModal.classList.add('bg-active')
+    btnEdit.style.display = 'block'
+    btnModalInput.style.display = 'none'
+
+    const response = await axios.get(`product/getProduct/${id}`)
+    const {data} = response
+
+    //Inputs
+    let inputName = document.querySelector('#name') as HTMLInputElement
+    let inputDescription = <HTMLElement>document.querySelector('#description') as HTMLInputElement
+    let inputImageURL = <HTMLElement>document.querySelector('#image') as HTMLInputElement
+    let inputStock = <HTMLElement>document.querySelector('#quantity') as HTMLInputElement
+    let inputPrice = <HTMLElement>document.querySelector('#price') as HTMLInputElement
+
+    
+    inputName.value = data.Product.name
+    inputDescription.value  = data.Product.description
+    inputImageURL.value  = data.Product.image
+    inputStock.value  = data.Product.quantity
+    inputPrice.value  = data.Product.price
+
+    idProduct = id
+
+    console.log(idProduct)
+
+}
+
+async function editProduct(){
+
+    const inputName = document.querySelector('#name') as HTMLInputElement
+    const inputDescription = <HTMLElement>document.querySelector('#description') as HTMLInputElement
+    const inputImageURL = <HTMLElement>document.querySelector('#image') as HTMLInputElement
+    const inputStock = <HTMLElement>document.querySelector('#quantity') as HTMLInputElement
+    const inputPrice = <HTMLElement>document.querySelector('#price') as HTMLInputElement
+
+
+    const editProduct = {
+        name:inputName.value,
+        description:inputDescription.value,
+        image:inputImageURL.value,
+        quantity: inputStock.valueAsNumber,
+        price: inputPrice.valueAsNumber,
+    }
+    const store = location.search.substr(1).split("=")[2]
+
+    await axios.put(`product/editProduct/${idProduct}/${store}`,editProduct)
+    
+    getAllProducts()
+
+    bgModal.classList.remove('bg-active')
+    
 }

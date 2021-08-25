@@ -43,10 +43,6 @@ export function addProductToStore(body) {
 
 }
 
-export function writeAllUsers(writeToJSON) {
-  fs.writeFileSync(allStoresJSON, JSON.stringify(writeToJSON));
-}
-
 export function deleteProductToStore(id:string, findStore:string){
   let allStores: any = readAllStores()
   const store = allStores.find(store => store.store === findStore)
@@ -54,4 +50,22 @@ export function deleteProductToStore(id:string, findStore:string){
   store.allProducts.splice(index,1)
   writeAllUsers(allStores)
 }
+
+export function editProductToStore(id:string, store:string, body:Product){
+  let allStores: any = readAllStores()
+  const findStore = allStores.find(allstores => allstores.store === store)
+  const findProduct = findStore.allProducts.find(product => product.id === id)
+  findProduct.name = body.name;
+  findProduct.description = body.description;
+  findProduct.image = body.image;
+  findProduct.quantity = body.quantity;
+  findProduct.price = body.price;
+  writeAllUsers(allStores)
+}
+
+export function writeAllUsers(writeToJSON) {
+  fs.writeFileSync(allStoresJSON, JSON.stringify(writeToJSON));
+}
+
+
 

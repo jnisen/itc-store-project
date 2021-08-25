@@ -1,5 +1,5 @@
 import { Product, Products, readAllProducts } from '../models/products'
-import { addProductToStore,deleteProductToStore } from '../models/store'
+import { addProductToStore,deleteProductToStore, editProductToStore } from '../models/store'
 
 
 export function addNewProduct(req, res) {
@@ -16,4 +16,18 @@ export function deleteProduct(req, res){
     const store = allListProducts.deleteProduct(req.params.id)
     deleteProductToStore(req.params.id, store)
     res.send()
+}
+
+export function getProductToEdit(req, res){
+    const allListProducts = new Products()
+    const findProduct = allListProducts.findProductById(req.params.id)
+    res.send({Product:findProduct})
+}
+
+export function editProduct(req ,res){
+    const allListProducts = new Products()
+    allListProducts.editProduct(req.params.idProduct, req.body)
+    editProductToStore(req.params.idProduct, req.params.store, req.body )
+    res.send()
+
 }

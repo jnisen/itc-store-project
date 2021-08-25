@@ -11,7 +11,7 @@ var __rest = (this && this.__rest) || function (s, e) {
     return t;
 };
 exports.__esModule = true;
-exports.deleteProductToStore = exports.writeAllUsers = exports.addProductToStore = exports.readAllStores = void 0;
+exports.writeAllUsers = exports.editProductToStore = exports.deleteProductToStore = exports.addProductToStore = exports.readAllStores = void 0;
 var fs = require("fs");
 var path = require("path");
 var allStoresJSON = path.resolve(__dirname, "./data/stores.json");
@@ -43,10 +43,6 @@ function addProductToStore(body) {
     writeAllUsers(allStores);
 }
 exports.addProductToStore = addProductToStore;
-function writeAllUsers(writeToJSON) {
-    fs.writeFileSync(allStoresJSON, JSON.stringify(writeToJSON));
-}
-exports.writeAllUsers = writeAllUsers;
 function deleteProductToStore(id, findStore) {
     var allStores = exports.readAllStores();
     var store = allStores.find(function (store) { return store.store === findStore; });
@@ -55,3 +51,19 @@ function deleteProductToStore(id, findStore) {
     writeAllUsers(allStores);
 }
 exports.deleteProductToStore = deleteProductToStore;
+function editProductToStore(id, store, body) {
+    var allStores = exports.readAllStores();
+    var findStore = allStores.find(function (allstores) { return allstores.store === store; });
+    var findProduct = findStore.allProducts.find(function (product) { return product.id === id; });
+    findProduct.name = body.name;
+    findProduct.description = body.description;
+    findProduct.image = body.image;
+    findProduct.quantity = body.quantity;
+    findProduct.price = body.price;
+    writeAllUsers(allStores);
+}
+exports.editProductToStore = editProductToStore;
+function writeAllUsers(writeToJSON) {
+    fs.writeFileSync(allStoresJSON, JSON.stringify(writeToJSON));
+}
+exports.writeAllUsers = writeAllUsers;

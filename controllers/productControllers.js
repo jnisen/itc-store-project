@@ -1,6 +1,6 @@
 "use strict";
 exports.__esModule = true;
-exports.deleteProduct = exports.addNewProduct = void 0;
+exports.editProduct = exports.getProductToEdit = exports.deleteProduct = exports.addNewProduct = void 0;
 var products_1 = require("../models/products");
 var store_1 = require("../models/store");
 function addNewProduct(req, res) {
@@ -19,3 +19,16 @@ function deleteProduct(req, res) {
     res.send();
 }
 exports.deleteProduct = deleteProduct;
+function getProductToEdit(req, res) {
+    var allListProducts = new products_1.Products();
+    var findProduct = allListProducts.findProductById(req.params.id);
+    res.send({ Product: findProduct });
+}
+exports.getProductToEdit = getProductToEdit;
+function editProduct(req, res) {
+    var allListProducts = new products_1.Products();
+    allListProducts.editProduct(req.params.idProduct, req.body);
+    store_1.editProductToStore(req.params.idProduct, req.params.store, req.body);
+    res.send();
+}
+exports.editProduct = editProduct;

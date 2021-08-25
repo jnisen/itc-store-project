@@ -41,6 +41,15 @@ var Products = /** @class */ (function () {
         this.writeProduct();
         return store;
     };
+    Products.prototype.editProduct = function (id, body) {
+        var product = this.findProductById(id);
+        product.name = body.name;
+        product.description = body.description;
+        product.image = body.image;
+        product.quantity = body.quantity;
+        product.price = body.price;
+        this.writeProduct();
+    };
     Products.prototype.findProductById = function (id) {
         var product = this.allProducts.find(function (product) { return product.id === id; });
         return product;

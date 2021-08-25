@@ -1,6 +1,6 @@
 "use strict";
 exports.__esModule = true;
-exports.validateProduct = exports.validateRegister = void 0;
+exports.imageExist = exports.validateProduct = exports.validateRegister = void 0;
 var Ajv = require("ajv");
 var ajv = new Ajv["default"]({ allErrors: true });
 var addFormats = require('ajv-formats');
@@ -33,4 +33,13 @@ function validateProduct(schema) {
     };
 }
 exports.validateProduct = validateProduct;
+function imageExist(req, res, next) {
+    var image = req.body.image;
+    console.log((image.split('/')[3]));
+    if (image.split('/')[3] === 'undefined')
+        res.status(404).send({ error: "Check you file input" });
+    else
+        next();
+}
+exports.imageExist = imageExist;
 //req.hash = hash

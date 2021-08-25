@@ -21,7 +21,7 @@ async function addProductOnDom(ev) {
     quantity = quantity.valueAsNumber
     price = price.valueAsNumber
 
-    
+    console.log(image)
 
     const addNewProduct = {
         name: name,

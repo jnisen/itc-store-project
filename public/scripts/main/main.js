@@ -56,6 +56,7 @@ function addProductOnDom(ev) {
                     image = "../images/" + store + "/" + image.value.split('\\')[2];
                     quantity = quantity.valueAsNumber;
                     price = price.valueAsNumber;
+                    console.log(image);
                     addNewProduct = {
                         name: name,
                         description: description,

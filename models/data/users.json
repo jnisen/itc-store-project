@@ -1,1 +1,26 @@
-[{"username":"jnisen","email":"jnisen@gmail.com","password":"a1234","id":"7dc0f968-1119-4c0b-8d9b-15041a7abcd7","role":"admin","store":"football"},{"username":"eric","email":"eric@gmail.com","password":"a1234","id":"8e56e579-430a-4daf-b78a-877546aad359","role":"public","cart":[]},{"username":"a","email":"a@a.com","password":"a","id":"c2ed8361-d79b-48d1-afa2-2a0cecbf4efa","role":"public","cart":[],"store":"tennis"},{"username":"leo","email":"leo@gmail.com","password":"a1234","id":"b0c33b67-dd82-4e74-a855-52b6a6a53f2c","role":"admin","store":"tennis"}]
+[
+    {
+        "username": "jnisen",
+        "email": "jnisen@gmail.com",
+        "password": "a1234",
+        "id": "7dc0f968-1119-4c0b-8d9b-15041a7abcd7",
+        "role": "admin",
+        "store": "football"
+    },
+    {
+        "username": "eric",
+        "email": "eric@gmail.com",
+        "password": "a1234",
+        "id": "8e56e579-430a-4daf-b78a-877546aad359",
+        "role": "public",
+        "cart": []
+    },
+    {
+        "username": "leo",
+        "email": "leo@gmail.com",
+        "password": "a1234",
+        "id": "b0c33b67-dd82-4e74-a855-52b6a6a53f2c",
+        "role": "admin",
+        "store": "tennis"
+    }
+]

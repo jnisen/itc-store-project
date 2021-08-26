@@ -19,8 +19,8 @@ body{
 
 .container {
     background: rgb(15,15,15);
-    width: 450px;
-    height: 470px;
+    width: 350px;
+    height: 450px;
     color:white;
     padding: 2em;
 display:flex;
@@ -30,6 +30,7 @@ flex-direction:column;
 }
 .heading{
     margin-bottom:3em;
+    text-align: center;
 }
 #btn-register,#btn-login{
     width:70px;

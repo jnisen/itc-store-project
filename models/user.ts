@@ -22,7 +22,8 @@ export class User {
     id: string;
     role: string;
     store: string
-    cart?: Array<Cart>; //want to be optional
+    cart?: Array<Cart>;
+    cartBuy: Array<Cart>; //want to be optional
 
     constructor(username: string,email: string, password: string) {
         this.username = username;  
@@ -42,15 +43,32 @@ export class Users{
         this.allUsers = readAllUsers();
     }
 
+    addCart(id:string, body){
+      const user = this.findUserById(id);
+      user.cart.push(body);
+      this.writeAllUsers()
+
+    }
+
     addNewUser(user:User){
       this.allUsers.push(user);
       this.writeAllUsers();
+    }
+
+    editCar(idUser:string, body, id){
+      const user = this.findUserById(idUser);
+      const findProductOnCart = user.cart.find(product=>product.id === id)
+      findProductOnCart.number = body.number;
+      this.writeAllUsers();
+      
     }
 
     findUserById(id:string){
       const user = this.allUsers.find(user=>user.id === id);
       return user
     }
+
+
 
     writeAllUsers(){
       fs.writeFileSync(allUsersJson, JSON.stringify(this.allUsers));

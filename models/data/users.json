@@ -8,27 +8,33 @@
         "store": "football"
     },
     {
-        "username": "eric",
-        "email": "eric@gmail.com",
-        "password": "a1234",
-        "id": "8e56e579-430a-4daf-b78a-877546aad359",
-        "role": "public",
-        "cart": []
-    },
-    {
         "username": "leo",
         "email": "leo@gmail.com",
         "password": "a1234",
-        "id": "b0c33b67-dd82-4e74-a855-52b6a6a53f2c",
-        "role": "admin",
-        "store": "tennis"
+        "id": "6b3a2e18-a74f-4612-86f4-2fd9aa609b84",
+        "role": "admin"
     },
     {
-        "username": "salmon",
-        "email": "salmon@gmail.com",
-        "password": "a1234",
-        "id": "67358b65-41bb-439b-823b-6cc256897d19",
-        "role": "admin",
+        "username": "pepe",
+        "email": "pepe@gmail.com",
+        "password": "a",
+        "id": "60b84084-2706-416f-a865-462d9628d65d",
+        "role": "public",
+        "cart": [
+            {
+                "id": "f1b01576-6f72-407f-a8f1-e99d68fc13cc",
+                "name": "Argentina",
+                "price": "120",
+                "number": "4"
+            },
+            {
+                "id": "aeee0ce3-4c83-448a-b32d-768d51005b3e",
+                "name": "Arge",
+                "price": "1",
+                "number": "12"
+            }
+        ],
+        "cartBuy": [],
         "store": "football"
     }
 ]

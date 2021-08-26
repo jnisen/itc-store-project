@@ -11,7 +11,7 @@ export function isUser(req, res, next) {
         if (!checkEmailAndPassword) throw new Error("Check your email or password")
         next()
     } catch (e) {
-        res.status(400).send({ error: `${e}` }); //cliente error
+        res.status(400).send({ error: `${e.message}` }); //cliente error
     }
 }
 
@@ -23,7 +23,7 @@ export function isUserExist(req, res, next) {
         if (userExist) throw new Error('User already exists')
         next()
     } catch (e) {
-        res.status(400).send({ error: `${e}` }); //cliente error
+        res.status(400).send({error:`${e.message}` }); //cliente error
     }
 }
 
@@ -35,7 +35,7 @@ export function isProductExist(req, res, next) {
         if (productExist) throw new Error('Product already exists')
         next()
     } catch (e) {
-        res.status(400).send({ error: `${e}` }); //cliente error
+        res.status(400).send({ error: `${e.message}` }); //cliente error
     }
 
 }
@@ -47,6 +47,6 @@ export function isThereProductOnDB(req, res, next){
         if(allProductsStore.length === 0) throw new Error('No database of that store found')
         next()
     } catch (e) {
-        res.status(400).send({ error: `${e}` }); //cliente error
+        res.status(400).send({ error: `${e.message}` }); //cliente error
     }
 }

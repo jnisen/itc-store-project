@@ -58,7 +58,6 @@ function addProductOnDom(ev) {
                     image = "../images/" + store + "/" + image.value.split('\\')[2];
                     quantity = quantity.valueAsNumber;
                     price = price.valueAsNumber;
-                    console.log(image);
                     addNewProduct = {
                         name: name,
                         description: description,
@@ -71,7 +70,7 @@ function addProductOnDom(ev) {
                 case 1:
                     response = _b.sent();
                     ok = response.ok, allProducts = response.allProducts;
-                    alert(ok);
+                    swal("" + ok, "", "success");
                     renderAllProducts(allProducts);
                     bgModal.classList.remove('bg-active');
                     return [2 /*return*/];
@@ -81,7 +80,7 @@ function addProductOnDom(ev) {
 }
 function getAllProducts() {
     return __awaiter(this, void 0, void 0, function () {
-        var h1, title, store, capitalizeStore, response, data;
+        var h1, title, store, capitalizeStore, responseAllProducts, data;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -93,8 +92,8 @@ function getAllProducts() {
                     title[0].innerHTML = capitalizeStore + " Store";
                     return [4 /*yield*/, axios.get("/store/getStore/" + store)];
                 case 1:
-                    response = _a.sent();
-                    data = response.data;
+                    responseAllProducts = _a.sent();
+                    data = responseAllProducts.data;
                     if (data.allStores)
                         renderAllProducts(data.allStores.allProducts);
                     return [2 /*return*/];
@@ -103,40 +102,83 @@ function getAllProducts() {
     });
 }
 function renderAllProducts(allProducts) {
-    var html = "";
-    var rootProducts = document.querySelector('#rootProducts');
-    allProducts.forEach(function (products) {
-        html += "\n        <div class=\"main__products\">\n                     <div class=\"main__products__product\" onclick='sendProduct(\"" + products.id + "\")'>\n                     <img src=\"" + products.image + "\" alt=\"" + products.name + "\" style = \"width:200px; height:200px\">\n                         <div class = \"main__products__product--name\">\n                             <span>" + products.name + " - " + products.description + "</span>\n                         </div>\n                         <div class=\"main__products__product--numbers\">\n                             <span>Stock: " + products.quantity + "</span>\n                             <span>\u20AA " + products.price + "</span>\n                         </div>\n                         <div class=\"main__products__product--actions\">\n                        \n                         </div>\n                     </div>\n                     <i class=\"fas fa-user-edit main__products__product--actions--edit\" onclick='findProduct(\"" + products.id + "\")'></i>\n                     <i class=\"fas fa-trash main__products__product--actions--trash\" onclick='deleteProduct(\"" + products.id + "\")'></i> \n        </div>\n                 ";
-    });
-    rootProducts.innerHTML = html;
-}
-function deleteProduct(id) {
     return __awaiter(this, void 0, void 0, function () {
-        var response, data, e_1;
+        var html, rootProducts, responseUser, role, btnAdd, addCart;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _a.trys.push([0, 4, , 5]);
-                    if (!confirm("Do you want to delete this product?")) return [3 /*break*/, 2];
+                    html = "";
+                    rootProducts = document.querySelector('#rootProducts');
+                    return [4 /*yield*/, axios.get('/user/readCookie')];
+                case 1:
+                    responseUser = _a.sent();
+                    role = responseUser.data.user.role;
+                    btnAdd = document.querySelector('.btn-add');
+                    if (role === 'admin') {
+                        btnAdd.style.display = 'block';
+                    }
+                    else {
+                        btnAdd.style.display = 'none';
+                        html += "<div>\n                <span>Carrito<i class=\"fas fa-shopping-cart\"></i><span>\n                <span class=\"addCart\" style=\"color:brown\">0</span>  \n                </div>\n                <div class=\"main__products\">";
+                    }
+                    allProducts.forEach(function (products) {
+                        html += "\n\n                     <div class=\"main__products__product\" >\n                     <img src=\"" + products.image + "\" alt=\"" + products.name + "\" style = \"width:200px; height:200px\" onclick='sendProduct(\"" + products.id + "\")'>\n                         <div class = \"main__products__product--name\">\n                             <span>" + products.name + " - " + products.description + "</span>\n                         </div>\n                         <div class=\"main__products__product--numbers\">";
+                        if (role === 'admin') {
+                            html = "<span class=\"stock\">Stock: " + products.quantity + "</span>";
+                        }
+                        else {
+                            html += "<span>Count: <input type=\"number\" id=\"" + products.id + "\" name=\"countproducts\" value=\"1\" min=\"1\" max=\"" + products.quantity + "\">";
+                        }
+                        html += "<span>\u20AA " + products.price + "</span>\n                         </div>\n                         <div class=\"main__products__product--actions\">\n                        \n                         </div>\n                     ";
+                        if (role === 'admin') {
+                            html += "  <i class=\"fas fa-user-edit main__products__product--actions--edit\" onclick='findProduct(\"" + products.id + "\")'></i>\n                          <i class=\"fas fa-trash main__products__product--actions--trash\" onclick='deleteProduct(\"" + products.id + "\")'></i> ";
+                        }
+                        else {
+                            html += "<button class=\"btnadduser" + products.id + "\" onclick='addProductCart(\"" + products.id + "\",\"" + products.name + "\",\"" + products.price + "\")'>Add Cart</button>\n                    <button class= 'btnedituser" + products.id + "' onclick='editQuantityCart(\"" + products.id + "\")' hidden >Edit Quantity</button>";
+                        }
+                        html += "</div>";
+                    });
+                    html += "</div>";
+                    rootProducts.innerHTML = html;
+                    addCart = document.querySelector('.addCart');
+                    addCart.innerText = "" + responseUser.data.user.cart.length;
+                    return [2 /*return*/];
+            }
+        });
+    });
+}
+function deleteProduct(id) {
+    var _this = this;
+    swal({
+        title: "Do you want to delete this product?",
+        text: "Once deleted, you will not be able to recover this imaginary file!",
+        icon: "warning",
+        buttons: {
+            cancel: true,
+            confirm: "Confirm"
+        },
+        dangerMode: true
+    })
+        .then(function (isConfirm) { return __awaiter(_this, void 0, void 0, function () {
+        var response, data;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    if (!isConfirm) return [3 /*break*/, 2];
                     return [4 /*yield*/, axios["delete"]("product/deleteProduct/" + id)];
                 case 1:
                     response = _a.sent();
                     data = response.data;
-                    alert(data.ok);
+                    swal("" + data.ok, "", "success");
                     getAllProducts();
                     return [3 /*break*/, 3];
                 case 2:
-                    alert('Delete Cancelled!');
+                    swal("Delete Cancelled!", "", "success");
                     _a.label = 3;
-                case 3: return [3 /*break*/, 5];
-                case 4:
-                    e_1 = _a.sent();
-                    alert(e_1);
-                    return [3 /*break*/, 5];
-                case 5: return [2 /*return*/];
+                case 3: return [2 /*return*/];
             }
         });
-    });
+    }); });
 }
 function findProduct(id) {
     return __awaiter(this, void 0, void 0, function () {
@@ -171,7 +213,7 @@ function findProduct(id) {
 }
 function editProduct() {
     return __awaiter(this, void 0, void 0, function () {
-        var inputName, inputDescription, inputStock, inputPrice, inputImage, editProduct, store, response, data;
+        var inputName, inputDescription, inputStock, inputPrice, inputImage, editProduct, store, response;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -188,11 +230,10 @@ function editProduct() {
                         price: inputPrice.valueAsNumber
                     };
                     store = location.search.substr(1).split("=")[2];
-                    return [4 /*yield*/, axios.put("product/editProduct/" + idProduct + "/" + store, editProduct)];
+                    return [4 /*yield*/, editProductPromise(editProduct, store)];
                 case 1:
                     response = _a.sent();
-                    data = response.data;
-                    alert(data.ok);
+                    swal("" + response.ok, "", "success");
                     getAllProducts();
                     bgModal.classList.remove('bg-active');
                     return [2 /*return*/];

@@ -11,7 +11,7 @@ function addRegisterPromise(newUser) {
                 return res.json().then(function (user) { resolve(user); });
             }
             else {
-                return res.json().then(function (user) { alert(user.error); });
+                return res.json().then(function (user) { swal('Oops!', "" + user.error, "error"); });
             }
         });
     });

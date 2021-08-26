@@ -41,7 +41,7 @@ btnReturn.addEventListener("click", returnHomePage);
 form.addEventListener("submit", addNewUser);
 function addNewUser(ev) {
     return __awaiter(this, void 0, void 0, function () {
-        var _a, username, email, password, repassword, newUser, response, ok, e_1;
+        var _a, username, email, password, repassword, newUser, response, ok, btnSwalButton, e_1;
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
@@ -65,8 +65,9 @@ function addNewUser(ev) {
                 case 2:
                     response = _b.sent();
                     ok = response.ok;
-                    alert(ok);
-                    window.location.href = 'login.html';
+                    swal("" + ok, 'now you can log in', "success");
+                    btnSwalButton = document.querySelector(".swal-button");
+                    btnSwalButton.addEventListener("click", goToLoginPage);
                     return [3 /*break*/, 4];
                 case 3:
                     e_1 = _b.sent();
@@ -76,6 +77,9 @@ function addNewUser(ev) {
             }
         });
     });
+}
+function goToLoginPage() {
+    window.location.href = 'login.html';
 }
 function returnHomePage() {
     window.location.href = 'index.html';

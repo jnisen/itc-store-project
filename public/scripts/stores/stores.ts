@@ -23,12 +23,21 @@ async function sendToMainSports(ev){
     
     const response = await axios.post('/user/addSection', store)
     const data = response.data
-    alert(data.ok)
     
     const params = new URLSearchParams(window.location.search);
     const emailUser = params.get('email');
+
+    swal(`${data.ok}`, {
+        icon: "success",
+        button: false,
+    });
+
+    setInterval(function () {
+        window.location.href = `main.html?email=${emailUser}?store=${store.store}`
+    }, 1000);
+
     
-    window.location.href = `main.html?email=${emailUser}?store=${store.store}`
+   
 }
 
 

@@ -59,10 +59,15 @@ function sendToMainSports(ev) {
                 case 1:
                     response = _a.sent();
                     data = response.data;
-                    alert(data.ok);
                     params = new URLSearchParams(window.location.search);
                     emailUser = params.get('email');
-                    window.location.href = "main.html?email=" + emailUser + "?store=" + store.store;
+                    swal("" + data.ok, {
+                        icon: "success",
+                        button: false
+                    });
+                    setInterval(function () {
+                        window.location.href = "main.html?email=" + emailUser + "?store=" + store.store;
+                    }, 1000);
                     return [2 /*return*/];
             }
         });

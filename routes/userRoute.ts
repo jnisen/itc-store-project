@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 //controllers
-import {addNewUser, sendCookie, addSection,getEmail} from '../controllers/userControllers';
+import {addNewUser, sendCookie, addSection,getEmail, addCartForNow,editCartNow} from '../controllers/userControllers';
 
 //middleware
 import {validateRegister} from '../middleware/validationSchema'
@@ -17,5 +17,7 @@ router.post('/addNewUser', validateRegister(schemaRegister),isUserExist,addNewUs
        .post('/cookie', isUser, sendCookie)
        .post('/addSection', readCookie, addSection)
        .get('/readCookie', readCookie,getEmail)
+       .post('/addCartForNow/:idUser',addCartForNow)
+       .put('/editCartNow/:idUser/:idProduct', editCartNow)
 
 module.exports = router

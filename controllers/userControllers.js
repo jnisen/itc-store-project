@@ -1,6 +1,6 @@
 "use strict";
 exports.__esModule = true;
-exports.getEmail = exports.addSection = exports.sendCookie = exports.addNewUser = void 0;
+exports.editCartNow = exports.addCartForNow = exports.getEmail = exports.addSection = exports.sendCookie = exports.addNewUser = void 0;
 var user_1 = require("../models/user");
 var secret_1 = require("./secrets/secret");
 var jwt = require('jwt-simple');
@@ -9,11 +9,13 @@ function addNewUser(req, res) {
     var user = new user_1.User(req.body.username, req.body.email, req.body.password);
     console.log(adminsArray);
     var role = adminsArray.includes(req.body.email) ? user.role = 'admin' : user.role = 'public';
-    if (role === 'public')
+    if (role === 'public') {
         user.cart = [];
+        user.cartBuy = [];
+    }
     var allUsers = new user_1.Users();
     allUsers.addNewUser(user);
-    res.send({ ok: "Hi " + req.body.username + "!, now you can log in" });
+    res.send({ ok: "Hi " + req.body.username + " \uD83D\uDE03" });
 }
 exports.addNewUser = addNewUser;
 function sendCookie(req, res) {
@@ -40,7 +42,19 @@ function addSection(req, res) {
 exports.addSection = addSection;
 function getEmail(req, res) {
     var allUsers = new user_1.Users();
-    var email = allUsers.findUserById(req.id).email;
-    res.send({ email: email });
+    var user = allUsers.findUserById(req.id);
+    res.send({ user: user });
 }
 exports.getEmail = getEmail;
+function addCartForNow(req, res) {
+    var allUsers = new user_1.Users();
+    allUsers.addCart(req.params.idUser, req.body);
+    res.send({ ok: "added" });
+}
+exports.addCartForNow = addCartForNow;
+function editCartNow(req, res) {
+    var allUsers = new user_1.Users();
+    allUsers.editCar(req.params.idUser, req.body, req.params.idProduct);
+    //res.send({ok:"edit"})
+}
+exports.editCartNow = editCartNow;

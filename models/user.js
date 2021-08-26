@@ -28,8 +28,19 @@ var Users = /** @class */ (function () {
     function Users() {
         this.allUsers = exports.readAllUsers();
     }
+    Users.prototype.addCart = function (id, body) {
+        var user = this.findUserById(id);
+        user.cart.push(body);
+        this.writeAllUsers();
+    };
     Users.prototype.addNewUser = function (user) {
         this.allUsers.push(user);
+        this.writeAllUsers();
+    };
+    Users.prototype.editCar = function (idUser, body, id) {
+        var user = this.findUserById(idUser);
+        var findProductOnCart = user.cart.find(function (product) { return product.id === id; });
+        findProductOnCart.number = body.number;
         this.writeAllUsers();
     };
     Users.prototype.findUserById = function (id) {

@@ -74,7 +74,7 @@ function returnHomePage() {
                 case 1:
                     response = _a.sent();
                     data = response.data;
-                    window.location.href = "main.html?email=" + data.email + "?store=" + store;
+                    window.location.href = "main.html?email=" + data.user.email + "?store=" + store;
                     return [2 /*return*/];
             }
         });

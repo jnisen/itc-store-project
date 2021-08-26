@@ -10,7 +10,7 @@ function enterPromiseLogin(user) {
             if (res.status === 200 && res.ok) {
                 return res.json().then(user => { resolve(user) });
             } else {
-                return res.json().then(user => { alert(user.error) })
+                return res.json().then(user =>{ swal ( 'Oops!',`${user.error}` , `error`) })
             }
         })
     })

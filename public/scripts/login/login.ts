@@ -23,17 +23,28 @@ async function enterToMainStores(ev) {
         }
 
         const response: any = await enterPromiseLogin(loginUser)
-        const {ok , user} = response
+        const { ok, user } = response
 
-        alert(ok)
-        
-        if (user.store)  window.location.href = `main.html?email=${email}?store=${user.store}`
-        else window.location.href = `stores.html?email=${email}`
+        swal(`${ok}`, {
+            icon: "success",
+            button: false,
+        });
+
+        if(user.role === "admin") {
+            setInterval(function () {
+                if (user.store) window.location.href = `main.html?email=${email}?store=${user.store}`
+                else window.location.href = `stores.html?email=${email}`
+            }, 1000);
+        }else{
+            setInterval(function(){ window.location.href = `stores.html?email=${email}` }, 2000);
+        }
+
 
     } catch (e) {
         alert(e)
     }
 }
+
 
 
 function returnHomePage() {

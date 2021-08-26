@@ -11,7 +11,25 @@ function addProductPromise(newProduct, store) {
                 return res.json().then(function (product) { resolve(product); });
             }
             else {
-                return res.json().then(function (product) { alert(product.error); });
+                return res.json().then(function (product) { swal('Oops!', "" + product.error, "error"); });
+            }
+        });
+    });
+}
+function editProductPromise(editProduct, store) {
+    return new Promise(function (resolve, reject) {
+        fetch("product/editProduct/" + idProduct + "/" + store, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(editProduct)
+        }).then(function (res) {
+            if (res.status === 200 && res.ok) {
+                return res.json().then(function (product) { resolve(product); });
+            }
+            else {
+                return res.json().then(function (product) { swal('Oops!', "" + product.error, "error"); });
             }
         });
     });

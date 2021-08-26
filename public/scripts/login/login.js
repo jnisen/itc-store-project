@@ -41,7 +41,7 @@ btnReturn.addEventListener("click", returnHomePage);
 form.addEventListener("submit", enterToMainStores);
 function enterToMainStores(ev) {
     return __awaiter(this, void 0, void 0, function () {
-        var _a, email, password, repassword, loginUser, response, ok, user, e_1;
+        var _a, email_1, password, repassword, loginUser, response, ok, user_1, e_1;
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
@@ -49,25 +49,35 @@ function enterToMainStores(ev) {
                     _b.label = 1;
                 case 1:
                     _b.trys.push([1, 3, , 4]);
-                    _a = ev.target.elements, email = _a.email, password = _a.password, repassword = _a.repassword;
-                    email = email.value;
+                    _a = ev.target.elements, email_1 = _a.email, password = _a.password, repassword = _a.repassword;
+                    email_1 = email_1.value;
                     password = password.value;
                     repassword = repassword.value;
                     if (password !== repassword)
                         throw new Error("Your password and repassword are not the same");
                     loginUser = {
-                        email: email,
+                        email: email_1,
                         password: password
                     };
                     return [4 /*yield*/, enterPromiseLogin(loginUser)];
                 case 2:
                     response = _b.sent();
-                    ok = response.ok, user = response.user;
-                    alert(ok);
-                    if (user.store)
-                        window.location.href = "main.html?email=" + email + "?store=" + user.store;
-                    else
-                        window.location.href = "stores.html?email=" + email;
+                    ok = response.ok, user_1 = response.user;
+                    swal("" + ok, {
+                        icon: "success",
+                        button: false
+                    });
+                    if (user_1.role === "admin") {
+                        setInterval(function () {
+                            if (user_1.store)
+                                window.location.href = "main.html?email=" + email_1 + "?store=" + user_1.store;
+                            else
+                                window.location.href = "stores.html?email=" + email_1;
+                        }, 1000);
+                    }
+                    else {
+                        setInterval(function () { window.location.href = "stores.html?email=" + email_1; }, 2000);
+                    }
                     return [3 /*break*/, 4];
                 case 3:
                     e_1 = _b.sent();

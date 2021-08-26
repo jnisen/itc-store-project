@@ -13,5 +13,7 @@ var allSchemas_1 = require("../schemas/allSchemas");
 router.post('/addNewUser', validationSchema_1.validateRegister(allSchemas_1.schemaRegister), validationJSON_1.isUserExist, userControllers_1.addNewUser)
     .post('/cookie', validationJSON_1.isUser, userControllers_1.sendCookie)
     .post('/addSection', handleCookies_1.readCookie, userControllers_1.addSection)
-    .get('/readCookie', handleCookies_1.readCookie, userControllers_1.getEmail);
+    .get('/readCookie', handleCookies_1.readCookie, userControllers_1.getEmail)
+    .post('/addCartForNow/:idUser', userControllers_1.addCartForNow)
+    .put('/editCartNow/:idUser/:idProduct', userControllers_1.editCartNow);
 module.exports = router;

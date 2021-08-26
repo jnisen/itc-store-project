@@ -40,7 +40,7 @@ async function returnHomePage() {
     const store = location.search.substr(1).split("=")[2]
     const response = await axios.get('/user/readCookie')
     const {data} = response
-   window.location.href = `main.html?email=${data.email}?store=${store}`
+   window.location.href = `main.html?email=${data.user.email}?store=${store}`
 }
 
 //http://localhost:3000/main.html?email=jnisen@gmail.com?store=football

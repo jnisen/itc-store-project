@@ -16,7 +16,7 @@ function isUser(req, res, next) {
         next();
     }
     catch (e) {
-        res.status(400).send({ error: "" + e }); //cliente error
+        res.status(400).send({ error: "" + e.message }); //cliente error
     }
 }
 exports.isUser = isUser;
@@ -30,7 +30,7 @@ function isUserExist(req, res, next) {
         next();
     }
     catch (e) {
-        res.status(400).send({ error: "" + e }); //cliente error
+        res.status(400).send({ error: "" + e.message }); //cliente error
     }
 }
 exports.isUserExist = isUserExist;
@@ -44,7 +44,7 @@ function isProductExist(req, res, next) {
         next();
     }
     catch (e) {
-        res.status(400).send({ error: "" + e }); //cliente error
+        res.status(400).send({ error: "" + e.message }); //cliente error
     }
 }
 exports.isProductExist = isProductExist;
@@ -57,7 +57,7 @@ function isThereProductOnDB(req, res, next) {
         next();
     }
     catch (e) {
-        res.status(400).send({ error: "" + e }); //cliente error
+        res.status(400).send({ error: "" + e.message }); //cliente error
     }
 }
 exports.isThereProductOnDB = isThereProductOnDB;

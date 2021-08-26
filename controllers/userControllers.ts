@@ -10,10 +10,13 @@ export function addNewUser(req, res) {
     const user = new User(req.body.username, req.body.email, req.body.password)
     console.log(adminsArray)
     const role =  adminsArray.includes(req.body.email) ? user.role = 'admin' : user.role = 'public'
-    if (role === 'public') user.cart = []
+    if (role === 'public') {
+        user.cart = []
+        user.cartBuy = []
+    }
     const allUsers = new Users();
     allUsers.addNewUser(user)
-    res.send({ ok: `Hi ${req.body.username}!, now you can log in` })
+    res.send({ ok: `Hi ${req.body.username} 😃` })
 
 }
 
@@ -40,6 +43,18 @@ export function addSection(req, res) {
 
 export function getEmail(req, res){
     const allUsers = new Users();
-    const email = allUsers.findUserById(req.id).email
-    res.send({email:email})
+    const user = allUsers.findUserById(req.id)
+    res.send({user:user})
+}
+
+export function addCartForNow(req, res){
+    const allUsers = new Users();
+    allUsers.addCart(req.params.idUser, req.body)
+    res.send({ok:"added"})
+}
+
+export function editCartNow(req, res){
+    const allUsers = new Users();
+    allUsers.editCar(req.params.idUser, req.body, req.params.idProduct)
+    //res.send({ok:"edit"})
 }

@@ -2,9 +2,9 @@
 const btnReturn = <HTMLElement>document.querySelector("#a-return")
 const form = <HTMLElement>document.querySelector("#form-register")
 
+
 btnReturn.addEventListener("click", returnHomePage)
 form.addEventListener("submit", addNewUser)
-
 
 
 async function addNewUser(ev) {
@@ -27,15 +27,20 @@ async function addNewUser(ev) {
 
         const response: any = await addRegisterPromise(newUser)
         const { ok } = response
-        alert(ok)
+        swal(`${ok}`,'now you can log in', "success")
+        
+        const btnSwalButton = <HTMLButtonElement>document.querySelector(".swal-button")
+        btnSwalButton.addEventListener("click", goToLoginPage)
 
-        window.location.href = 'login.html'
     } catch (e) {
         alert(e)
     }
 }
 
 
+function goToLoginPage(){
+    window.location.href = 'login.html'; 
+}
 
 function returnHomePage() {
     window.location.href = 'index.html'

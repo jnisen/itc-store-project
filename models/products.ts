@@ -62,8 +62,16 @@ export class Products {
     product.quantity = body.quantity;
     product.price = body.price;
     this.writeProduct();
-
   }
+
+    editProductCart(cartBuy){
+      cartBuy.forEach(element => {
+        const product = this.allProducts.find(product => product.id === element.id);
+        product.quantity-= +element.number
+      });
+
+    this.writeProduct();
+    }
 
   findProductById(id: string): Product {
     const product = this.allProducts.find(product => product.id === id);

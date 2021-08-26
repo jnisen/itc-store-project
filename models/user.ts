@@ -55,6 +55,14 @@ export class Users{
       this.writeAllUsers();
     }
 
+    buyCart(idUser:string){
+      const user = this.findUserById(idUser);
+      user.cartBuy = user.cart
+      user.cart = []
+      this.writeAllUsers()
+      return user
+    }
+
     editCar(idUser:string, body, id){
       const user = this.findUserById(idUser);
       const findProductOnCart = user.cart.find(product=>product.id === id)
@@ -74,8 +82,6 @@ export class Users{
       const user = this.allUsers.find(user=>user.id === id);
       return user
     }
-
-
 
     writeAllUsers(){
       fs.writeFileSync(allUsersJson, JSON.stringify(this.allUsers));

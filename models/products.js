@@ -50,6 +50,14 @@ var Products = /** @class */ (function () {
         product.price = body.price;
         this.writeProduct();
     };
+    Products.prototype.editProductCart = function (cartBuy) {
+        var _this = this;
+        cartBuy.forEach(function (element) {
+            var product = _this.allProducts.find(function (product) { return product.id === element.id; });
+            product.quantity -= +element.number;
+        });
+        this.writeProduct();
+    };
     Products.prototype.findProductById = function (id) {
         var product = this.allProducts.find(function (product) { return product.id === id; });
         return product;

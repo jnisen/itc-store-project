@@ -63,6 +63,18 @@ export function editProductToStore(id:string, store:string, body:Product){
  writeAllUsers(allStores)
 }
 
+export function removeStock(cartBuy,store){
+  let allStores: any = readAllStores()
+  const getStore = allStores.find(st => st.store === store)
+  
+  cartBuy.forEach(element => {
+     const product = getStore.allProducts.find(product => product.id === element.id);
+     product.quantity-= +element.number
+   });
+
+   writeAllUsers(allStores)
+}
+
 export function writeAllUsers(writeToJSON) {
   fs.writeFileSync(allStoresJSON, JSON.stringify(writeToJSON));
 }

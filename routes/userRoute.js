@@ -16,5 +16,6 @@ router.post('/addNewUser', validationSchema_1.validateRegister(allSchemas_1.sche
     .get('/readCookie', handleCookies_1.readCookie, userControllers_1.getEmail)
     .post('/addCartForNow/:idUser', userControllers_1.addCartForNow)
     .put('/editCartNow/:idUser/:idProduct', userControllers_1.editCartNow)
-    .get('/getAllProducts/:idUser', userControllers_1.getAllCart)["delete"]('/deleteProductOnCart/:id/:idUser', userControllers_1.deleteProductOnCart);
+    .get('/getAllProducts/:idUser', userControllers_1.getAllCart)["delete"]('/deleteProductOnCart/:id/:idUser', userControllers_1.deleteProductOnCart)
+    .post('/buyCart/:idUser', userControllers_1.buyCart);
 module.exports = router;

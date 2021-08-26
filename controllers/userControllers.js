@@ -1,8 +1,12 @@
 "use strict";
 exports.__esModule = true;
-exports.deleteProductOnCart = exports.getAllCart = exports.editCartNow = exports.addCartForNow = exports.getEmail = exports.addSection = exports.sendCookie = exports.addNewUser = void 0;
+exports.buyCart = exports.deleteProductOnCart = exports.getAllCart = exports.editCartNow = exports.addCartForNow = exports.getEmail = exports.addSection = exports.sendCookie = exports.addNewUser = void 0;
 var user_1 = require("../models/user");
+var products_1 = require("../models/products");
+var carts_1 = require("../models/carts");
+var store_1 = require("../models/store");
 var secret_1 = require("./secrets/secret");
+var uuidv4 = require("uuid").v4;
 var jwt = require('jwt-simple');
 var adminsArray = ['jnisen@gmail.com', 'leo@gmail.com', 'salmon@gmail.com'];
 function addNewUser(req, res) {
@@ -72,3 +76,21 @@ function deleteProductOnCart(req, res) {
     res.send({ ok: "Delete Product", cart: user.cart });
 }
 exports.deleteProductOnCart = deleteProductOnCart;
+function buyCart(req, res) {
+    var allUsers = new user_1.Users();
+    var idUser = req.params.idUser;
+    var user = allUsers.buyCart(idUser);
+    var date = new Date();
+    var dateString = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
+    var newCart = [{
+            id: uuidv4(),
+            date: dateString,
+            cart: user.cartBuy
+        }];
+    var allProducts = new products_1.Products();
+    allProducts.editProductCart(user.cartBuy);
+    carts_1.addCart(newCart);
+    store_1.removeStock(user.cartBuy, user.store);
+    res.send({ "ok": "Felicidades por su compra" });
+}
+exports.buyCart = buyCart;

@@ -37,6 +37,13 @@ var Users = /** @class */ (function () {
         this.allUsers.push(user);
         this.writeAllUsers();
     };
+    Users.prototype.buyCart = function (idUser) {
+        var user = this.findUserById(idUser);
+        user.cartBuy = user.cart;
+        user.cart = [];
+        this.writeAllUsers();
+        return user;
+    };
     Users.prototype.editCar = function (idUser, body, id) {
         var user = this.findUserById(idUser);
         var findProductOnCart = user.cart.find(function (product) { return product.id === id; });

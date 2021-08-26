@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 //controllers
-import {addNewUser, sendCookie, addSection,getEmail, addCartForNow,editCartNow,getAllCart,deleteProductOnCart} from '../controllers/userControllers';
+import {addNewUser, sendCookie, addSection,getEmail, addCartForNow,editCartNow,getAllCart,deleteProductOnCart,buyCart} from '../controllers/userControllers';
 
 //middleware
 import {validateRegister} from '../middleware/validationSchema'
@@ -21,4 +21,7 @@ router.post('/addNewUser', validateRegister(schemaRegister),isUserExist,addNewUs
        .put('/editCartNow/:idUser/:idProduct', editCartNow)
        .get('/getAllProducts/:idUser', getAllCart)
        .delete('/deleteProductOnCart/:id/:idUser', deleteProductOnCart)
+       .post('/buyCart/:idUser', buyCart)
+
+
 module.exports = router

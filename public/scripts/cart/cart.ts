@@ -48,7 +48,8 @@ function renderCart(data){
                  </tr> `
         });
 
-        html += `</tbody></table>`
+        html += `</tbody></table>
+                 <button onclick='buyCart()'>Buy Cart</button> `
     } else {
         let html = ''
     }
@@ -79,8 +80,36 @@ async function deleteProductOnCart(id){
                 const {ok, cart} = data
                 swal(`${ok}`, "", "success")
                 renderCart(cart)
+                //si el cart esta vacio, vuelva a la pagina de atras
             } else {
                 swal("Delete Cancelled!", "", "success");
             }
         });
+}
+
+
+async function buyCart(){
+    const responseUser = await axios.get('/user/readCookie')
+    let idUser =  responseUser.data.user.id
+
+    const response = await buyCartPromise(idUser)
+    swal(`${response.ok}`, {
+        icon: "success",
+        button: false,
+    });
+}
+
+
+function buyCartPromise(idUser) {
+    return new Promise((resolve, reject) => {
+        fetch(`/user/buyCart/${idUser}`, {
+            method: 'POST',
+        }).then(function (res) {
+            if (res.status === 200 && res.ok) {
+                return res.json().then(user => { resolve(user) });
+            } else {
+                return res.json().then(user => { swal ( 'Oops!',`${user.error}` , `error`) })
+            }
+        })
+    })
 }

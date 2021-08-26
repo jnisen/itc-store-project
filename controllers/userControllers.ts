@@ -1,6 +1,12 @@
 
 import { User, Users, readAllUsers } from '../models/user'
+import {Products} from '../models/products'
+import { addCart } from '../models/carts'
+import { removeStock } from '../models/store'
+
 import { secret } from './secrets/secret';
+
+const { v4: uuidv4 } = require("uuid");
 
 const jwt = require('jwt-simple');
 
@@ -71,4 +77,28 @@ export function deleteProductOnCart(req, res){
     const {id, idUser} = req.params;
     const user = allUsers.deleteProductOnCart(id, idUser)
     res.send({ok:"Delete Product",cart:user.cart})
+}
+
+export function buyCart(req, res){
+    const allUsers = new Users();
+    const {idUser} = req.params;
+    const user = allUsers.buyCart(idUser)
+
+    const date = new Date();
+    const dateString = date.getDate()  + "/" + (date.getMonth()+1) + "/" + date.getFullYear()
+
+    const newCart = [{
+        id:uuidv4(),
+        date:dateString,
+        cart:user.cartBuy
+    }]
+
+    const allProducts = new Products()
+
+    allProducts.editProductCart(user.cartBuy)
+    addCart(newCart)    
+
+    removeStock(user.cartBuy, user.store)
+
+    res.send({"ok":"Felicidades por su compra"})
 }

@@ -64,7 +64,7 @@ function renderCart(data) {
             var id = cart.id, name = cart.name, description = cart.description, image = cart.image, number = cart.number, price = cart.price, total = cart.total;
             html += "<tr>\n                      <td> <img src=\"" + image + "\" alt=\"" + name + "\" style = \"width:70px; height:70px\"</td>\n                        <td>" + name + "</td>\n                        <td>" + description + "</td>\n                        <td>" + number + "</td>\n                        <td>" + price + "</td>\n                        <td>" + total + "</td>\n                        <td><i class=\"fa fa-edit\" onclick='editProduct(\"" + id + "\")' title=\"Edit Item\" style=\"cursor:pointer\"></i></td>   \n                        <td><i class=\"fa fa-trash\" onclick='deleteProductOnCart(\"" + id + "\")' title=\"Delete Item\" style=\"cursor:pointer\"></i></td>   \n                 </tr> ";
         });
-        html += "</tbody></table>";
+        html += "</tbody></table>\n                 <button onclick='buyCart()'>Buy Cart</button> ";
     }
     else {
         var html_1 = '';
@@ -113,6 +113,41 @@ function deleteProductOnCart(id) {
                         });
                     }); });
                     return [2 /*return*/];
+            }
+        });
+    });
+}
+function buyCart() {
+    return __awaiter(this, void 0, void 0, function () {
+        var responseUser, idUser, response;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, axios.get('/user/readCookie')];
+                case 1:
+                    responseUser = _a.sent();
+                    idUser = responseUser.data.user.id;
+                    return [4 /*yield*/, buyCartPromise(idUser)];
+                case 2:
+                    response = _a.sent();
+                    swal("" + response.ok, {
+                        icon: "success",
+                        button: false
+                    });
+                    return [2 /*return*/];
+            }
+        });
+    });
+}
+function buyCartPromise(idUser) {
+    return new Promise(function (resolve, reject) {
+        fetch("/user/buyCart/" + idUser, {
+            method: 'POST'
+        }).then(function (res) {
+            if (res.status === 200 && res.ok) {
+                return res.json().then(function (user) { resolve(user); });
+            }
+            else {
+                return res.json().then(function (user) { swal('Oops!', "" + user.error, "error"); });
             }
         });
     });

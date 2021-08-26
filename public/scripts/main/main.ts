@@ -82,9 +82,9 @@ async function renderAllProducts(allProducts) {
     }
 
     allProducts.forEach(products => {
-        html += `
 
-                     <div class="main__products__product" >
+        html += `
+                <div class="main__products__product" >
                      <img src="${products.image}" alt="${products.name}" style = "width:200px; height:200px" onclick='sendProduct("${products.id}")'>
                          <div class = "main__products__product--name">
                              <span>${products.name} - ${products.description}</span>
@@ -92,7 +92,7 @@ async function renderAllProducts(allProducts) {
                          <div class="main__products__product--numbers">`
 
         if (role === 'admin') {
-            html = `<span class="stock">Stock: ${products.quantity}</span>`
+            html += `<span class="stock">Stock: ${products.quantity}</span>`
         } else {
             html += `<span>Count: <input type="number" id="${products.id}" name="countproducts" value="1" min="1" max="${products.quantity}">`
         }
@@ -100,8 +100,8 @@ async function renderAllProducts(allProducts) {
                          </div>
                          <div class="main__products__product--actions">
                         
-                         </div>
-                     `
+                         `
+
         if (role === 'admin') {
             html += `  <i class="fas fa-user-edit main__products__product--actions--edit" onclick='findProduct("${products.id}")'></i>
                           <i class="fas fa-trash main__products__product--actions--trash" onclick='deleteProduct("${products.id}")'></i> `
@@ -110,17 +110,18 @@ async function renderAllProducts(allProducts) {
                     <button class= 'btnedituser${products.id}' onclick='editQuantityCart("${products.id}")' hidden >Edit Quantity</button>`
         }
 
-        html += `</div>`
+        html += `</div></div>`
     });
 
-    html += `</div>`
 
 
     rootProducts.innerHTML = html
 
-    const addCart = document.querySelector('.addCart') as HTMLElement
-    addCart.innerText = `${responseUser.data.user.cart.length}`
+    if (role === 'public') {
 
+        const addCart = document.querySelector('.addCart') as HTMLElement
+        addCart.innerText = `${responseUser.data.user.cart.length}`
+    }
 
 }
 
@@ -134,7 +135,7 @@ function deleteProduct(id) {
             cancel: true,
             confirm: "Confirm"
         },
-            dangerMode: true,
+        dangerMode: true,
     })
         .then(async (isConfirm) => {
             if (isConfirm) {

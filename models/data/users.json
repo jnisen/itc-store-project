@@ -1,1 +1,39 @@
-[{"username":"jnisen","email":"jnisen@gmail.com","password":"a1234","id":"7dc0f968-1119-4c0b-8d9b-15041a7abcd7","role":"admin","store":"football"},{"username":"leo","email":"leo@gmail.com","password":"a1234","id":"6b3a2e18-a74f-4612-86f4-2fd9aa609b84","role":"admin"},{"username":"pepe","email":"pepe@gmail.com","password":"a","id":"60b84084-2706-416f-a865-462d9628d65d","role":"public","cart":[{"id":"f1b01576-6f72-407f-a8f1-e99d68fc13cc","name":"Argentina","description":"Edicion 20212","image":"../images/football/israel.jpg","price":"120","number":"1","total":120}],"cartBuy":[],"store":"football"}]
+[
+    {
+        "username": "jnisen",
+        "email": "jnisen@gmail.com",
+        "password": "a1234",
+        "id": "699c1422-dd9b-474f-be1b-cb6c9b1d3375",
+        "role": "admin",
+        "store": "football"
+    },
+    {
+        "username": "pepe",
+        "email": "pepe@gmail.com",
+        "password": "a",
+        "id": "13fffe76-1662-4ebf-9d66-d8ac882e8beb",
+        "role": "public",
+        "cart": [],
+        "cartBuy": [
+            {
+                "id": "86317fd2-6e8f-46f4-bc0a-e35c7e4671b4",
+                "name": "Jony",
+                "description": "asd",
+                "image": "../images/football/argentina.jfif",
+                "price": "1",
+                "number": "1",
+                "total": 1
+            },
+            {
+                "id": "55fe54c8-e4ed-44a9-a069-733c05abb75e",
+                "name": "Jonya",
+                "description": "asd",
+                "image": "../images/football/israel.jpg",
+                "price": "1",
+                "number": "1",
+                "total": 1
+            }
+        ],
+        "store": "football"
+    }
+]

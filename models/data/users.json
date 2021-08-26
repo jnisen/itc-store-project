@@ -16,24 +16,15 @@
         "cart": [],
         "cartBuy": [
             {
-                "id": "86317fd2-6e8f-46f4-bc0a-e35c7e4671b4",
+                "id": "9ae56c57-feab-49da-b686-56a8fcac262c",
                 "name": "Jony",
                 "description": "asd",
-                "image": "../images/football/argentina.jfif",
-                "price": "1",
-                "number": "1",
-                "total": 1
-            },
-            {
-                "id": "55fe54c8-e4ed-44a9-a069-733c05abb75e",
-                "name": "Jonya",
-                "description": "asd",
-                "image": "../images/football/israel.jpg",
+                "image": "../images/tennis/tennis1_1.jfif",
                 "price": "1",
                 "number": "1",
                 "total": 1
             }
         ],
-        "store": "football"
+        "store": "tennis"
     }
 ]

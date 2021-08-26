@@ -14,7 +14,7 @@ router.post('/addNewUser', validationSchema_1.validateRegister(allSchemas_1.sche
     .post('/cookie', validationJSON_1.isUser, userControllers_1.sendCookie)
     .post('/addSection', handleCookies_1.readCookie, userControllers_1.addSection)
     .get('/readCookie', handleCookies_1.readCookie, userControllers_1.getEmail)
-    .post('/addCartForNow/:idUser', userControllers_1.addCartForNow)
+    .post('/addCartForNow/:idUser', validationJSON_1.isThereSamProductOnCart, userControllers_1.addCartForNow)
     .put('/editCartNow/:idUser/:idProduct', userControllers_1.editCartNow)
     .get('/getAllProducts/:idUser', userControllers_1.getAllCart)["delete"]('/deleteProductOnCart/:id/:idUser', userControllers_1.deleteProductOnCart)
     .post('/buyCart/:idUser', userControllers_1.buyCart);

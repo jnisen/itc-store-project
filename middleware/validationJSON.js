@@ -1,6 +1,6 @@
 "use strict";
 exports.__esModule = true;
-exports.isThereProductOnDB = exports.isProductExist = exports.isUserExist = exports.isUser = void 0;
+exports.isThereSamProductOnCart = exports.isThereProductOnDB = exports.isProductExist = exports.isUserExist = exports.isUser = void 0;
 var user_1 = require("../models/user");
 var products_1 = require("../models/products");
 function isUser(req, res, next) {
@@ -61,3 +61,18 @@ function isThereProductOnDB(req, res, next) {
     }
 }
 exports.isThereProductOnDB = isThereProductOnDB;
+function isThereSamProductOnCart(req, res, next) {
+    try {
+        var allUsers = user_1.readAllUsers();
+        var idUser_1 = req.params.idUser;
+        var getCart = allUsers.find(function (user) { return user.id === idUser_1; }).cart;
+        var findProduct = getCart.some(function (product) { return product.id === req.body.id; });
+        if (findProduct)
+            throw new Error('Product already picked');
+        next();
+    }
+    catch (e) {
+        res.status(400).send({ error: "" + e.message }); //cliente error
+    }
+}
+exports.isThereSamProductOnCart = isThereSamProductOnCart;

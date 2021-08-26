@@ -37,7 +37,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 var count = 0;
 function addProductCart(id, name, description, image, price) {
     return __awaiter(this, void 0, void 0, function () {
-        var pathBtnEdit, pathBtnAdd, btnAddUser, btnEditUser, inputCount, number, addCart, total, addCartForNow, responseUser, idUser;
+        var pathBtnEdit, pathBtnAdd, btnAddUser, btnEditUser, inputCount, number, addCart, total, addCartForNow, responseUser, idUser, response;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -66,11 +66,9 @@ function addProductCart(id, name, description, image, price) {
                 case 1:
                     responseUser = _a.sent();
                     idUser = responseUser.data.user.id;
-                    return [4 /*yield*/, addCartPromise(addCartForNow, idUser)
-                        //validar si ya elijio ese producto
-                    ];
+                    return [4 /*yield*/, addCartPromise(addCartForNow, idUser)];
                 case 2:
-                    _a.sent();
+                    response = _a.sent();
                     return [2 /*return*/];
             }
         });

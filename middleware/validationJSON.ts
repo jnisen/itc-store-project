@@ -50,3 +50,16 @@ export function isThereProductOnDB(req, res, next){
         res.status(400).send({ error: `${e.message}` }); //cliente error
     }
 }
+
+export function isThereSamProductOnCart(req, res, next){
+    try {
+        const allUsers: any = readAllUsers()
+        const {idUser} = req.params
+        const getCart = allUsers.find(user => user.id === idUser).cart;
+        const findProduct = getCart.some(product => product.id === req.body.id);
+        if(findProduct) throw new Error('Product already picked')
+        next()
+    } catch (e) {
+        res.status(400).send({ error: `${e.message}` }); //cliente error
+    }
+}

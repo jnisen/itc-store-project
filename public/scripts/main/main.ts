@@ -55,19 +55,22 @@ async function getAllProducts() {
 
     if (data.allStores) renderAllProducts(data.allStores.allProducts)
 
+    const responseUser = await axios.get('/user/readCookie')
+    let role = responseUser.data.user.role
+
+    
+
 }
-
-
 
 async function renderAllProducts(allProducts) {
     let html: string = "";
     const rootProducts = document.querySelector('#rootProducts')
 
-    const responseUser = await axios.get('/user/readCookie')
-    let role = responseUser.data.user.role
-
 
     const btnAdd = document.querySelector('.btn-add') as HTMLButtonElement
+
+    const responseUser = await axios.get('/user/readCookie')
+    let role = responseUser.data.user.role
 
     if (role === 'admin') {
         btnAdd.style.display = 'block'
@@ -81,9 +84,13 @@ async function renderAllProducts(allProducts) {
                 <div class="main__products">`
     }
 
-    allProducts.forEach(products => {
+    allProducts.forEach(async products => {
 
-        html += `
+        if (products.quantity == 0) {
+            await axios.delete(`product/deleteProduct/${products.id}`)
+        } else {
+
+            html += `
                 <div class="main__products__product" >
                      <img src="${products.image}" alt="${products.name}" style = "width:200px; height:200px" onclick='sendProduct("${products.id}")'>
                          <div class = "main__products__product--name">
@@ -91,26 +98,27 @@ async function renderAllProducts(allProducts) {
                          </div>
                          <div class="main__products__product--numbers">`
 
-        if (role === 'admin') {
-            html += `<span class="stock">Stock: ${products.quantity}</span>`
-        } else {
-            html += `<span>Count: <input type="number" id="${products.id}" name="countproducts" value="1" min="1" max="${products.quantity}">`
-        }
-        html += `<span>₪ ${products.price}</span>
+            if (role === 'admin') {
+                html += `<span class="stock">Stock: ${products.quantity}</span>`
+            } else {
+                html += `<span>Count: <input type="number" id="${products.id}" name="countproducts" value="1" min="1" max="${products.quantity}">`
+            }
+            html += `<span>₪ ${products.price}</span>
                          </div>
                          <div class="main__products__product--actions">
                         
                          `
 
-        if (role === 'admin') {
-            html += `  <i class="fas fa-user-edit main__products__product--actions--edit" onclick='findProduct("${products.id}")'></i>
+            if (role === 'admin') {
+                html += `  <i class="fas fa-user-edit main__products__product--actions--edit" onclick='findProduct("${products.id}")'></i>
                           <i class="fas fa-trash main__products__product--actions--trash" onclick='deleteProduct("${products.id}")'></i> `
-        } else {
-            html += `<button class="btnadduser${products.id}" onclick='addProductCart("${products.id}","${products.name}","${products.description}","${products.image}","${products.price}")'>Add Cart</button>
+            } else {
+                html += `<button class="btnadduser${products.id}" onclick='addProductCart("${products.id}","${products.name}","${products.description}","${products.image}","${products.price}")'>Add Cart</button>
                     <button class= 'btnedituser${products.id}' onclick='editQuantityCart("${products.id}")' hidden >Edit Quantity</button>`
-        }
+            }
 
-        html += `</div></div>`
+            html += `</div></div>`
+        }
     });
 
 
@@ -124,6 +132,8 @@ async function renderAllProducts(allProducts) {
     }
 
 }
+
+
 
 function deleteProduct(id) {
 

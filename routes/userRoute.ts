@@ -6,7 +6,7 @@ import {addNewUser, sendCookie, addSection,getEmail, addCartForNow,editCartNow,g
 
 //middleware
 import {validateRegister} from '../middleware/validationSchema'
-import {isUser,isUserExist} from '../middleware/validationJSON'
+import {isUser,isUserExist,isThereSamProductOnCart} from '../middleware/validationJSON'
 import {readCookie} from '../middleware/handleCookies'
 
 //schema
@@ -17,7 +17,7 @@ router.post('/addNewUser', validateRegister(schemaRegister),isUserExist,addNewUs
        .post('/cookie', isUser, sendCookie)
        .post('/addSection', readCookie, addSection)
        .get('/readCookie', readCookie,getEmail)
-       .post('/addCartForNow/:idUser',addCartForNow)
+       .post('/addCartForNow/:idUser',isThereSamProductOnCart,addCartForNow)
        .put('/editCartNow/:idUser/:idProduct', editCartNow)
        .get('/getAllProducts/:idUser', getAllCart)
        .delete('/deleteProductOnCart/:id/:idUser', deleteProductOnCart)

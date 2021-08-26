@@ -32,9 +32,8 @@ async function addProductCart(id, name, description, image, price){
     const responseUser = await axios.get('/user/readCookie')
     let idUser =  responseUser.data.user.id
     
-   await addCartPromise(addCartForNow,idUser)
+   const response  = await addCartPromise(addCartForNow,idUser)
     
-    //validar si ya elijio ese producto
 
 }
 

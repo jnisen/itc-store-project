@@ -64,18 +64,19 @@ async function renderAllProducts(allProducts) {
     const rootProducts = document.querySelector('#rootProducts')
 
     const responseUser = await axios.get('/user/readCookie')
-    let role =  responseUser.data.user.role
+    let role = responseUser.data.user.role
 
 
     const btnAdd = document.querySelector('.btn-add') as HTMLButtonElement
 
-    if(role === 'admin'){
+    if (role === 'admin') {
         btnAdd.style.display = 'block'
-    } else{
+    } else {
         btnAdd.style.display = 'none'
         html += `<div>
                 <span>Carrito<i class="fas fa-shopping-cart"></i><span>
                 <span class="addCart" style="color:brown">0</span>  
+                <button onclick='toCarrito(event)'>See Cart</button>
                 </div>
                 <div class="main__products">`
     }
@@ -89,13 +90,13 @@ async function renderAllProducts(allProducts) {
                              <span>${products.name} - ${products.description}</span>
                          </div>
                          <div class="main__products__product--numbers">`
-                             
-        if (role === 'admin'){
-                html = `<span class="stock">Stock: ${products.quantity}</span>`
-        }else{
+
+        if (role === 'admin') {
+            html = `<span class="stock">Stock: ${products.quantity}</span>`
+        } else {
             html += `<span>Count: <input type="number" id="${products.id}" name="countproducts" value="1" min="1" max="${products.quantity}">`
         }
-        html +=              `<span>₪ ${products.price}</span>
+        html += `<span>₪ ${products.price}</span>
                          </div>
                          <div class="main__products__product--actions">
                         
@@ -105,7 +106,7 @@ async function renderAllProducts(allProducts) {
             html += `  <i class="fas fa-user-edit main__products__product--actions--edit" onclick='findProduct("${products.id}")'></i>
                           <i class="fas fa-trash main__products__product--actions--trash" onclick='deleteProduct("${products.id}")'></i> `
         } else {
-            html += `<button class="btnadduser${products.id}" onclick='addProductCart("${products.id}","${products.name}","${products.price}")'>Add Cart</button>
+            html += `<button class="btnadduser${products.id}" onclick='addProductCart("${products.id}","${products.name}","${products.description}","${products.image}","${products.price}")'>Add Cart</button>
                     <button class= 'btnedituser${products.id}' onclick='editQuantityCart("${products.id}")' hidden >Edit Quantity</button>`
         }
 
@@ -118,7 +119,7 @@ async function renderAllProducts(allProducts) {
     rootProducts.innerHTML = html
 
     const addCart = document.querySelector('.addCart') as HTMLElement
-    addCart.innerText= `${responseUser.data.user.cart.length}`
+    addCart.innerText = `${responseUser.data.user.cart.length}`
 
 
 }
@@ -132,7 +133,7 @@ function deleteProduct(id) {
         buttons: {
             cancel: true,
             confirm: "Confirm"
-        }
+        },
             dangerMode: true,
     })
         .then(async (isConfirm) => {
@@ -249,4 +250,10 @@ function readURL(input): void {
         }
         reader.readAsDataURL(input.files[0])
     }
+}
+
+
+function toCarrito(event) {
+    event.preventDefault();
+    window.location.href = 'cart.html'
 }

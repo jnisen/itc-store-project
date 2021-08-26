@@ -50,11 +50,25 @@ export function getEmail(req, res){
 export function addCartForNow(req, res){
     const allUsers = new Users();
     allUsers.addCart(req.params.idUser, req.body)
+    console.log(req.body);
     res.send({ok:"added"})
 }
 
 export function editCartNow(req, res){
     const allUsers = new Users();
     allUsers.editCar(req.params.idUser, req.body, req.params.idProduct)
-    //res.send({ok:"edit"})
+    res.send({ok:"edit"})
+}
+
+export function getAllCart(req, res){
+    const allUsers = new Users();
+    const user = allUsers.findUserById(req.params.idUser);
+    res.send({cart:user.cart})
+}
+
+export function deleteProductOnCart(req, res){
+    const allUsers = new Users();
+    const {id, idUser} = req.params;
+    const user = allUsers.deleteProductOnCart(id, idUser)
+    res.send({ok:"Delete Product",cart:user.cart})
 }

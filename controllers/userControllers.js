@@ -1,6 +1,6 @@
 "use strict";
 exports.__esModule = true;
-exports.editCartNow = exports.addCartForNow = exports.getEmail = exports.addSection = exports.sendCookie = exports.addNewUser = void 0;
+exports.deleteProductOnCart = exports.getAllCart = exports.editCartNow = exports.addCartForNow = exports.getEmail = exports.addSection = exports.sendCookie = exports.addNewUser = void 0;
 var user_1 = require("../models/user");
 var secret_1 = require("./secrets/secret");
 var jwt = require('jwt-simple');
@@ -49,12 +49,26 @@ exports.getEmail = getEmail;
 function addCartForNow(req, res) {
     var allUsers = new user_1.Users();
     allUsers.addCart(req.params.idUser, req.body);
+    console.log(req.body);
     res.send({ ok: "added" });
 }
 exports.addCartForNow = addCartForNow;
 function editCartNow(req, res) {
     var allUsers = new user_1.Users();
     allUsers.editCar(req.params.idUser, req.body, req.params.idProduct);
-    //res.send({ok:"edit"})
+    res.send({ ok: "edit" });
 }
 exports.editCartNow = editCartNow;
+function getAllCart(req, res) {
+    var allUsers = new user_1.Users();
+    var user = allUsers.findUserById(req.params.idUser);
+    res.send({ cart: user.cart });
+}
+exports.getAllCart = getAllCart;
+function deleteProductOnCart(req, res) {
+    var allUsers = new user_1.Users();
+    var _a = req.params, id = _a.id, idUser = _a.idUser;
+    var user = allUsers.deleteProductOnCart(id, idUser);
+    res.send({ ok: "Delete Product", cart: user.cart });
+}
+exports.deleteProductOnCart = deleteProductOnCart;

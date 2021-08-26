@@ -119,7 +119,7 @@ function renderAllProducts(allProducts) {
                     }
                     else {
                         btnAdd.style.display = 'none';
-                        html += "<div>\n                <span>Carrito<i class=\"fas fa-shopping-cart\"></i><span>\n                <span class=\"addCart\" style=\"color:brown\">0</span>  \n                </div>\n                <div class=\"main__products\">";
+                        html += "<div>\n                <span>Carrito<i class=\"fas fa-shopping-cart\"></i><span>\n                <span class=\"addCart\" style=\"color:brown\">0</span>  \n                <button onclick='toCarrito(event)'>See Cart</button>\n                </div>\n                <div class=\"main__products\">";
                     }
                     allProducts.forEach(function (products) {
                         html += "\n\n                     <div class=\"main__products__product\" >\n                     <img src=\"" + products.image + "\" alt=\"" + products.name + "\" style = \"width:200px; height:200px\" onclick='sendProduct(\"" + products.id + "\")'>\n                         <div class = \"main__products__product--name\">\n                             <span>" + products.name + " - " + products.description + "</span>\n                         </div>\n                         <div class=\"main__products__product--numbers\">";
@@ -134,7 +134,7 @@ function renderAllProducts(allProducts) {
                             html += "  <i class=\"fas fa-user-edit main__products__product--actions--edit\" onclick='findProduct(\"" + products.id + "\")'></i>\n                          <i class=\"fas fa-trash main__products__product--actions--trash\" onclick='deleteProduct(\"" + products.id + "\")'></i> ";
                         }
                         else {
-                            html += "<button class=\"btnadduser" + products.id + "\" onclick='addProductCart(\"" + products.id + "\",\"" + products.name + "\",\"" + products.price + "\")'>Add Cart</button>\n                    <button class= 'btnedituser" + products.id + "' onclick='editQuantityCart(\"" + products.id + "\")' hidden >Edit Quantity</button>";
+                            html += "<button class=\"btnadduser" + products.id + "\" onclick='addProductCart(\"" + products.id + "\",\"" + products.name + "\",\"" + products.description + "\",\"" + products.image + "\",\"" + products.price + "\")'>Add Cart</button>\n                    <button class= 'btnedituser" + products.id + "' onclick='editQuantityCart(\"" + products.id + "\")' hidden >Edit Quantity</button>";
                         }
                         html += "</div>";
                     });
@@ -293,4 +293,8 @@ function readURL(input) {
         };
         reader.readAsDataURL(input.files[0]);
     }
+}
+function toCarrito(event) {
+    event.preventDefault();
+    window.location.href = 'cart.html';
 }

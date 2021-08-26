@@ -43,6 +43,12 @@ var Users = /** @class */ (function () {
         findProductOnCart.number = body.number;
         this.writeAllUsers();
     };
+    Users.prototype.deleteProductOnCart = function (idProduct, idUser) {
+        var user = this.findUserById(idUser);
+        user.cart = user.cart.filter(function (product) { return product.id !== idProduct; });
+        this.writeAllUsers();
+        return user;
+    };
     Users.prototype.findUserById = function (id) {
         var user = this.allUsers.find(function (user) { return user.id === id; });
         return user;

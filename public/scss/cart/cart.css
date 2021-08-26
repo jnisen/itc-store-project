@@ -1,0 +1,32 @@
+#cart {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 70%;
+  text-align: center;
+}
+
+#cart td,
+#cart th {
+  border: 1px solid #ddd;
+  padding: 5px;
+  text-align: center;
+}
+
+#cart tr {
+  background-color: white;
+  color: #8B0000;
+}
+
+#cart tr:hover {
+  background-color: white;
+  color: green;
+}
+
+#cart th {
+  padding-top: 7px;
+  padding-bottom: 7px;
+  text-align: left;
+  background-color: black;
+  color: white;
+  text-align: center;
+}

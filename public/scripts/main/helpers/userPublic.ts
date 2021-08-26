@@ -1,5 +1,5 @@
 let count = 0;
-async function addProductCart(id, name, price){
+async function addProductCart(id, name, description, image, price){
 
     const pathBtnEdit = `.btnedituser${id}`
     const pathBtnAdd = `.btnadduser${id}`
@@ -17,17 +17,22 @@ async function addProductCart(id, name, price){
     count++;
     addCart.innerText= `${count}`
 
+    let total = +number * price
+
     const addCartForNow = {
         id:id,
         name:name,
+        description:description,
+        image:image,
         price:price,
-        number:number
+        number:number,
+        total: total,
     }
     
     const responseUser = await axios.get('/user/readCookie')
     let idUser =  responseUser.data.user.id
     
-    await addCartPromise(addCartForNow,idUser)
+   await addCartPromise(addCartForNow,idUser)
     
     //validar si ya elijio ese producto
 

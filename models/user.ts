@@ -63,6 +63,13 @@ export class Users{
       
     }
 
+    deleteProductOnCart(idProduct, idUser){
+      let user = this.findUserById(idUser);
+      user.cart = user.cart.filter(product=>product.id !== idProduct)
+      this.writeAllUsers();
+      return user
+    }
+
     findUserById(id:string){
       const user = this.allUsers.find(user=>user.id === id);
       return user

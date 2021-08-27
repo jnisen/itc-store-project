@@ -33,6 +33,6 @@ export function editProduct(req ,res){
 export function searchProduct(req, res){
     const regrExp: string = `^${req.params.searchProduct}`
     const searchTermReg: RegExp = new RegExp(regrExp, 'i');
-    const findProduct = allListProducts.searchProduct(searchTermReg)
-   res.send({allProducts:findProduct})
+    const findProduct = allListProducts.searchProduct(searchTermReg, req.params.store)
+    res.send({allProducts:findProduct})
 }

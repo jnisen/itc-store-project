@@ -75,6 +75,8 @@ export function removeStock(cartBuy,store){
    writeAllUsers(allStores)
 }
 
+
+
 export function writeAllUsers(writeToJSON) {
   fs.writeFileSync(allStoresJSON, JSON.stringify(writeToJSON));
 }

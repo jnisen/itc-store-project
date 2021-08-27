@@ -32,7 +32,7 @@ exports.editProduct = editProduct;
 function searchProduct(req, res) {
     var regrExp = "^" + req.params.searchProduct;
     var searchTermReg = new RegExp(regrExp, 'i');
-    var findProduct = allListProducts.searchProduct(searchTermReg);
+    var findProduct = allListProducts.searchProduct(searchTermReg, req.params.store);
     res.send({ allProducts: findProduct });
 }
 exports.searchProduct = searchProduct;

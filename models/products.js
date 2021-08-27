@@ -52,9 +52,9 @@ var Products = /** @class */ (function () {
     };
     Products.prototype.editProductCart = function (cartBuy) {
         var _this = this;
-        cartBuy.forEach(function (element) {
-            var product = _this.allProducts.find(function (product) { return product.id === element.id; });
-            product.quantity -= +element.number;
+        cartBuy.forEach(function (cart) {
+            var product = _this.allProducts.find(function (product) { return product.id === cart.id; });
+            product.quantity -= +cart.number;
         });
         this.writeProduct();
     };
@@ -66,8 +66,9 @@ var Products = /** @class */ (function () {
         var findStore = this.allProducts.filter(function (product) { return product.store === store; });
         return findStore;
     };
-    Products.prototype.searchProduct = function (searchTermReg) {
-        var productName = this.allProducts.filter(function (elem) { return searchTermReg.test(elem.name); });
+    Products.prototype.searchProduct = function (searchTermReg, store) {
+        var findStore = this.findStore(store);
+        var productName = findStore.filter(function (elem) { return searchTermReg.test(elem.name); });
         return productName;
     };
     Products.prototype.writeProduct = function () {

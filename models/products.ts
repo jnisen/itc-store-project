@@ -65,9 +65,9 @@ export class Products {
   }
 
     editProductCart(cartBuy){
-      cartBuy.forEach(element => {
-        const product = this.allProducts.find(product => product.id === element.id);
-        product.quantity-= +element.number
+      cartBuy.forEach(cart => {
+        const product = this.allProducts.find(product => product.id === cart.id);
+        product.quantity-= +cart.number
       });
 
     this.writeProduct();
@@ -83,8 +83,9 @@ export class Products {
     return findStore
   }
 
-  searchProduct(searchTermReg:any){
-    const productName = this.allProducts.filter(elem => searchTermReg.test(elem.name))
+  searchProduct(searchTermReg:any, store: string) {
+    const findStore = this.findStore(store)
+    const productName = findStore.filter(elem => searchTermReg.test(elem.name))
     return productName
   }
 

@@ -1,15 +1,15 @@
 "use strict";
 exports.__esModule = true;
 exports.writeAllCarts = exports.addCart = exports.readAllStores = exports.Cart = void 0;
+var fs = require("fs");
+var path = require("path");
+var allStoresJSON = path.resolve(__dirname, "./data/carts.json");
 var Cart = /** @class */ (function () {
     function Cart() {
     }
     return Cart;
 }());
 exports.Cart = Cart;
-var fs = require("fs");
-var path = require("path");
-var allStoresJSON = path.resolve(__dirname, "./data/carts.json");
 exports.readAllStores = function () {
     try {
         var stores = fs.readFileSync(allStoresJSON);
@@ -20,7 +20,6 @@ exports.readAllStores = function () {
     }
 };
 function addCart(newCart) {
-    console.log(newCart);
     writeAllCarts(newCart);
 }
 exports.addCart = addCart;

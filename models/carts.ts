@@ -1,16 +1,12 @@
-export class Cart {
-    id:string
-    cart: Array<Products>
-    date: Date
-    
-}
-
-
 const fs = require("fs");
 const path = require("path");
 const allStoresJSON = path.resolve(__dirname, "./data/carts.json");
 
-
+export class Cart {
+  id:string
+  cart: Array<Products>
+  date: Date  
+}
 
 export const readAllStores = () => {
     try {
@@ -22,9 +18,7 @@ export const readAllStores = () => {
   };
 
 
-  export function addCart(newCart){
-        
-      console.log(newCart);
+  export function addCart(newCart:Array<Cart>){
       writeAllCarts(newCart)
   }
 

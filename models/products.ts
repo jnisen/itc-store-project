@@ -19,7 +19,7 @@ export class Product {
   id: string;
   name: string;
   description: string;
-  image: string; //url
+  image: string; 
   price: number;
   quantity: number;
   store: string;

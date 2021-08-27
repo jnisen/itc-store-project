@@ -185,9 +185,9 @@ function searchProduct(ev) {
                 case 1:
                     response = _a.sent();
                     if (response.data.length === 1)
-                        renderAllProducts([response.data.allProducts]);
+                        renderAllProductsAdmin([response.data.allProducts]);
                     else
-                        renderAllProducts(response.data.allProducts);
+                        renderAllProductsAdmin(response.data.allProducts);
                     return [3 /*break*/, 3];
                 case 2:
                     getAllProducts();

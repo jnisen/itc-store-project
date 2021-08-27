@@ -134,8 +134,8 @@ async function searchProduct(ev) {
 
     if (searchProduct.length > 0) {
         const response = await axios.get(`product/searchProduct/${store}/${searchProduct}`)
-        if (response.data.length === 1) renderAllProducts([response.data.allProducts])
-        else renderAllProducts(response.data.allProducts)
+        if (response.data.length === 1) renderAllProductsAdmin([response.data.allProducts])
+        else renderAllProductsAdmin(response.data.allProducts)
     } else {
         getAllProducts()
     }

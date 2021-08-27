@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 function getAllProducts() {
     return __awaiter(this, void 0, void 0, function () {
-        var h1, title, store, capitalizeStore, responseAllProducts, data;
+        var h1, title, store, capitalizeStore, responseAllProducts, data, responseUser, role;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -50,71 +50,71 @@ function getAllProducts() {
                 case 1:
                     responseAllProducts = _a.sent();
                     data = responseAllProducts.data;
-                    if (data.allStores)
-                        renderAllProducts(data.allStores.allProducts);
+                    return [4 /*yield*/, axios.get('/user/readCookie')];
+                case 2:
+                    responseUser = _a.sent();
+                    role = responseUser.data.user.role;
+                    if (role === 'admin') {
+                        if (data.allStores)
+                            renderAllProductsAdmin(data.allStores.allProducts);
+                    }
+                    else {
+                        if (data.allStores)
+                            renderAllProductsUser(data.allStores.allProducts, role);
+                    }
                     return [2 /*return*/];
             }
         });
     });
 }
-function renderAllProducts(allProducts) {
+function renderAllProductsAdmin(allProducts) {
     return __awaiter(this, void 0, void 0, function () {
-        var html, rootProducts, btnAdd, responseUser, role, addCart;
+        var html, rootProducts, btnAdd;
         var _this = this;
         return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    html = "";
-                    rootProducts = document.querySelector('#rootProducts');
-                    btnAdd = document.querySelector('.btn-add');
-                    return [4 /*yield*/, axios.get('/user/readCookie')];
-                case 1:
-                    responseUser = _a.sent();
-                    role = responseUser.data.user.role;
-                    if (role === 'admin') {
-                        btnAdd.style.display = 'block';
-                    }
-                    else {
-                        btnAdd.style.display = 'none';
-                        html += "<div>\n                <span>Carrito<i class=\"fas fa-shopping-cart\"></i><span>\n                <span class=\"addCart\" style=\"color:brown\">0</span>  \n                <button onclick='toCarrito(event)'>See Cart</button>\n                </div>\n                <div class=\"main__products\">";
-                    }
-                    allProducts.forEach(function (products) { return __awaiter(_this, void 0, void 0, function () {
-                        return __generator(this, function (_a) {
-                            switch (_a.label) {
-                                case 0:
-                                    if (!(products.quantity == 0)) return [3 /*break*/, 2];
-                                    return [4 /*yield*/, axios["delete"]("product/deleteProduct/" + products.id)];
-                                case 1:
-                                    _a.sent();
-                                    return [3 /*break*/, 3];
-                                case 2:
-                                    html += "\n                <div class=\"main__products__product\" >\n                     <img src=\"" + products.image + "\" alt=\"" + products.name + "\" style = \"width:200px; height:200px\" onclick='sendProduct(\"" + products.id + "\")'>\n                         <div class = \"main__products__product--name\">\n                             <span>" + products.name + " - " + products.description + "</span>\n                         </div>\n                         <div class=\"main__products__product--numbers\">";
-                                    if (role === 'admin') {
-                                        html += "<span class=\"stock\">Stock: " + products.quantity + "</span>";
-                                    }
-                                    else {
-                                        html += "<span>Count: <input type=\"number\" id=\"" + products.id + "\" name=\"countproducts\" value=\"1\" min=\"1\" max=\"" + products.quantity + "\">";
-                                    }
-                                    html += "<span>\u20AA " + products.price + "</span>\n                         </div>\n                         <div class=\"main__products__product--actions\">\n                        \n                         ";
-                                    if (role === 'admin') {
-                                        html += "  <i class=\"fas fa-user-edit main__products__product--actions--edit\" onclick='findProduct(\"" + products.id + "\")'></i>\n                          <i class=\"fas fa-trash main__products__product--actions--trash\" onclick='deleteProduct(\"" + products.id + "\")'></i> ";
-                                    }
-                                    else {
-                                        html += "<button class=\"btnadduser" + products.id + "\" onclick='addProductCart(\"" + products.id + "\",\"" + products.name + "\",\"" + products.description + "\",\"" + products.image + "\",\"" + products.price + "\")'>Add Cart</button>\n                    <button class= 'btnedituser" + products.id + "' onclick='editQuantityCart(\"" + products.id + "\")' hidden >Edit Quantity</button>";
-                                    }
-                                    html += "</div></div>";
-                                    _a.label = 3;
-                                case 3: return [2 /*return*/];
-                            }
-                        });
-                    }); });
-                    rootProducts.innerHTML = html;
-                    if (role === 'public') {
-                        addCart = document.querySelector('.addCart');
-                        addCart.innerText = "" + responseUser.data.user.cart.length;
-                    }
+            html = "";
+            rootProducts = document.querySelector('#rootProducts');
+            btnAdd = document.querySelector('.btn-add');
+            btnAdd.style.display = 'block';
+            btnAdd.style.margin = '2em auto';
+            btnAdd.style.cursor = 'pointer';
+            allProducts.forEach(function (products) { return __awaiter(_this, void 0, void 0, function () {
+                return __generator(this, function (_a) {
+                    // if (products.quantity == 0) {
+                    //     await axios.delete(`product/deleteProduct/${products.id}`)
+                    // } else {
+                    html += "\n                <div class=\"rootProducts__productsAdmin\">\n                     <img src=\"" + products.image + "\" alt=\"" + products.name + "\" class=\"image\" style = \"width:200px; height:200px\" onclick='sendProduct(\"" + products.id + "\")'>   \n                             <span class=\"name\">" + products.name + "</span>\n                             <span class=\"description\">" + products.description + "</span>\n                            <span class=\"stock\">Stock: " + products.quantity + "</span>\n                             <span class=\"price\">Price: \u20AA " + products.price + "</span>\n                            <i class=\"fas fa-user-edit edit\" onclick='findProduct(\"" + products.id + "\")'></i>\n                            <i class=\"fas fa-trash delete\" onclick='deleteProduct(\"" + products.id + "\")'></i> \n                        \n                </div>";
                     return [2 /*return*/];
-            }
+                });
+            }); });
+            rootProducts.innerHTML = html;
+            return [2 /*return*/];
+        });
+    });
+}
+function renderAllProductsUser(allProducts, responseUser) {
+    return __awaiter(this, void 0, void 0, function () {
+        var html, rootProducts, btnAdd, addCart;
+        var _this = this;
+        return __generator(this, function (_a) {
+            html = "";
+            rootProducts = document.querySelector('#rootCarts');
+            btnAdd = document.querySelector('.btn-add');
+            btnAdd.style.display = 'none';
+            html += "<div class=\"carrito\">\n                    <span>Carrito<i class=\"fas fa-shopping-cart\"></i><span>\n                    <span class=\"addCart\" style=\"color:brown\">0</span>  \n                    <button onclick='toCarrito(event)'>See Cart</button>\n                </div>\n                <div class=\"rootCarts__productsUser\">";
+            allProducts.forEach(function (products) { return __awaiter(_this, void 0, void 0, function () {
+                return __generator(this, function (_a) {
+                    // if (products.quantity == 0) {
+                    //     await axios.delete(`product/deleteProduct/${products.id}`)
+                    // } else {
+                    html += "\n                \n                <div class=\"rootCarts__productsUser__product\">\n                    \n                    <span class=\"name\">" + products.name + "</span>\n                    <span class=\"description\">" + products.description + "</span>\n                    <img src=\"" + products.image + "\" alt=\"" + products.name + "\" class=\"image\" style = \"width:200px; height:200px\" onclick='sendProduct(\"" + products.id + "\")'>\n\n                    <span class=\"stock\">\n                            Count: <input type=\"number\" id=\"" + products.id + "\" class=\"count\" name=\"countproducts\" value=\"1\" min=\"1\" max=\"" + products.quantity + "\">\n                    </span>\n                    <span class=\"price\">Price: \u20AA " + products.price + "</span>\n                    <button class=\"btnadduser" + products.id + " btn-cart\" onclick='addProductCart(\"" + products.id + "\",\"" + products.name + "\",\"" + products.description + "\",\"" + products.image + "\",\"" + products.price + "\")'>Add Cart</button>\n                    <button class= 'btnedituser" + products.id + "' onclick='editQuantityCart(\"" + products.id + "\")' hidden >Edit Quantity</button>\n                </div>";
+                    return [2 /*return*/];
+                });
+            }); });
+            rootProducts.innerHTML = html;
+            addCart = document.querySelector('.addCart');
+            addCart.innerText = "" + responseUser.data.user.cart.length;
+            return [2 /*return*/];
         });
     });
 }

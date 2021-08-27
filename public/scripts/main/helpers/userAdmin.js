@@ -173,26 +173,45 @@ function editProduct() {
 }
 function searchProduct(ev) {
     return __awaiter(this, void 0, void 0, function () {
-        var store, searchProduct, response;
+        var store, searchProduct, responseUser, role, response, response;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     ev.preventDefault();
                     store = location.search.substr(1).split("=")[2];
                     searchProduct = inputSearch.value;
-                    if (!(searchProduct.length > 0)) return [3 /*break*/, 2];
-                    return [4 /*yield*/, axios.get("product/searchProduct/" + store + "/" + searchProduct)];
+                    return [4 /*yield*/, axios.get('/user/readCookie')];
                 case 1:
+                    responseUser = _a.sent();
+                    role = responseUser.data.user.role;
+                    if (!(role === 'admin')) return [3 /*break*/, 5];
+                    if (!(searchProduct.length > 0)) return [3 /*break*/, 3];
+                    return [4 /*yield*/, axios.get("product/searchProduct/" + store + "/" + searchProduct)];
+                case 2:
                     response = _a.sent();
                     if (response.data.length === 1)
                         renderAllProductsAdmin([response.data.allProducts]);
                     else
                         renderAllProductsAdmin(response.data.allProducts);
-                    return [3 /*break*/, 3];
-                case 2:
+                    return [3 /*break*/, 4];
+                case 3:
                     getAllProducts();
-                    _a.label = 3;
-                case 3: return [2 /*return*/];
+                    _a.label = 4;
+                case 4: return [3 /*break*/, 8];
+                case 5:
+                    if (!(searchProduct.length > 0)) return [3 /*break*/, 7];
+                    return [4 /*yield*/, axios.get("product/searchProduct/" + store + "/" + searchProduct)];
+                case 6:
+                    response = _a.sent();
+                    if (response.data.length === 1)
+                        renderAllProductsUser([response.data.allProducts], responseUser);
+                    else
+                        renderAllProductsUser(response.data.allProducts, responseUser);
+                    return [3 /*break*/, 8];
+                case 7:
+                    getAllProducts();
+                    _a.label = 8;
+                case 8: return [2 /*return*/];
             }
         });
     });

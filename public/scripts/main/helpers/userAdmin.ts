@@ -41,7 +41,7 @@ async function addProductOnDom(ev) {
 }
 
 
-function deleteProduct(id:string) {
+function deleteProduct(id: string) {
 
     swal({
         title: "Do you want to delete this product?",
@@ -67,7 +67,7 @@ function deleteProduct(id:string) {
 }
 
 
-async function findProduct(id:string) {
+async function findProduct(id: string) {
     //popup
     const bgModal = document.querySelector('.modal-bg')
     const btnModalInput = <HTMLButtonElement>document.querySelector('.btn-modal')
@@ -132,14 +132,28 @@ async function searchProduct(ev) {
 
     const searchProduct = inputSearch.value
 
-    if (searchProduct.length > 0) {
-        const response = await axios.get(`product/searchProduct/${store}/${searchProduct}`)
-        if (response.data.length === 1) renderAllProductsAdmin([response.data.allProducts])
-        else renderAllProductsAdmin(response.data.allProducts)
-    } else {
-        getAllProducts()
+    const responseUser = await axios.get('/user/readCookie')
+    let role = responseUser.data.user.role
+
+    if (role === 'admin') {
+
+        if (searchProduct.length > 0) {
+            const response = await axios.get(`product/searchProduct/${store}/${searchProduct}`)
+            if (response.data.length === 1) renderAllProductsAdmin([response.data.allProducts])
+            else renderAllProductsAdmin(response.data.allProducts)
+        } else {
+            getAllProducts()
+        }
+
+    } else{
+
+        if (searchProduct.length > 0) {
+            const response = await axios.get(`product/searchProduct/${store}/${searchProduct}`)
+            if (response.data.length === 1) renderAllProductsUser([response.data.allProducts],responseUser)
+            else renderAllProductsUser(response.data.allProducts,responseUser)
+        } else {
+            getAllProducts()
+        }
     }
-
-
 
 }

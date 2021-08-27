@@ -10,8 +10,6 @@ async function addProductCart(id, name, description, image, price) {
 
     const addCart = document.querySelector('.addCart') as HTMLElement
 
-   
-
     let total = +number * price
 
     const date = new Date();
@@ -42,23 +40,6 @@ async function addProductCart(id, name, description, image, price) {
     }
 
 }
-
-
-// async function editQuantityCart(id) {
-
-//     // const inputCount = document.getElementById(`${id}`) as HTMLInputElement;
-
-//     // const newNumber = {
-//     //     number:inputCount.value
-//     // }
-
-//     const responseUser = await axios.get('/user/readCookie')
-//     let idUser = responseUser.data.user.id
-
-   
-// }
-
-//clousures
 
 function addCartPromise(addCartForNow, idUser) {
     return new Promise((resolve, reject) => {

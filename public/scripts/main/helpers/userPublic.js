@@ -76,15 +76,6 @@ function addProductCart(id, name, description, image, price) {
         });
     });
 }
-// async function editQuantityCart(id) {
-//     // const inputCount = document.getElementById(`${id}`) as HTMLInputElement;
-//     // const newNumber = {
-//     //     number:inputCount.value
-//     // }
-//     const responseUser = await axios.get('/user/readCookie')
-//     let idUser = responseUser.data.user.id
-// }
-//clousures
 function addCartPromise(addCartForNow, idUser) {
     return new Promise(function (resolve, reject) {
         fetch("/user/addCartForNow/" + idUser, {

@@ -1,3 +1,11 @@
+@import url("http://fonts.googleapis.com/css2?family=Poppins&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
 #cart {
   font-family: Arial, Helvetica, sans-serif;
   border-collapse: collapse;
@@ -22,6 +30,16 @@
   color: green;
 }
 
+#cart tr:nth-child(odd):hover {
+  background-color: lightcyan;
+  color: blue;
+}
+
+#cart tr:nth-child(even):hover {
+  background-color: lightblue;
+  color: blue;
+}
+
 #cart th {
   padding-top: 7px;
   padding-bottom: 7px;
@@ -31,51 +49,46 @@
   text-align: center;
 }
 
-.modal-bg {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
+body {
   height: 100vh;
-  /*cover the all things*/
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: black;
+  color: white;
+}
+
+h1 {
+  text-align: center;
+  margin: 0.5em 0 1.5em 0;
+}
+
+.cartRoot__table {
   display: flex;
   justify-content: center;
-  align-items: center;
-  visibility: hidden;
-  /*to see nothing at the beginning*/
-  opacity: 0;
-  transition: visibility 0s, opacity 2s;
 }
-
-.bg-active {
-  visibility: visible;
-  opacity: 1;
-}
-
-.modal {
-  position: relative;
-  background-color: white;
-  width: 60%;
-  height: 60%;
+.cartRoot__finalstep {
+  margin-top: 3em;
   display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  flex-direction: column;
+  justify-content: flex-end;
+  position: relative;
+  right: 15%;
+}
+.cartRoot__finalstep span {
+  position: relative;
+  right: 5%;
+  top: 15px;
+}
+.cartRoot__finalstep button {
+  width: 10%;
+  height: 40px;
+  border: none;
   border-radius: 10px;
-}
-.modal .btn-modal {
-  padding: 0.5rem;
-  background-color: lightslategray;
+  margin: 0.5em 0;
+  transform: translate(-1%);
+  cursor: pointer;
   color: white;
-  border-radius: 12%;
-  margin-top: 0.5rem;
-  cursor: pointer;
+  background: linear-gradient(to right, #ff416c, #ff4b2b);
+  transition: all 0.4s;
 }
-.modal span {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  font-weight: bold;
-  cursor: pointer;
+.cartRoot__finalstep .button:hover {
+  transform: translate(-1%, 5%);
+  box-shadow: 0 0 10px #ff416d65;
 }

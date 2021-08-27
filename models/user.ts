@@ -67,7 +67,7 @@ export class Users{
       const user = this.findUserById(idUser);
       const findProductOnCart = user.cart.find(product=>product.id === id)
       findProductOnCart.number = body.number;
-      findProductOnCart.total = body.number * findProductOnCart.total;
+      findProductOnCart.total = body.number * findProductOnCart.price;
       this.writeAllUsers();
       return user.cart
       

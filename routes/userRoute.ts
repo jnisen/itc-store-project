@@ -5,12 +5,12 @@ const router = express.Router();
 import {addNewUser, sendCookie, addSection,getEmail, addCartForNow,editCartNow,getAllCart,deleteProductOnCart,buyCart} from '../controllers/userControllers';
 
 //middleware
-import {validateRegister} from '../middleware/validationSchema'
-import {isUser,isUserExist,isThereSamProductOnCart} from '../middleware/validationJSON'
+import {validateRegister,validateEditSchema} from '../middleware/validationSchema'
+import {isUser,isUserExist,isThereSamProductOnCart,isThereStock,} from '../middleware/validationJSON'
 import {readCookie} from '../middleware/handleCookies'
 
 //schema
-import {schemaRegister} from '../schemas/allSchemas';
+import {schemaRegister,schemaEditNumber} from '../schemas/allSchemas';
 
 
 router.post('/addNewUser', validateRegister(schemaRegister),isUserExist,addNewUser)
@@ -18,7 +18,7 @@ router.post('/addNewUser', validateRegister(schemaRegister),isUserExist,addNewUs
        .post('/addSection', readCookie, addSection)
        .get('/readCookie', readCookie,getEmail)
        .post('/addCartForNow/:idUser',isThereSamProductOnCart,addCartForNow)
-       .put('/editCartNow/:idUser/:idProduct', editCartNow)
+       .put('/editCartNow/:idUser/:idProduct', validateEditSchema(schemaEditNumber),isThereStock,editCartNow)
        .get('/getAllProducts/:idUser', getAllCart)
        .delete('/deleteProductOnCart/:id/:idUser', deleteProductOnCart)
        .post('/buyCart/:idUser', buyCart)

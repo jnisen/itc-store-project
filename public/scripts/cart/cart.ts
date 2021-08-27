@@ -15,9 +15,11 @@ function renderCart(data) {
 
     const cartRoot = document.querySelector('#cartRoot') as HTMLElement
 
+    let totalCart:number = 0;
+
     let html: string = ''
     if (data.length > 0) {
-        html += `<table id="cart">
+        html += `<div class="cartRoot__table"><table id="cart">
         <thead>
     <tr>
         <th>Image</th>
@@ -36,6 +38,8 @@ function renderCart(data) {
 
             const { id, name, description, image, number, price, total } = cart
 
+            totalCart += number * price 
+
             html += `<tr>
                       <td> <img src="${image}" alt="${name}" style = "width:70px; height:70px"</td>
                         <td>${name}</td>
@@ -48,8 +52,17 @@ function renderCart(data) {
                  </tr> `
         });
 
-        html += `</tbody></table>
-                 <button onclick='buyCart()'>Buy Cart</button> `
+        html += `       </tbody>
+                    </table>
+                 </div>
+                    <div class="cartRoot__finalstep">
+                        <span>Total Cart: ₪ ${totalCart}</span>
+                        <button onclick='buyCart()'>Buy Cart</button>
+                 </div>`
+
+
+       
+
     } else {
         let html = ''
     }
@@ -107,10 +120,9 @@ async function editQuantityCart(id:string, number:string){
         }else{
 
             const newNumber = {
-                number:value
+                number:+value
             }
             const response = await editCartPromise(idUser, id, newNumber)
-            //middleware para ver si el cambio es menor al stock
             renderCart(response)
     }
       });

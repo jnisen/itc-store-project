@@ -17,11 +17,18 @@ export const schemaProduct = {
         name: { type: 'string', minLength: 1, maxLength: 12, errorMessage: "Debe contener caracteresn o esta vacio el username o supera el maximo de 12 digitos" },
         description: { type: 'string',minLength: 1, errorMessage: "El formato no es el correcto" },
         image: { type: 'string', minLength: 1, errorMessage: "El formato no es el correcto" },
-        quantity: { type: 'number', errorMessage: "cantidad incorrecta" },
-        price: { type: 'number',  errorMessage: "precio vacio" }, //format: 'float'
+        quantity: { type: 'number', errorMessage: "Incorrecto formato o vacio" },
+        price: { type: 'number',  errorMessage: "Incorrecto formato o vacio" }, //format: 'float'
         
     },
     additionalProperties: true,
-
 }
 
+export const schemaEditNumber = {
+    type: "object",
+    required: ["number"],
+    properties: {
+        number: { type: 'number', errorMessage: "Incorrecto formato" },        
+    },
+    additionalProperties: true,
+}

@@ -63,3 +63,15 @@ export function isThereSamProductOnCart(req, res, next){
         res.status(400).send({ error: `${e.message}` }); //cliente error
     }
 }
+
+export function isThereStock(req, res, next){
+    try {
+        const allProducts: any = readAllProducts()
+        const {idProduct} = req.params
+        const getProduct = allProducts.find(product => product.id === idProduct)
+        if(req.body.number > getProduct.quantity) throw new Error('We dont have enough stock')
+        next()
+    } catch (e) {
+        res.status(400).send({ error: `${e.message}` }); //cliente error
+    }
+}

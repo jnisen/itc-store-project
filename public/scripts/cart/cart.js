@@ -57,14 +57,16 @@ function getCart(event) {
 }
 function renderCart(data) {
     var cartRoot = document.querySelector('#cartRoot');
+    var totalCart = 0;
     var html = '';
     if (data.length > 0) {
-        html += "<table id=\"cart\">\n        <thead>\n    <tr>\n        <th>Image</th>\n        <th>Name</th>\n        <th>Description</th>\n        <th>Quantity</th>\n        <th>Price</th>\n        <th>Total</th>\n        <th><th>\n    <tr>\n    </thead>\n    <tbody>";
+        html += "<div class=\"cartRoot__table\"><table id=\"cart\">\n        <thead>\n    <tr>\n        <th>Image</th>\n        <th>Name</th>\n        <th>Description</th>\n        <th>Quantity</th>\n        <th>Price</th>\n        <th>Total</th>\n        <th><th>\n    <tr>\n    </thead>\n    <tbody>";
         data.forEach(function (cart) {
             var id = cart.id, name = cart.name, description = cart.description, image = cart.image, number = cart.number, price = cart.price, total = cart.total;
+            totalCart += number * price;
             html += "<tr>\n                      <td> <img src=\"" + image + "\" alt=\"" + name + "\" style = \"width:70px; height:70px\"</td>\n                        <td>" + name + "</td>\n                        <td>" + description + "</td>\n                        <td>" + number + "</td>\n                        <td>\u20AA " + price + "</td>\n                        <td>\u20AA " + total + "</td>\n                        <td><i class=\"fa fa-edit btn-edit\" onclick='editQuantityCart(\"" + id + "\",\"" + number + "\")' title=\"Edit Item\" style=\"cursor:pointer\"></i></td>   \n                        <td><i class=\"fa fa-trash\" onclick='deleteProductOnCart(\"" + id + "\")' title=\"Delete Item\" style=\"cursor:pointer\"></i></td>   \n                 </tr> ";
         });
-        html += "</tbody></table>\n                 <button onclick='buyCart()'>Buy Cart</button> ";
+        html += "       </tbody>\n                    </table>\n                 </div>\n                    <div class=\"cartRoot__finalstep\">\n                        <span>Total Cart: \u20AA " + totalCart + "</span>\n                        <button onclick='buyCart()'>Buy Cart</button>\n                 </div>";
     }
     else {
         var html_1 = '';
@@ -143,14 +145,11 @@ function editQuantityCart(id, number) {
                                     return [3 /*break*/, 3];
                                 case 1:
                                     newNumber = {
-                                        number: value
+                                        number: +value
                                     };
-                                    return [4 /*yield*/, editCartPromise(idUser, id, newNumber)
-                                        //middleware para ver si el cambio es menor al stock
-                                    ];
+                                    return [4 /*yield*/, editCartPromise(idUser, id, newNumber)];
                                 case 2:
                                     response = _a.sent();
-                                    //middleware para ver si el cambio es menor al stock
                                     renderCart(response);
                                     _a.label = 3;
                                 case 3: return [2 /*return*/];

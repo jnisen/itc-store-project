@@ -1,6 +1,6 @@
 "use strict";
 exports.__esModule = true;
-exports.isThereSamProductOnCart = exports.isThereProductOnDB = exports.isProductExist = exports.isUserExist = exports.isUser = void 0;
+exports.isThereStock = exports.isThereSamProductOnCart = exports.isThereProductOnDB = exports.isProductExist = exports.isUserExist = exports.isUser = void 0;
 var user_1 = require("../models/user");
 var products_1 = require("../models/products");
 function isUser(req, res, next) {
@@ -76,3 +76,17 @@ function isThereSamProductOnCart(req, res, next) {
     }
 }
 exports.isThereSamProductOnCart = isThereSamProductOnCart;
+function isThereStock(req, res, next) {
+    try {
+        var allProducts = products_1.readAllProducts();
+        var idProduct_1 = req.params.idProduct;
+        var getProduct = allProducts.find(function (product) { return product.id === idProduct_1; });
+        if (req.body.number > getProduct.quantity)
+            throw new Error('We dont have enough stock');
+        next();
+    }
+    catch (e) {
+        res.status(400).send({ error: "" + e.message }); //cliente error
+    }
+}
+exports.isThereStock = isThereStock;

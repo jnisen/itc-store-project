@@ -65,7 +65,6 @@ async function renderAllProductsAdmin(allProducts:Array<Product>) {
 
 }
 
-
 async function renderAllProductsUser(allProducts:Array<Product>, responseUser) {
     let html: string = "";
     const rootProducts = document.querySelector('#rootCarts')
@@ -76,7 +75,7 @@ async function renderAllProductsUser(allProducts:Array<Product>, responseUser) {
         html += `<div class="carrito">
                     <span>Carrito<i class="fas fa-shopping-cart"></i><span>
                     <span class="addCart" style="color:brown">0</span>  
-                    <button onclick='toCarrito(event)'>See Cart</button>
+                    <button onclick='toCarrito(event)' class="btn-sent-cart" disabled>See Cart</button>
                 </div>
                 <div class="rootCarts__productsUser">`
     

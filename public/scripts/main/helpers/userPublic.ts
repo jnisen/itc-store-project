@@ -1,5 +1,9 @@
-
 async function addProductCart(id, name, description, image, price) {
+
+    const btnSeeCart = document.querySelector('.btn-sent-cart') as HTMLButtonElement;
+
+    btnSeeCart.disabled = false
+
 
     const inputCount = document.getElementById(`${id}`) as HTMLInputElement;
     const number = inputCount.value

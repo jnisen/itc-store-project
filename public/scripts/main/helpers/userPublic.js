@@ -36,10 +36,12 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 function addProductCart(id, name, description, image, price) {
     return __awaiter(this, void 0, void 0, function () {
-        var inputCount, number, addCart, total, date, dateString, addCartForNow, responseUser, idUser, count, response, ok;
+        var btnSeeCart, inputCount, number, addCart, total, date, dateString, addCartForNow, responseUser, idUser, count, response, ok;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
+                    btnSeeCart = document.querySelector('.btn-sent-cart');
+                    btnSeeCart.disabled = false;
                     inputCount = document.getElementById("" + id);
                     number = inputCount.value;
                     addCart = document.querySelector('.addCart');

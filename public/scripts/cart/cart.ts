@@ -11,7 +11,7 @@ async function getCart(event) {
     const getProduct = await axios.get(`/user/getAllProducts/${idUser}`)
     const { data } = getProduct
 
-    renderCart(data.cart)
+    renderCart(data.cart) 
 }
 
 function renderCart(data) {
@@ -67,7 +67,8 @@ function renderCart(data) {
        
 
     } else {
-        let html = ''
+        setInterval(function(){returnMainPage()}, 1000);
+        
     }
 
     cartRoot.innerHTML = html

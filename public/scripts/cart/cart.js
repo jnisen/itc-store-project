@@ -71,7 +71,7 @@ function renderCart(data) {
         html += "       </tbody>\n                    </table>\n                 </div>\n                    <div class=\"cartRoot__finalstep\">\n                        <span>Total Cart: \u20AA " + totalCart + "</span>\n                        <button onclick='buyCart()'>Buy Cart</button>\n                 </div>";
     }
     else {
-        var html_1 = '';
+        setInterval(function () { returnMainPage(); }, 1000);
     }
     cartRoot.innerHTML = html;
 }

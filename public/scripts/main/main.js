@@ -101,7 +101,7 @@ function renderAllProductsUser(allProducts, responseUser) {
             rootProducts = document.querySelector('#rootCarts');
             btnAdd = document.querySelector('.btn-add');
             btnAdd.style.display = 'none';
-            html += "<div class=\"carrito\">\n                    <span>Carrito<i class=\"fas fa-shopping-cart\"></i><span>\n                    <span class=\"addCart\" style=\"color:brown\">0</span>  \n                    <button onclick='toCarrito(event)'>See Cart</button>\n                </div>\n                <div class=\"rootCarts__productsUser\">";
+            html += "<div class=\"carrito\">\n                    <span>Carrito<i class=\"fas fa-shopping-cart\"></i><span>\n                    <span class=\"addCart\" style=\"color:brown\">0</span>  \n                    <button onclick='toCarrito(event)' class=\"btn-sent-cart\" disabled>See Cart</button>\n                </div>\n                <div class=\"rootCarts__productsUser\">";
             allProducts.forEach(function (products) { return __awaiter(_this, void 0, void 0, function () {
                 return __generator(this, function (_a) {
                     // if (products.quantity == 0) {

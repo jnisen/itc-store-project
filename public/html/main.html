@@ -9,12 +9,14 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://kit.fontawesome.com/0415b59e2e.js" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <link rel="shortcut icon" href="https://www.iconpacks.net/icons/2/free-store-icon-2017-thumb.png" />
     <title></title>
 </head>
 
 <body id="body-main" class ="body" onload="getAllProducts(event)">
     <header>
         <h1 class = "h1"></h1>
+        <input type="button" value="Log Out" id="btn-return">
         <label for="search">Search Product Name:</label>
         <input type="search" name="search" id="search">
     </header>
@@ -43,11 +45,14 @@
         </div>
     </div>
 
+    <script src="../scripts/main/helpers/modal.js"></script>
     <script src="../scripts/main/helpers/userAdmin.js""></script>
-    <script src="../scripts//main/helpers/userPublic.js"></script>
     <script src="../scripts/main/helpers/productPromise.js"></script>
     <script src="../scripts/main/main.js"></script>
-    <script src="../scripts/main/helpers/modal.js"></script>
+    <script src="../scripts//main/helpers/userPublic.js"></script>
+    
+
+  
 </body>
 
 </html>

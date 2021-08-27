@@ -1,4 +1,4 @@
-async function addProductCart(id, name, description, image, price) {
+async function addProductCart(id, name, description, image, price, store) {
 
     const btnSeeCart = document.querySelector('.btn-sent-cart') as HTMLButtonElement;
 
@@ -24,6 +24,7 @@ async function addProductCart(id, name, description, image, price) {
         price: price,
         number: number,
         total: total,
+        store:store,
     }
 
     const responseUser = await axios.get('/user/readCookie')

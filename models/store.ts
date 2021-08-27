@@ -66,9 +66,10 @@ export function editProductToStore(id:string, store:string, body:Product){
 export function removeStock(cartBuy,store){
   let allStores: any = readAllStores()
   const getStore = allStores.find(st => st.store === store)
-  
+
   cartBuy.forEach(element => {
      const product = getStore.allProducts.find(product => product.id === element.id);
+    console.log(product);
      product.quantity-= +element.number
    });
 

@@ -40,35 +40,81 @@ var clickContainer = document.querySelector(".container");
 //addEventListener
 btnReturn.addEventListener("click", returnLoginPage);
 clickContainer.addEventListener("click", sendToMainSports);
-function sendToMainSports(ev) {
+function renderPage(ev) {
     return __awaiter(this, void 0, void 0, function () {
-        var store, response, data, params, emailUser;
+        var responseUser, role, inputMessage;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     ev.preventDefault();
+                    return [4 /*yield*/, axios.get('/user/readCookie')];
+                case 1:
+                    responseUser = _a.sent();
+                    role = responseUser.data.user.role;
+                    inputMessage = document.querySelector('.message');
+                    if (role === 'public') {
+                        inputMessage.innerText = 'Welcome To Jonathans Store, pick which store do you want to buy';
+                    }
+                    else {
+                        inputMessage.innerText = "Welcome " + responseUser.data.user.username + " , pick which store do you want to work";
+                    }
+                    return [2 /*return*/];
+            }
+        });
+    });
+}
+function sendToMainSports(ev) {
+    return __awaiter(this, void 0, void 0, function () {
+        var store_1, response, params, emailUser_1, responseAllProducts, data, responseUser, role, e_1;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    ev.preventDefault();
+                    _a.label = 1;
+                case 1:
+                    _a.trys.push([1, 5, , 6]);
                     if (ev.target.className.indexOf('container__store_') === -1)
                         return [2 /*return*/];
                     if (ev.target.className === 'container__store__1 container__store') {
-                        store = { store: "football" };
+                        store_1 = { store: "football" };
                     }
                     else {
-                        store = { store: "tennis" };
+                        store_1 = { store: "tennis" };
                     }
-                    return [4 /*yield*/, axios.post('/user/addSection', store)];
-                case 1:
+                    return [4 /*yield*/, axios.post('/user/addSection', store_1)];
+                case 2:
                     response = _a.sent();
-                    data = response.data;
                     params = new URLSearchParams(window.location.search);
-                    emailUser = params.get('email');
-                    swal("" + data.ok, {
-                        icon: "success",
-                        button: false
-                    });
-                    setInterval(function () {
-                        window.location.href = "main.html?email=" + emailUser + "?store=" + store.store;
-                    }, 1000);
-                    return [2 /*return*/];
+                    emailUser_1 = params.get('email');
+                    return [4 /*yield*/, axios.get("/store/getStore/" + store_1.store)];
+                case 3:
+                    responseAllProducts = _a.sent();
+                    data = responseAllProducts.data;
+                    return [4 /*yield*/, axios.get('/user/readCookie')];
+                case 4:
+                    responseUser = _a.sent();
+                    role = responseUser.data.user.role;
+                    if (role === 'public') {
+                        if (data.allStores.allProducts.length === 0)
+                            throw new Error('No stock available');
+                        else {
+                            swal("" + response.data.ok, { icon: "success", button: false });
+                            setInterval(function () {
+                                window.location.href = "main.html?email=" + emailUser_1 + "?store=" + store_1.store;
+                            }, 1000);
+                        }
+                    }
+                    else {
+                        setInterval(function () {
+                            window.location.href = "main.html?email=" + emailUser_1 + "?store=" + store_1.store;
+                        }, 1000);
+                    }
+                    return [3 /*break*/, 6];
+                case 5:
+                    e_1 = _a.sent();
+                    swal('Oops!', "" + e_1, "error");
+                    return [3 /*break*/, 6];
+                case 6: return [2 /*return*/];
             }
         });
     });

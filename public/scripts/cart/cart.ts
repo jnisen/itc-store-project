@@ -30,7 +30,7 @@ function renderCart(data) {
         <th>Description</th>
         <th>Quantity</th>
         <th>Price</th>
-        <th>Total</th>
+        <th>SubTotal</th>
         <th><th>
     <tr>
     </thead>
@@ -56,10 +56,16 @@ function renderCart(data) {
         });
 
         html += `       </tbody>
+                    <tfoot>
+                            <tr>
+                        <th id="total" colspan="5" style="text-align:right;">Total :</th>
+                             <td> ₪ ${totalCart}</td>
+                            <th colspan="2" ></th>
+                         </tr>
+                    </tfoot>
                     </table>
                  </div>
                     <div class="cartRoot__finalstep">
-                        <span>Total Cart: ₪ ${totalCart}</span>
                         <button onclick='buyCart()'>Buy Cart</button>
                  </div>`
 

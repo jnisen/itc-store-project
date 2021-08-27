@@ -3,6 +3,7 @@ const btnTrash = <HTMLElement>document.querySelector('.main__products__product--
 const btnOpenModalToEdit = <HTMLElement>document.querySelector('.main__products__product--actions--edit')
 const btnEdit = <HTMLButtonElement>document.querySelector('.btn-edit')
 const inputSearch = <HTMLInputElement>document.querySelector('#search')
+const bgModal =  document.querySelector('.modal-bg')
 
 form.addEventListener('submit', addProductOnDom)
 btnEdit.addEventListener('click', editProduct)
@@ -35,9 +36,12 @@ async function addProductOnDom(ev) {
     const response: any = await addProductPromise(addNewProduct, store)
     const { ok, allProducts } = response
     swal(`${ok}`, "", "success")
-    renderAllProducts(allProducts)
-
+    
     bgModal.classList.remove('bg-active')
+    
+    renderAllProductsAdmin(allProducts)
+
+   
 }
 
 

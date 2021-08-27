@@ -34,7 +34,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-function addProductCart(id, name, description, image, price) {
+function addProductCart(id, name, description, image, price, store) {
     return __awaiter(this, void 0, void 0, function () {
         var btnSeeCart, inputCount, number, addCart, total, date, dateString, addCartForNow, responseUser, idUser, count, response, ok;
         return __generator(this, function (_a) {
@@ -56,7 +56,8 @@ function addProductCart(id, name, description, image, price) {
                         image: image,
                         price: price,
                         number: number,
-                        total: total
+                        total: total,
+                        store: store
                     };
                     return [4 /*yield*/, axios.get('/user/readCookie')];
                 case 1:

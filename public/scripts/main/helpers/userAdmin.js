@@ -39,6 +39,7 @@ var btnTrash = document.querySelector('.main__products__product--actions--trash'
 var btnOpenModalToEdit = document.querySelector('.main__products__product--actions--edit');
 var btnEdit = document.querySelector('.btn-edit');
 var inputSearch = document.querySelector('#search');
+var bgModal = document.querySelector('.modal-bg');
 form.addEventListener('submit', addProductOnDom);
 btnEdit.addEventListener('click', editProduct);
 inputSearch.addEventListener('keyup', searchProduct);
@@ -70,8 +71,8 @@ function addProductOnDom(ev) {
                     response = _b.sent();
                     ok = response.ok, allProducts = response.allProducts;
                     swal("" + ok, "", "success");
-                    renderAllProducts(allProducts);
                     bgModal.classList.remove('bg-active');
+                    renderAllProductsAdmin(allProducts);
                     return [2 /*return*/];
             }
         });

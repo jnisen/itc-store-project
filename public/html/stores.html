@@ -7,12 +7,13 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <link rel="stylesheet" href="../scss/stores/store.min.css">
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <link rel="shortcut icon" href="https://www.iconpacks.net/icons/2/free-store-icon-2017-thumb.png" />
     <title>Stores</title>
 </head>
-<body class ="body">
+<body class ="body" onload="renderPage(event)">
         <header>
            <input type="button" value="Log Out" id="btn-return">
-            Welcome new user, choose where do you want to work
+            <h1 class="message" style = "text-align:center; margin-top:1em"></h1>
         </header>
         <div class="container">
             <div class="container__store__1 container__store">

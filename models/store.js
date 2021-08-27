@@ -68,6 +68,7 @@ function removeStock(cartBuy, store) {
     var getStore = allStores.find(function (st) { return st.store === store; });
     cartBuy.forEach(function (element) {
         var product = getStore.allProducts.find(function (product) { return product.id === element.id; });
+        console.log(product);
         product.quantity -= +element.number;
     });
     writeAllUsers(allStores);

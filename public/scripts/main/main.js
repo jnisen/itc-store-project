@@ -34,6 +34,10 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+//btn
+var btnReturn = document.querySelector("#btn-return");
+//addEventListener
+btnReturn.addEventListener("click", returnLoginPage);
 function getAllProducts() {
     return __awaiter(this, void 0, void 0, function () {
         var h1, title, store, capitalizeStore, responseAllProducts, data, responseUser, role;
@@ -80,10 +84,14 @@ function renderAllProductsAdmin(allProducts) {
             btnAdd.style.cursor = 'pointer';
             allProducts.forEach(function (products) { return __awaiter(_this, void 0, void 0, function () {
                 return __generator(this, function (_a) {
-                    // if (products.quantity == 0) {
-                    //     await axios.delete(`product/deleteProduct/${products.id}`)
-                    // } else {
-                    html += "\n                <div class=\"rootProducts__productsAdmin\">\n                     <img src=\"" + products.image + "\" alt=\"" + products.name + "\" class=\"image\" style = \"width:200px; height:200px\" onclick='sendProduct(\"" + products.id + "\")'>   \n                             <span class=\"name\">" + products.name + "</span>\n                             <span class=\"description\">" + products.description + "</span>\n                            <span class=\"stock\">Stock: " + products.quantity + "</span>\n                             <span class=\"price\">Price: \u20AA " + products.price + "</span>\n                            <i class=\"fas fa-user-edit edit\" onclick='findProduct(\"" + products.id + "\")'></i>\n                            <i class=\"fas fa-trash delete\" onclick='deleteProduct(\"" + products.id + "\")'></i> \n                        \n                </div>";
+                    html += "\n                <div class=\"rootProducts__productsAdmin\">\n                     <img src=\"" + products.image + "\" alt=\"" + products.name + "\" class=\"image\" style = \"width:200px; height:200px\" onclick='sendProduct(\"" + products.id + "\")'>   \n                             <span class=\"name\">" + products.name + "</span>\n                             <span class=\"description\">" + products.description + "</span>";
+                    if (products.quantity === 0) {
+                        html += "            <span class=\"stock red\">Stock: " + products.quantity + "</span>";
+                    }
+                    else {
+                        html += "            <span class=\"stock green\">Stock: " + products.quantity + "</span>";
+                    }
+                    html += "     \n                             <span class=\"price\">Price: \u20AA " + products.price + "</span>\n                            <i class=\"fas fa-user-edit edit\" onclick='findProduct(\"" + products.id + "\")'></i>\n                            <i class=\"fas fa-trash delete\" onclick='deleteProduct(\"" + products.id + "\")'></i> \n                        \n                </div>";
                     return [2 /*return*/];
                 });
             }); });
@@ -94,25 +102,34 @@ function renderAllProductsAdmin(allProducts) {
 }
 function renderAllProductsUser(allProducts, responseUser) {
     return __awaiter(this, void 0, void 0, function () {
-        var html, rootProducts, btnAdd, addCart;
+        var html, rootProducts, store, btnAdd, addCart;
         var _this = this;
         return __generator(this, function (_a) {
             html = "";
             rootProducts = document.querySelector('#rootCarts');
+            store = location.search.substr(1).split("=")[2];
             btnAdd = document.querySelector('.btn-add');
             btnAdd.style.display = 'none';
             html += "<div class=\"carrito\">\n                    <span>Carrito<i class=\"fas fa-shopping-cart\"></i><span>\n                    <span class=\"addCart\" style=\"color:brown\">0</span>  \n                    <button onclick='toCarrito(event)' class=\"btn-sent-cart\" disabled>See Cart</button>\n                </div>\n                <div class=\"rootCarts__productsUser\">";
             allProducts.forEach(function (products) { return __awaiter(_this, void 0, void 0, function () {
                 return __generator(this, function (_a) {
-                    // if (products.quantity == 0) {
-                    //     await axios.delete(`product/deleteProduct/${products.id}`)
-                    // } else {
-                    html += "\n                \n                <div class=\"rootCarts__productsUser__product\">\n                    \n                    <span class=\"name\">" + products.name + "</span>\n                    <span class=\"description\">" + products.description + "</span>\n                    <img src=\"" + products.image + "\" alt=\"" + products.name + "\" class=\"image\" style = \"width:200px; height:200px\" onclick='sendProduct(\"" + products.id + "\")'>\n\n                    <span class=\"stock\">\n                            Count: <input type=\"number\" id=\"" + products.id + "\" class=\"count\" name=\"countproducts\" value=\"1\" min=\"1\" max=\"" + products.quantity + "\">\n                    </span>\n                    <span class=\"price\">Price: \u20AA " + products.price + "</span>\n                    <button class=\"btnadduser" + products.id + " btn-cart\" onclick='addProductCart(\"" + products.id + "\",\"" + products.name + "\",\"" + products.description + "\",\"" + products.image + "\",\"" + products.price + "\")'>Add Cart</button>\n                </div>";
-                    return [2 /*return*/];
+                    switch (_a.label) {
+                        case 0:
+                            if (!(products.quantity <= 0)) return [3 /*break*/, 2];
+                            return [4 /*yield*/, axios["delete"]("product/deleteProduct/" + products.id)];
+                        case 1:
+                            _a.sent();
+                            return [3 /*break*/, 3];
+                        case 2:
+                            html += "\n                \n                <div class=\"rootCarts__productsUser__product\">\n                    \n                    <span class=\"name\">" + products.name + "</span>\n                    <span class=\"description\">" + products.description + "</span>\n                    <img src=\"" + products.image + "\" alt=\"" + products.name + "\" class=\"image\" style = \"width:200px; height:200px\" onclick='sendProduct(\"" + products.id + "\")'>\n\n                    <span class=\"stock\">\n                            Count: <input type=\"number\" id=\"" + products.id + "\" class=\"count\" name=\"countproducts\" value=\"1\" min=\"1\" max=\"" + products.quantity + "\">\n                    </span>\n                    <span class=\"price\">Price: \u20AA " + products.price + "</span>\n                    <button class=\"btnadduser" + products.id + " btn-cart\" onclick='addProductCart(\"" + products.id + "\",\"" + products.name + "\",\"" + products.description + "\",\"" + products.image + "\",\"" + products.price + "\",\"" + store + "\")'>Add Cart</button>\n                </div>";
+                            _a.label = 3;
+                        case 3: return [2 /*return*/];
+                    }
                 });
             }); });
             rootProducts.innerHTML = html;
             addCart = document.querySelector('.addCart');
+            console.log(responseUser.data.user);
             addCart.innerText = "" + responseUser.data.user.cart.length;
             return [2 /*return*/];
         });
@@ -148,4 +165,7 @@ function readURL(input) {
 function toCarrito(event) {
     event.preventDefault();
     window.location.href = 'cart.html';
+}
+function returnLoginPage() {
+    window.location.href = 'login.html';
 }

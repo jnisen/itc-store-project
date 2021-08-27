@@ -62,13 +62,13 @@ function renderCart(data) {
     var totalCart = 0;
     var html = '';
     if (data.length > 0) {
-        html += "<div class=\"cartRoot__table\"><table id=\"cart\">\n        <thead>\n    <tr>\n        <th>Image</th>\n        <th>Name</th>\n        <th>Description</th>\n        <th>Quantity</th>\n        <th>Price</th>\n        <th>Total</th>\n        <th><th>\n    <tr>\n    </thead>\n    <tbody>";
+        html += "<div class=\"cartRoot__table\"><table id=\"cart\">\n        <thead>\n    <tr>\n        <th>Image</th>\n        <th>Name</th>\n        <th>Description</th>\n        <th>Quantity</th>\n        <th>Price</th>\n        <th>SubTotal</th>\n        <th><th>\n    <tr>\n    </thead>\n    <tbody>";
         data.forEach(function (cart) {
             var id = cart.id, name = cart.name, description = cart.description, image = cart.image, number = cart.number, price = cart.price, total = cart.total;
             totalCart += number * price;
             html += "<tr>\n                      <td> <img src=\"" + image + "\" alt=\"" + name + "\" style = \"width:70px; height:70px\"</td>\n                        <td>" + name + "</td>\n                        <td>" + description + "</td>\n                        <td>" + number + "</td>\n                        <td>\u20AA " + price + "</td>\n                        <td>\u20AA " + total + "</td>\n                        <td><i class=\"fa fa-edit btn-edit\" onclick='editQuantityCart(\"" + id + "\",\"" + number + "\")' title=\"Edit Item\" style=\"cursor:pointer\"></i></td>   \n                        <td><i class=\"fa fa-trash\" onclick='deleteProductOnCart(\"" + id + "\")' title=\"Delete Item\" style=\"cursor:pointer\"></i></td>   \n                 </tr> ";
         });
-        html += "       </tbody>\n                    </table>\n                 </div>\n                    <div class=\"cartRoot__finalstep\">\n                        <span>Total Cart: \u20AA " + totalCart + "</span>\n                        <button onclick='buyCart()'>Buy Cart</button>\n                 </div>";
+        html += "       </tbody>\n                    <tfoot>\n                            <tr>\n                        <th id=\"total\" colspan=\"5\" style=\"text-align:right;\">Total :</th>\n                             <td> \u20AA " + totalCart + "</td>\n                            <th colspan=\"2\" ></th>\n                         </tr>\n                    </tfoot>\n                    </table>\n                 </div>\n                    <div class=\"cartRoot__finalstep\">\n                        <button onclick='buyCart()'>Buy Cart</button>\n                 </div>";
     }
     else {
         setInterval(function () { returnMainPage(); }, 1000);

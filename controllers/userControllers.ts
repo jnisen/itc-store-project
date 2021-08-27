@@ -89,14 +89,15 @@ export function buyCart(req, res){
         cart:user.cart
     }
 
-    const allProducts = new Products()
+     const allProducts = new Products()
 
-    allProducts.editProductCart(user.cart)
-    addCart(newCart)    
+      allProducts.editProductCart(user.cart)
+    
+      addCart(newCart)    
 
-    removeStock(user.cart, user.store)
+       removeStock(user.cart, user.store)
 
-    allUsers.buyCart(idUser)
+     allUsers.buyCart(idUser)
 
-   res.send({"ok":"Felicidades por su compra"})
+    res.send({"ok":"Felicidades por su compra"})
 }

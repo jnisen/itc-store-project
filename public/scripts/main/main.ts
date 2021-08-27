@@ -1,3 +1,9 @@
+//btn
+const btnReturn = <HTMLElement>document.querySelector("#btn-return")
+
+//addEventListener
+btnReturn.addEventListener("click", returnLoginPage)
+
 
 interface Product{
     id:string;
@@ -32,6 +38,9 @@ async function getAllProducts() {
 }
 
 
+
+
+
 async function renderAllProductsAdmin(allProducts:Array<Product>) {
     let html: string = "";
 
@@ -45,15 +54,17 @@ async function renderAllProductsAdmin(allProducts:Array<Product>) {
 
     allProducts.forEach(async products => {
 
-        // if (products.quantity == 0) {
-        //     await axios.delete(`product/deleteProduct/${products.id}`)
-        // } else {
             html += `
                 <div class="rootProducts__productsAdmin">
                      <img src="${products.image}" alt="${products.name}" class="image" style = "width:200px; height:200px" onclick='sendProduct("${products.id}")'>   
                              <span class="name">${products.name}</span>
-                             <span class="description">${products.description}</span>
-                            <span class="stock">Stock: ${products.quantity}</span>
+                             <span class="description">${products.description}</span>`
+              if (products.quantity === 0){
+                html += `            <span class="stock red">Stock: ${products.quantity}</span>`
+              } else {
+                html += `            <span class="stock green">Stock: ${products.quantity}</span>`
+              }              
+                 html += `     
                              <span class="price">Price: ₪ ${products.price}</span>
                             <i class="fas fa-user-edit edit" onclick='findProduct("${products.id}")'></i>
                             <i class="fas fa-trash delete" onclick='deleteProduct("${products.id}")'></i> 
@@ -68,7 +79,7 @@ async function renderAllProductsAdmin(allProducts:Array<Product>) {
 async function renderAllProductsUser(allProducts:Array<Product>, responseUser) {
     let html: string = "";
     const rootProducts = document.querySelector('#rootCarts')
-
+    const store = location.search.substr(1).split("=")[2]
     const btnAdd = document.querySelector('.btn-add') as HTMLButtonElement
 
         btnAdd.style.display = 'none'
@@ -82,9 +93,9 @@ async function renderAllProductsUser(allProducts:Array<Product>, responseUser) {
 
     allProducts.forEach(async products => {
 
-        // if (products.quantity == 0) {
-        //     await axios.delete(`product/deleteProduct/${products.id}`)
-        // } else {
+        if (products.quantity <= 0) {
+            await axios.delete(`product/deleteProduct/${products.id}`)
+        } else {
 
             html += `
                 
@@ -98,7 +109,7 @@ async function renderAllProductsUser(allProducts:Array<Product>, responseUser) {
                             Count: <input type="number" id="${products.id}" class="count" name="countproducts" value="1" min="1" max="${products.quantity}">
                     </span>
                     <span class="price">Price: ₪ ${products.price}</span>
-                    <button class="btnadduser${products.id} btn-cart" onclick='addProductCart("${products.id}","${products.name}","${products.description}","${products.image}","${products.price}")'>Add Cart</button>
+                    <button class="btnadduser${products.id} btn-cart" onclick='addProductCart("${products.id}","${products.name}","${products.description}","${products.image}","${products.price}","${store}")'>Add Cart</button>
                 </div>`
         }
     );
@@ -107,18 +118,17 @@ async function renderAllProductsUser(allProducts:Array<Product>, responseUser) {
     rootProducts.innerHTML = html
 
     const addCart = document.querySelector('.addCart') as HTMLElement
+    console.log(responseUser.data.user)
     addCart.innerText = `${responseUser.data.user.cart.length}`
     
 
 }
 
 
-
 async function sendProduct(id: string) {
     const store = location.search.substr(1).split("=")[2]
     window.location.href = `product.html?id=${id}?store=${store}`
 }
-
 
 //Read URL
 
@@ -144,4 +154,8 @@ function readURL(input:any): void {
 function toCarrito(event) {
     event.preventDefault();
     window.location.href = 'cart.html'
+}
+
+function returnLoginPage() {
+    window.location.href = 'login.html'
 }

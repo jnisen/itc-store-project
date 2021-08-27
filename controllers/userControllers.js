@@ -13,10 +13,8 @@ function addNewUser(req, res) {
     var user = new user_1.User(req.body.username, req.body.email, req.body.password);
     console.log(adminsArray);
     var role = adminsArray.includes(req.body.email) ? user.role = 'admin' : user.role = 'public';
-    if (role === 'public') {
+    if (role === 'public')
         user.cart = [];
-        user.cartBuy = [];
-    }
     var allUsers = new user_1.Users();
     allUsers.addNewUser(user);
     res.send({ ok: "Hi " + req.body.username + " \uD83D\uDE03" });
@@ -53,8 +51,7 @@ exports.getEmail = getEmail;
 function addCartForNow(req, res) {
     var allUsers = new user_1.Users();
     allUsers.addCart(req.params.idUser, req.body);
-    console.log(req.body);
-    res.send({ ok: "added" });
+    res.send({ ok: true });
 }
 exports.addCartForNow = addCartForNow;
 function editCartNow(req, res) {
@@ -79,18 +76,19 @@ exports.deleteProductOnCart = deleteProductOnCart;
 function buyCart(req, res) {
     var allUsers = new user_1.Users();
     var idUser = req.params.idUser;
-    var user = allUsers.buyCart(idUser);
+    var user = allUsers.findUserById(idUser);
     var date = new Date();
     var dateString = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
-    var newCart = [{
-            id: uuidv4(),
-            date: dateString,
-            cart: user.cartBuy
-        }];
+    var newCart = {
+        id: uuidv4(),
+        date: dateString,
+        cart: user.cart
+    };
     var allProducts = new products_1.Products();
-    allProducts.editProductCart(user.cartBuy);
+    allProducts.editProductCart(user.cart);
     carts_1.addCart(newCart);
-    store_1.removeStock(user.cartBuy, user.store);
+    store_1.removeStock(user.cart, user.store);
+    allUsers.buyCart(idUser);
     res.send({ "ok": "Felicidades por su compra" });
 }
 exports.buyCart = buyCart;

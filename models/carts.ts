@@ -1,27 +1,29 @@
 const fs = require("fs");
 const path = require("path");
-const allStoresJSON = path.resolve(__dirname, "./data/carts.json");
+const allCartsJSON = path.resolve(__dirname, "./data/carts.json");
 
 export class Cart {
-  id:string
+  id: string
   cart: Array<Products>
-  date: Date  
+  date: Date
 }
 
-export const readAllStores = () => {
-    try {
-      const stores = fs.readFileSync(allStoresJSON);
-      return JSON.parse(stores);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-
-  export function addCart(newCart:Array<Cart>){
-      writeAllCarts(newCart)
+export const readAllCarts = () => {
+  try {
+    const stores = fs.readFileSync(allCartsJSON);
+    return JSON.parse(stores);
+  } catch (error) {
+    console.error(error);
   }
+};
 
-  export function writeAllCarts(writeToJSON) {
-    fs.writeFileSync(allStoresJSON, JSON.stringify(writeToJSON));
-  }
+
+export function addCart(newCart) {
+  const allCarts = readAllCarts()
+  allCarts.push(newCart)
+  writeAllCarts(allCarts)
+}
+
+export function writeAllCarts(writeToJSON) {
+  fs.writeFileSync(allCartsJSON, JSON.stringify(writeToJSON));
+}

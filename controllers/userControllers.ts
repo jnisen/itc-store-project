@@ -1,7 +1,7 @@
 
 import { User, Users, readAllUsers } from '../models/user'
 import {Products} from '../models/products'
-import { addCart } from '../models/carts'
+import { addCart, Cart } from '../models/carts'
 import { removeStock } from '../models/store'
 
 import { secret } from './secrets/secret';
@@ -16,10 +16,7 @@ export function addNewUser(req, res) {
     const user = new User(req.body.username, req.body.email, req.body.password)
     console.log(adminsArray)
     const role =  adminsArray.includes(req.body.email) ? user.role = 'admin' : user.role = 'public'
-    if (role === 'public') {
-        user.cart = []
-        user.cartBuy = []
-    }
+    if (role === 'public') user.cart = []
     const allUsers = new Users();
     allUsers.addNewUser(user)
     res.send({ ok: `Hi ${req.body.username} 😃` })
@@ -56,8 +53,7 @@ export function getEmail(req, res){
 export function addCartForNow(req, res){
     const allUsers = new Users();
     allUsers.addCart(req.params.idUser, req.body)
-    console.log(req.body);
-    res.send({ok:"added"})
+    res.send({ok:true})
 }
 
 export function editCartNow(req, res){
@@ -82,23 +78,25 @@ export function deleteProductOnCart(req, res){
 export function buyCart(req, res){
     const allUsers = new Users();
     const {idUser} = req.params;
-    const user = allUsers.buyCart(idUser)
+    const user = allUsers.findUserById(idUser)
 
     const date = new Date();
     const dateString = date.getDate()  + "/" + (date.getMonth()+1) + "/" + date.getFullYear()
 
-    const newCart = [{
+    const newCart = {
         id:uuidv4(),
         date:dateString,
-        cart:user.cartBuy
-    }]
+        cart:user.cart
+    }
 
     const allProducts = new Products()
 
-    allProducts.editProductCart(user.cartBuy)
+    allProducts.editProductCart(user.cart)
     addCart(newCart)    
 
-    removeStock(user.cartBuy, user.store)
+    removeStock(user.cart, user.store)
 
-    res.send({"ok":"Felicidades por su compra"})
+    allUsers.buyCart(idUser)
+
+   res.send({"ok":"Felicidades por su compra"})
 }

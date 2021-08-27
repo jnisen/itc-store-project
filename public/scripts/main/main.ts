@@ -26,7 +26,7 @@ async function getAllProducts() {
     if (role === 'admin'){
         if (data.allStores) renderAllProductsAdmin(data.allStores.allProducts)
     } else{
-        if (data.allStores) renderAllProductsUser(data.allStores.allProducts,role)
+        if (data.allStores) renderAllProductsUser(data.allStores.allProducts,responseUser)
     }
 
 }
@@ -100,7 +100,6 @@ async function renderAllProductsUser(allProducts:Array<Product>, responseUser) {
                     </span>
                     <span class="price">Price: ₪ ${products.price}</span>
                     <button class="btnadduser${products.id} btn-cart" onclick='addProductCart("${products.id}","${products.name}","${products.description}","${products.image}","${products.price}")'>Add Cart</button>
-                    <button class= 'btnedituser${products.id}' onclick='editQuantityCart("${products.id}")' hidden >Edit Quantity</button>
                 </div>`
         }
     );
@@ -108,10 +107,8 @@ async function renderAllProductsUser(allProducts:Array<Product>, responseUser) {
 
     rootProducts.innerHTML = html
 
-  
-
-        const addCart = document.querySelector('.addCart') as HTMLElement
-        addCart.innerText = `${responseUser.data.user.cart.length}`
+    const addCart = document.querySelector('.addCart') as HTMLElement
+    addCart.innerText = `${responseUser.data.user.cart.length}`
     
 
 }

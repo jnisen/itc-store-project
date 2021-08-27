@@ -69,8 +69,7 @@ export class Products {
         const product = this.allProducts.find(product => product.id === cart.id);
         product.quantity-= +cart.number
       });
-
-    this.writeProduct();
+     this.writeProduct();
     }
 
   findProductById(id: string): Product {

@@ -1,18 +1,18 @@
 "use strict";
 exports.__esModule = true;
-exports.writeAllCarts = exports.addCart = exports.readAllStores = exports.Cart = void 0;
+exports.writeAllCarts = exports.addCart = exports.readAllCarts = exports.Cart = void 0;
 var fs = require("fs");
 var path = require("path");
-var allStoresJSON = path.resolve(__dirname, "./data/carts.json");
+var allCartsJSON = path.resolve(__dirname, "./data/carts.json");
 var Cart = /** @class */ (function () {
     function Cart() {
     }
     return Cart;
 }());
 exports.Cart = Cart;
-exports.readAllStores = function () {
+exports.readAllCarts = function () {
     try {
-        var stores = fs.readFileSync(allStoresJSON);
+        var stores = fs.readFileSync(allCartsJSON);
         return JSON.parse(stores);
     }
     catch (error) {
@@ -20,10 +20,12 @@ exports.readAllStores = function () {
     }
 };
 function addCart(newCart) {
-    writeAllCarts(newCart);
+    var allCarts = exports.readAllCarts();
+    allCarts.push(newCart);
+    writeAllCarts(allCarts);
 }
 exports.addCart = addCart;
 function writeAllCarts(writeToJSON) {
-    fs.writeFileSync(allStoresJSON, JSON.stringify(writeToJSON));
+    fs.writeFileSync(allCartsJSON, JSON.stringify(writeToJSON));
 }
 exports.writeAllCarts = writeAllCarts;

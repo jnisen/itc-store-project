@@ -1,55 +1,57 @@
-let count = 0;
-async function addProductCart(id, name, description, image, price){
 
-    const pathBtnEdit = `.btnedituser${id}`
-    const pathBtnAdd = `.btnadduser${id}`
-
-    const btnAddUser = document.querySelector(pathBtnAdd) as HTMLButtonElement;
-    const btnEditUser = document.querySelector(pathBtnEdit) as HTMLButtonElement;
-
-    btnEditUser.hidden = false;
-    btnAddUser.hidden = true;
+async function addProductCart(id, name, description, image, price) {
 
     const inputCount = document.getElementById(`${id}`) as HTMLInputElement;
     const number = inputCount.value
 
     const addCart = document.querySelector('.addCart') as HTMLElement
-    count++;
-    addCart.innerText= `${count}`
+
+   
 
     let total = +number * price
 
+    const date = new Date();
+    const dateString = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear()
+
     const addCartForNow = {
-        id:id,
-        name:name,
-        description:description,
-        image:image,
-        price:price,
-        number:number,
+        id: id,
+        date: dateString,
+        name: name,
+        description: description,
+        image: image,
+        price: price,
+        number: number,
         total: total,
     }
-    
+
     const responseUser = await axios.get('/user/readCookie')
-    let idUser =  responseUser.data.user.id
-    
-   const response  = await addCartPromise(addCartForNow,idUser)
-    
+    let idUser = responseUser.data.user.id
+
+    let count = responseUser.data.user.cart.length
+
+    const response:any = await addCartPromise(addCartForNow, idUser)
+    const {ok} = response
+
+    if (ok) {
+        count++;
+        addCart.innerText = `${count}`
+    }
 
 }
 
 
-async function editQuantityCart(id){
+async function editQuantityCart(id) {
 
-    const inputCount = document.getElementById(`${id}`) as HTMLInputElement;
+    // const inputCount = document.getElementById(`${id}`) as HTMLInputElement;
 
-    const newNumber = {
-        number:inputCount.value
-    }
+    // const newNumber = {
+    //     number:inputCount.value
+    // }
 
     const responseUser = await axios.get('/user/readCookie')
-    let idUser =  responseUser.data.user.id
+    let idUser = responseUser.data.user.id
 
-   const response = await editCartPromise(idUser, id, newNumber)
+    const response = await editCartPromise(idUser, id, newNumber)
     console.log(response)
 }
 
@@ -67,13 +69,13 @@ function addCartPromise(addCartForNow, idUser) {
             if (res.status === 200 && res.ok) {
                 return res.json().then(user => { resolve(user) });
             } else {
-                return res.json().then(user => { swal ( 'Oops!',`${user.error}` , `error`) })
+                return res.json().then(user => { swal('Oops!', `${user.error}`, `error`) })
             }
         })
     })
 }
 
-function editCartPromise(idUser,idProduct, newNumber) {
+function editCartPromise(idUser, idProduct, newNumber) {
     return new Promise((resolve, reject) => {
         fetch(`/user/editCartNow/${idUser}/${idProduct}`, {
             method: 'PUT',
@@ -85,7 +87,7 @@ function editCartPromise(idUser,idProduct, newNumber) {
             if (res.status === 200 && res.ok) {
                 return res.json().then(user => { resolve(user) });
             } else {
-                return res.json().then(user => { swal ( 'Oops!',`${user.error}` , `error`) })
+                return res.json().then(user => { swal('Oops!', `${user.error}`, `error`) })
             }
         })
     })

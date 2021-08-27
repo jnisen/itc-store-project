@@ -34,27 +34,21 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var count = 0;
 function addProductCart(id, name, description, image, price) {
     return __awaiter(this, void 0, void 0, function () {
-        var pathBtnEdit, pathBtnAdd, btnAddUser, btnEditUser, inputCount, number, addCart, total, addCartForNow, responseUser, idUser, response;
+        var inputCount, number, addCart, total, date, dateString, addCartForNow, responseUser, idUser, count, response, ok;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    pathBtnEdit = ".btnedituser" + id;
-                    pathBtnAdd = ".btnadduser" + id;
-                    btnAddUser = document.querySelector(pathBtnAdd);
-                    btnEditUser = document.querySelector(pathBtnEdit);
-                    btnEditUser.hidden = false;
-                    btnAddUser.hidden = true;
                     inputCount = document.getElementById("" + id);
                     number = inputCount.value;
                     addCart = document.querySelector('.addCart');
-                    count++;
-                    addCart.innerText = "" + count;
                     total = +number * price;
+                    date = new Date();
+                    dateString = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
                     addCartForNow = {
                         id: id,
+                        date: dateString,
                         name: name,
                         description: description,
                         image: image,
@@ -66,9 +60,15 @@ function addProductCart(id, name, description, image, price) {
                 case 1:
                     responseUser = _a.sent();
                     idUser = responseUser.data.user.id;
+                    count = responseUser.data.user.cart.length;
                     return [4 /*yield*/, addCartPromise(addCartForNow, idUser)];
                 case 2:
                     response = _a.sent();
+                    ok = response.ok;
+                    if (ok) {
+                        count++;
+                        addCart.innerText = "" + count;
+                    }
                     return [2 /*return*/];
             }
         });
@@ -76,15 +76,10 @@ function addProductCart(id, name, description, image, price) {
 }
 function editQuantityCart(id) {
     return __awaiter(this, void 0, void 0, function () {
-        var inputCount, newNumber, responseUser, idUser, response;
+        var responseUser, idUser, response;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0:
-                    inputCount = document.getElementById("" + id);
-                    newNumber = {
-                        number: inputCount.value
-                    };
-                    return [4 /*yield*/, axios.get('/user/readCookie')];
+                case 0: return [4 /*yield*/, axios.get('/user/readCookie')];
                 case 1:
                     responseUser = _a.sent();
                     idUser = responseUser.data.user.id;

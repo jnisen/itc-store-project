@@ -22,7 +22,7 @@ export class User {
     id: string;
     role: string;
     store: string
-    cart?: Array<Cart>;
+    cart: Array<Cart>;
     cartBuy: Array<Cart>; //want to be optional
 
     constructor(username: string,email: string, password: string) {
@@ -57,10 +57,10 @@ export class Users{
 
     buyCart(idUser:string){
       const user = this.findUserById(idUser);
-      user.cartBuy = user.cart
+      if (user.cartBuy === undefined) user.cartBuy = user.cart
+      else user.cartBuy.push(user.cart)
       user.cart = []
       this.writeAllUsers()
-      return user
     }
 
     editCar(idUser:string, body, id){

@@ -1,3 +1,6 @@
+const btnReturn  = document.querySelector('.btn-return');
+
+btnReturn.addEventListener('click', returnMainPage)
 
 async function getCart(event) {
     event.preventDefault();
@@ -179,3 +182,18 @@ function editCartPromise(idUser, idProduct, newNumber) {
         })
     })
 }
+
+
+async function returnMainPage(){
+    
+    const responseUser = await axios.get('/user/readCookie')
+    const {data} = responseUser
+    
+    const email = data.user.email
+    const store = data.user.store
+
+    window.location.href = `http://localhost:3000/main.html?email=${email}?store=${store}`
+
+
+}
+

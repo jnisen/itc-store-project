@@ -40,20 +40,19 @@ async function addProductCart(id, name, description, image, price) {
 }
 
 
-async function editQuantityCart(id) {
+// async function editQuantityCart(id) {
 
-    // const inputCount = document.getElementById(`${id}`) as HTMLInputElement;
+//     // const inputCount = document.getElementById(`${id}`) as HTMLInputElement;
 
-    // const newNumber = {
-    //     number:inputCount.value
-    // }
+//     // const newNumber = {
+//     //     number:inputCount.value
+//     // }
 
-    const responseUser = await axios.get('/user/readCookie')
-    let idUser = responseUser.data.user.id
+//     const responseUser = await axios.get('/user/readCookie')
+//     let idUser = responseUser.data.user.id
 
-    const response = await editCartPromise(idUser, id, newNumber)
-    console.log(response)
-}
+   
+// }
 
 //clousures
 
@@ -75,20 +74,3 @@ function addCartPromise(addCartForNow, idUser) {
     })
 }
 
-function editCartPromise(idUser, idProduct, newNumber) {
-    return new Promise((resolve, reject) => {
-        fetch(`/user/editCartNow/${idUser}/${idProduct}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(newNumber)
-        }).then(function (res) {
-            if (res.status === 200 && res.ok) {
-                return res.json().then(user => { resolve(user) });
-            } else {
-                return res.json().then(user => { swal('Oops!', `${user.error}`, `error`) })
-            }
-        })
-    })
-}

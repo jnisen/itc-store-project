@@ -62,7 +62,7 @@ function renderCart(data) {
         html += "<table id=\"cart\">\n        <thead>\n    <tr>\n        <th>Image</th>\n        <th>Name</th>\n        <th>Description</th>\n        <th>Quantity</th>\n        <th>Price</th>\n        <th>Total</th>\n        <th><th>\n    <tr>\n    </thead>\n    <tbody>";
         data.forEach(function (cart) {
             var id = cart.id, name = cart.name, description = cart.description, image = cart.image, number = cart.number, price = cart.price, total = cart.total;
-            html += "<tr>\n                      <td> <img src=\"" + image + "\" alt=\"" + name + "\" style = \"width:70px; height:70px\"</td>\n                        <td>" + name + "</td>\n                        <td>" + description + "</td>\n                        <td>" + number + "</td>\n                        <td>" + price + "</td>\n                        <td>" + total + "</td>\n                        <td><i class=\"fa fa-edit btn-edit\" onclick='editQuantityCart(\"" + id + "\")' title=\"Edit Item\" style=\"cursor:pointer\"></i></td>   \n                        <td><i class=\"fa fa-trash\" onclick='deleteProductOnCart(\"" + id + "\")' title=\"Delete Item\" style=\"cursor:pointer\"></i></td>   \n                 </tr> ";
+            html += "<tr>\n                      <td> <img src=\"" + image + "\" alt=\"" + name + "\" style = \"width:70px; height:70px\"</td>\n                        <td>" + name + "</td>\n                        <td>" + description + "</td>\n                        <td>" + number + "</td>\n                        <td>\u20AA " + price + "</td>\n                        <td>\u20AA " + total + "</td>\n                        <td><i class=\"fa fa-edit btn-edit\" onclick='editQuantityCart(\"" + id + "\",\"" + number + "\")' title=\"Edit Item\" style=\"cursor:pointer\"></i></td>   \n                        <td><i class=\"fa fa-trash\" onclick='deleteProductOnCart(\"" + id + "\")' title=\"Delete Item\" style=\"cursor:pointer\"></i></td>   \n                 </tr> ";
         });
         html += "</tbody></table>\n                 <button onclick='buyCart()'>Buy Cart</button> ";
     }
@@ -117,6 +117,51 @@ function deleteProductOnCart(id) {
         });
     });
 }
+function editQuantityCart(id, number) {
+    return __awaiter(this, void 0, void 0, function () {
+        var responseUser, idUser;
+        var _this = this;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, axios.get('/user/readCookie')];
+                case 1:
+                    responseUser = _a.sent();
+                    idUser = responseUser.data.user.id;
+                    swal("You have " + number + " , change the quantity here:", {
+                        content: "input",
+                        buttons: {
+                            cancel: true,
+                            confirm: "Confirm"
+                        }
+                    }).then(function (value) { return __awaiter(_this, void 0, void 0, function () {
+                        var newNumber, response;
+                        return __generator(this, function (_a) {
+                            switch (_a.label) {
+                                case 0:
+                                    if (!(value === null)) return [3 /*break*/, 1];
+                                    swal("Edit Cancelled!", "", "success");
+                                    return [3 /*break*/, 3];
+                                case 1:
+                                    newNumber = {
+                                        number: value
+                                    };
+                                    return [4 /*yield*/, editCartPromise(idUser, id, newNumber)
+                                        //middleware para ver si el cambio es menor al stock
+                                    ];
+                                case 2:
+                                    response = _a.sent();
+                                    //middleware para ver si el cambio es menor al stock
+                                    renderCart(response);
+                                    _a.label = 3;
+                                case 3: return [2 /*return*/];
+                            }
+                        });
+                    }); });
+                    return [2 /*return*/];
+            }
+        });
+    });
+}
 function buyCart() {
     return __awaiter(this, void 0, void 0, function () {
         var responseUser, idUser, response;
@@ -133,7 +178,7 @@ function buyCart() {
                         icon: "success",
                         button: false
                     });
-                    window.location.href = 'login.html';
+                    setInterval(function () { window.location.href = 'login.html'; }, 2000);
                     return [2 /*return*/];
             }
         });
@@ -143,6 +188,24 @@ function buyCartPromise(idUser) {
     return new Promise(function (resolve, reject) {
         fetch("/user/buyCart/" + idUser, {
             method: 'POST'
+        }).then(function (res) {
+            if (res.status === 200 && res.ok) {
+                return res.json().then(function (user) { resolve(user); });
+            }
+            else {
+                return res.json().then(function (user) { swal('Oops!', "" + user.error, "error"); });
+            }
+        });
+    });
+}
+function editCartPromise(idUser, idProduct, newNumber) {
+    return new Promise(function (resolve, reject) {
+        fetch("/user/editCartNow/" + idUser + "/" + idProduct, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newNumber)
         }).then(function (res) {
             if (res.status === 200 && res.ok) {
                 return res.json().then(function (user) { resolve(user); });

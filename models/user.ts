@@ -63,11 +63,13 @@ export class Users{
       this.writeAllUsers()
     }
 
-    editCar(idUser:string, body, id){
+    editCar(idUser:string, body, id:string){
       const user = this.findUserById(idUser);
       const findProductOnCart = user.cart.find(product=>product.id === id)
       findProductOnCart.number = body.number;
+      findProductOnCart.total = body.number * findProductOnCart.total;
       this.writeAllUsers();
+      return user.cart
       
     }
 

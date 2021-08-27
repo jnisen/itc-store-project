@@ -56,8 +56,8 @@ function addCartForNow(req, res) {
 exports.addCartForNow = addCartForNow;
 function editCartNow(req, res) {
     var allUsers = new user_1.Users();
-    allUsers.editCar(req.params.idUser, req.body, req.params.idProduct);
-    res.send({ ok: "edit" });
+    var cartUser = allUsers.editCar(req.params.idUser, req.body, req.params.idProduct);
+    res.send(cartUser);
 }
 exports.editCartNow = editCartNow;
 function getAllCart(req, res) {

@@ -74,24 +74,14 @@ function addProductCart(id, name, description, image, price) {
         });
     });
 }
-function editQuantityCart(id) {
-    return __awaiter(this, void 0, void 0, function () {
-        var responseUser, idUser, response;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0: return [4 /*yield*/, axios.get('/user/readCookie')];
-                case 1:
-                    responseUser = _a.sent();
-                    idUser = responseUser.data.user.id;
-                    return [4 /*yield*/, editCartPromise(idUser, id, newNumber)];
-                case 2:
-                    response = _a.sent();
-                    console.log(response);
-                    return [2 /*return*/];
-            }
-        });
-    });
-}
+// async function editQuantityCart(id) {
+//     // const inputCount = document.getElementById(`${id}`) as HTMLInputElement;
+//     // const newNumber = {
+//     //     number:inputCount.value
+//     // }
+//     const responseUser = await axios.get('/user/readCookie')
+//     let idUser = responseUser.data.user.id
+// }
 //clousures
 function addCartPromise(addCartForNow, idUser) {
     return new Promise(function (resolve, reject) {
@@ -101,24 +91,6 @@ function addCartPromise(addCartForNow, idUser) {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(addCartForNow)
-        }).then(function (res) {
-            if (res.status === 200 && res.ok) {
-                return res.json().then(function (user) { resolve(user); });
-            }
-            else {
-                return res.json().then(function (user) { swal('Oops!', "" + user.error, "error"); });
-            }
-        });
-    });
-}
-function editCartPromise(idUser, idProduct, newNumber) {
-    return new Promise(function (resolve, reject) {
-        fetch("/user/editCartNow/" + idUser + "/" + idProduct, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(newNumber)
         }).then(function (res) {
             if (res.status === 200 && res.ok) {
                 return res.json().then(function (user) { resolve(user); });

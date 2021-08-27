@@ -41,9 +41,9 @@ function renderCart(data) {
                         <td>${name}</td>
                         <td>${description}</td>
                         <td>${number}</td>
-                        <td>${price}</td>
-                        <td>${total}</td>
-                        <td><i class="fa fa-edit btn-edit" onclick='editQuantityCart("${id}")' title="Edit Item" style="cursor:pointer"></i></td>   
+                        <td>₪ ${price}</td>
+                        <td>₪ ${total}</td>
+                        <td><i class="fa fa-edit btn-edit" onclick='editQuantityCart("${id}","${number}")' title="Edit Item" style="cursor:pointer"></i></td>   
                         <td><i class="fa fa-trash" onclick='deleteProductOnCart("${id}")' title="Delete Item" style="cursor:pointer"></i></td>   
                  </tr> `
         });
@@ -54,10 +54,7 @@ function renderCart(data) {
         let html = ''
     }
 
-
-
     cartRoot.innerHTML = html
-
 
 }
 
@@ -92,6 +89,36 @@ async function deleteProductOnCart(id) {
 }
 
 
+async function editQuantityCart(id:string, number:string){
+    
+    const responseUser = await axios.get('/user/readCookie')
+    let idUser = responseUser.data.user.id
+
+
+    swal(`You have ${number} , change the quantity here:`, {
+        content: "input",
+        buttons: {
+            cancel: true,
+            confirm: "Confirm"
+        },
+      }).then(async (value) => {
+        if(value === null){
+            swal("Edit Cancelled!", "", "success");
+        }else{
+
+            const newNumber = {
+                number:value
+            }
+            const response = await editCartPromise(idUser, id, newNumber)
+            //middleware para ver si el cambio es menor al stock
+            renderCart(response)
+    }
+      });
+}
+
+
+
+
 async function buyCart() {
     const responseUser = await axios.get('/user/readCookie')
     let idUser = responseUser.data.user.id
@@ -102,7 +129,9 @@ async function buyCart() {
         button: false,
     });
 
-    window.location.href = 'login.html'
+    setInterval(function(){window.location.href = 'login.html'}, 2000);
+
+   
 }
 
 
@@ -121,3 +150,20 @@ function buyCartPromise(idUser) {
 }
 
 
+function editCartPromise(idUser, idProduct, newNumber) {
+    return new Promise((resolve, reject) => {
+        fetch(`/user/editCartNow/${idUser}/${idProduct}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newNumber)
+        }).then(function (res) {
+            if (res.status === 200 && res.ok) {
+                return res.json().then(user => { resolve(user) });
+            } else {
+                return res.json().then(user => { swal('Oops!', `${user.error}`, `error`) })
+            }
+        })
+    })
+}

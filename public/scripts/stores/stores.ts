@@ -52,15 +52,17 @@ async function sendToMainSports(ev) {
         const responseUser = await axios.get('/user/readCookie')
         let role = responseUser.data.user.role
 
+        
+
         if (role === 'public') {
-            
-            if (data.allStores.allProducts.length === 0) throw new Error('No stock available')
-            else {
-                swal(`${response.data.ok}`, { icon: "success", button: false });
+           
+        
+            if (data.allStores === undefined) throw new Error('No stock available')
+            swal(`${response.data.ok}`, { icon: "success", button: false });
                 setInterval(function () {
                     window.location.href = `main.html?email=${emailUser}?store=${store.store}`
                 }, 1000);
-            }
+            
         } else {
             
             setInterval(function () {

@@ -95,14 +95,12 @@ function sendToMainSports(ev) {
                     responseUser = _a.sent();
                     role = responseUser.data.user.role;
                     if (role === 'public') {
-                        if (data.allStores.allProducts.length === 0)
+                        if (data.allStores === undefined)
                             throw new Error('No stock available');
-                        else {
-                            swal("" + response.data.ok, { icon: "success", button: false });
-                            setInterval(function () {
-                                window.location.href = "main.html?email=" + emailUser_1 + "?store=" + store_1.store;
-                            }, 1000);
-                        }
+                        swal("" + response.data.ok, { icon: "success", button: false });
+                        setInterval(function () {
+                            window.location.href = "main.html?email=" + emailUser_1 + "?store=" + store_1.store;
+                        }, 1000);
                     }
                     else {
                         setInterval(function () {

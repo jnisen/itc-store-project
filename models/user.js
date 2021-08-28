@@ -40,7 +40,7 @@ var Users = /** @class */ (function () {
     Users.prototype.buyCart = function (idUser) {
         var user = this.findUserById(idUser);
         if (user.cartBuy === undefined)
-            user.cartBuy = user.cart;
+            user.cartBuy = [user.cart];
         else
             user.cartBuy.push(user.cart);
         user.cart = [];
@@ -52,17 +52,23 @@ var Users = /** @class */ (function () {
         findProductOnCart.number = body.number;
         findProductOnCart.total = body.number * findProductOnCart.price;
         this.writeAllUsers();
-        return user.cart;
+        return this.findCartByStore(body.store, idUser);
     };
-    Users.prototype.deleteProductOnCart = function (idProduct, idUser) {
+    Users.prototype.deleteProductOnCart = function (idProduct, idUser, store) {
         var user = this.findUserById(idUser);
-        user.cart = user.cart.filter(function (product) { return product.id !== idProduct; });
+        var index = user.cart.findIndex(function (product) { return product.id === idProduct; });
+        user.cart.splice(index, 1);
         this.writeAllUsers();
-        return user;
+        return this.findCartByStore(store, idUser);
     };
     Users.prototype.findUserById = function (id) {
         var user = this.allUsers.find(function (user) { return user.id === id; });
         return user;
+    };
+    Users.prototype.findCartByStore = function (store, id) {
+        var user = this.findUserById(id);
+        var seeCart = user.cart.filter(function (user) { return user.store === store; });
+        return seeCart;
     };
     Users.prototype.writeAllUsers = function () {
         fs.writeFileSync(allUsersJson, JSON.stringify(this.allUsers));

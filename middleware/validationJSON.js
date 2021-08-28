@@ -64,8 +64,7 @@ exports.isThereProductOnDB = isThereProductOnDB;
 function isThereSamProductOnCart(req, res, next) {
     try {
         var allUsers = user_1.readAllUsers();
-        var idUser_1 = req.params.idUser;
-        var getCart = allUsers.find(function (user) { return user.id === idUser_1; }).cart;
+        var getCart = allUsers.find(function (user) { return user.id === req.id; }).cart;
         var findProduct = getCart.some(function (product) { return product.id === req.body.id; });
         if (findProduct)
             throw new Error('Product already picked');

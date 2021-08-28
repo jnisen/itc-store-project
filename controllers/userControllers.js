@@ -1,6 +1,6 @@
 "use strict";
 exports.__esModule = true;
-exports.buyCart = exports.deleteProductOnCart = exports.getAllCart = exports.editCartNow = exports.addCartForNow = exports.getEmail = exports.addSection = exports.sendCookie = exports.addNewUser = void 0;
+exports.seeCartStore = exports.buyCart = exports.deleteProductOnCart = exports.editCartNow = exports.addCartForNow = exports.getEmail = exports.addSection = exports.sendCookie = exports.addNewUser = void 0;
 var user_1 = require("../models/user");
 var products_1 = require("../models/products");
 var carts_1 = require("../models/carts");
@@ -50,45 +50,50 @@ function getEmail(req, res) {
 exports.getEmail = getEmail;
 function addCartForNow(req, res) {
     var allUsers = new user_1.Users();
-    allUsers.addCart(req.params.idUser, req.body);
+    allUsers.addCart(req.id, req.body);
     res.send({ ok: true });
 }
 exports.addCartForNow = addCartForNow;
 function editCartNow(req, res) {
     var allUsers = new user_1.Users();
-    var cartUser = allUsers.editCar(req.params.idUser, req.body, req.params.idProduct);
-    res.send(cartUser);
+    var cart = allUsers.editCar(req.id, req.body, req.params.idProduct);
+    res.send(cart);
 }
 exports.editCartNow = editCartNow;
-function getAllCart(req, res) {
-    var allUsers = new user_1.Users();
-    var user = allUsers.findUserById(req.params.idUser);
-    res.send({ cart: user.cart });
-}
-exports.getAllCart = getAllCart;
+// export function getAllCart(req, res){
+//     const allUsers = new Users();
+//     const user = allUsers.findUserById(req.params.idUser);
+//     res.send({cart:user.cart})
+// }
 function deleteProductOnCart(req, res) {
     var allUsers = new user_1.Users();
-    var _a = req.params, id = _a.id, idUser = _a.idUser;
-    var user = allUsers.deleteProductOnCart(id, idUser);
-    res.send({ ok: "Delete Product", cart: user.cart });
+    var _a = req.params, id = _a.id, store = _a.store;
+    var cart = allUsers.deleteProductOnCart(id, req.id, store);
+    res.send({ ok: "Delete Product", cart: cart });
 }
 exports.deleteProductOnCart = deleteProductOnCart;
 function buyCart(req, res) {
     var allUsers = new user_1.Users();
-    var idUser = req.params.idUser;
-    var user = allUsers.findUserById(idUser);
+    var user = allUsers.findUserById(req.id);
     var date = new Date();
     var dateString = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
     var newCart = {
         id: uuidv4(),
         date: dateString,
-        cart: user.cart
+        cart: user.cart,
+        store: req.params.store
     };
     var allProducts = new products_1.Products();
     allProducts.editProductCart(user.cart);
     carts_1.addCart(newCart);
     store_1.removeStock(user.cart, user.store);
-    allUsers.buyCart(idUser);
+    allUsers.buyCart(req.id);
     res.send({ "ok": "Felicidades por su compra" });
 }
 exports.buyCart = buyCart;
+function seeCartStore(req, res) {
+    var allUsers = new user_1.Users();
+    var cart = allUsers.findCartByStore(req.params.store, req.id);
+    res.send({ cart: cart });
+}
+exports.seeCartStore = seeCartStore;

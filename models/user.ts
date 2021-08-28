@@ -23,7 +23,7 @@ export class User {
     role: string;
     store: string
     cart: Array<Cart>;
-    cartBuy: Array<Cart>; //want to be optional
+    cartBuy: Array<Cart>; 
 
     constructor(username: string,email: string, password: string) {
         this.username = username;  
@@ -57,7 +57,7 @@ export class Users{
 
     buyCart(idUser:string){
       const user = this.findUserById(idUser);
-      if (user.cartBuy === undefined) user.cartBuy = user.cart
+      if (user.cartBuy === undefined) user.cartBuy = [user.cart]
       else user.cartBuy.push(user.cart)
       user.cart = []
       this.writeAllUsers()
@@ -69,20 +69,27 @@ export class Users{
       findProductOnCart.number = body.number;
       findProductOnCart.total = body.number * findProductOnCart.price;
       this.writeAllUsers();
-      return user.cart
+      return this.findCartByStore(body.store,idUser)
       
     }
 
-    deleteProductOnCart(idProduct, idUser){
-      let user = this.findUserById(idUser);
-      user.cart = user.cart.filter(product=>product.id !== idProduct)
+    deleteProductOnCart(idProduct, idUser,store){
+      const user = this.findUserById(idUser);
+      const index = user.cart.findIndex(product=>product.id === idProduct)
+      user.cart.splice(index, 1)
       this.writeAllUsers();
-      return user
+      return this.findCartByStore(store,idUser)
     }
 
     findUserById(id:string){
       const user = this.allUsers.find(user=>user.id === id);
       return user
+    }
+
+    findCartByStore(store:string, id:string){
+      const user = this.findUserById(id);
+      const seeCart = user.cart.filter(user=>user.store === store)
+      return seeCart
     }
 
     writeAllUsers(){

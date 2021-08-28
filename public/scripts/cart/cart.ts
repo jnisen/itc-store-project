@@ -5,11 +5,10 @@ btnReturn.addEventListener('click', returnMainPage)
 async function getCart(event) {
     event.preventDefault();
 
-    const responseUser = await axios.get('/user/readCookie')
-    let idUser = responseUser.data.user.id
-
-    const getProduct = await axios.get(`/user/getAllProducts/${idUser}`)
-    const { data } = getProduct
+    const store = location.search.substr(1).split("=")[1]
+   
+    const seeCart = await axios.get(`/user/seeCartStore/${store}`)
+    const {data} = seeCart
 
     renderCart(data.cart) 
 }
@@ -84,8 +83,9 @@ function renderCart(data) {
 
 async function deleteProductOnCart(id) {
 
-    const responseUser = await axios.get('/user/readCookie')
-    let idUser = responseUser.data.user.id
+
+
+    const store = location.search.substr(1).split("=")[1]
 
     swal({
         title: "Do you want to delete this product?",
@@ -99,7 +99,7 @@ async function deleteProductOnCart(id) {
     })
         .then(async (isConfirm) => {
             if (isConfirm) {
-                const response = await axios.delete(`/user/deleteProductOnCart/${id}/${idUser}`)
+                const response = await axios.delete(`/user/deleteProductOnCart/${id}/${store}`)
                 const { data } = response
                 const { ok, cart } = data
                 swal(`${ok}`, "", "success")
@@ -114,9 +114,7 @@ async function deleteProductOnCart(id) {
 
 async function editQuantityCart(id:string, number:string){
     
-    const responseUser = await axios.get('/user/readCookie')
-    let idUser = responseUser.data.user.id
-
+    const store = location.search.substr(1).split("=")[1]
 
     swal(`You have ${number} , change the quantity here:`, {
         content: "input",
@@ -130,9 +128,11 @@ async function editQuantityCart(id:string, number:string){
         }else{
 
             const newNumber = {
-                number:+value
+                number:+value,
+                store:store,
+
             }
-            const response = await editCartPromise(idUser, id, newNumber)
+            const response = await editCartPromise(id, newNumber)
             renderCart(response)
     }
       });
@@ -142,10 +142,9 @@ async function editQuantityCart(id:string, number:string){
 
 
 async function buyCart() {
-    const responseUser = await axios.get('/user/readCookie')
-    let idUser = responseUser.data.user.id
+    const store = location.search.substr(1).split("=")[1]
 
-    const response = await buyCartPromise(idUser)
+    const response = await buyCartPromise(store)
     swal(`${response.ok}`, {
         icon: "success",
         button: false,
@@ -157,9 +156,9 @@ async function buyCart() {
 }
 
 
-function buyCartPromise(idUser) {
+function buyCartPromise(store) {
     return new Promise((resolve, reject) => {
-        fetch(`/user/buyCart/${idUser}`, {
+        fetch(`/user/buyCart/${store}`, {
             method: 'POST',
         }).then(function (res) {
             if (res.status === 200 && res.ok) {
@@ -172,9 +171,9 @@ function buyCartPromise(idUser) {
 }
 
 
-function editCartPromise(idUser, idProduct, newNumber) {
+function editCartPromise(idProduct, newNumber) {
     return new Promise((resolve, reject) => {
-        fetch(`/user/editCartNow/${idUser}/${idProduct}`, {
+        fetch(`/user/editCartNow/${idProduct}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'

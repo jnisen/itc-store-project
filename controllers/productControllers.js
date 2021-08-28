@@ -5,7 +5,7 @@ var products_1 = require("../models/products");
 var store_1 = require("../models/store");
 var allListProducts = new products_1.Products();
 function addNewProduct(req, res) {
-    var product = new products_1.Product(req.body.name, req.body.description, req.body.image, req.body.quantity, req.body.price, req.body.store);
+    var product = new products_1.Product(req.body.name, req.body.description, req.body.image, req.body.price, req.body.quantity, req.body.store);
     allListProducts.addNewProduct(product);
     store_1.addProductToStore(product);
     var allProducts = allListProducts.findStore(req.params.store);

@@ -10,7 +10,7 @@ async function addProductCart(id, name, description, image, price, store) {
 
     const addCart = document.querySelector('.addCart') as HTMLElement
 
-    let total = +number * price
+    let total = +number * +price
 
     const date = new Date();
     const dateString = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear()
@@ -21,30 +21,33 @@ async function addProductCart(id, name, description, image, price, store) {
         name: name,
         description: description,
         image: image,
-        price: price,
-        number: number,
-        total: total,
+        price: +price,
+        number: +number,
+        total: +total,
         store:store,
     }
 
-    const responseUser = await axios.get('/user/readCookie')
-    let idUser = responseUser.data.user.id
+    const seeCart = await axios.get(`/user/seeCartStore/${store}`)
+    const {data} = seeCart
+    
+    let count = data.cart.length
 
-    let count = responseUser.data.user.cart.length
 
-    const response:any = await addCartPromise(addCartForNow, idUser)
+    const response:any = await addCartPromise(addCartForNow)
     const {ok} = response
 
     if (ok) {
         count++;
-        addCart.innerText = `${count}`
-    }
+         addCart.innerText = `${count}`
+    }else{
+         btnSeeCart.disabled = true //dont think is necessary
+     }
 
 }
 
-function addCartPromise(addCartForNow, idUser) {
+function addCartPromise(addCartForNow) {
     return new Promise((resolve, reject) => {
-        fetch(`/user/addCartForNow/${idUser}`, {
+        fetch(`/user/addCartForNow/`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

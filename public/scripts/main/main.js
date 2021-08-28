@@ -50,11 +50,12 @@ function getAllProducts() {
                     capitalizeStore = store.charAt(0).toUpperCase() + store.slice(1);
                     h1.innerText = "Welcome to the " + capitalizeStore + " Store";
                     title[0].innerHTML = capitalizeStore + " Store";
-                    return [4 /*yield*/, axios.get("/store/getStore/" + store)];
+                    return [4 /*yield*/, axios.get("/store/getStore/" + store)]; // te dice que productos hay disponobles.
                 case 1:
-                    responseAllProducts = _a.sent();
+                    responseAllProducts = _a.sent() // te dice que productos hay disponobles.
+                    ;
                     data = responseAllProducts.data;
-                    return [4 /*yield*/, axios.get('/user/readCookie')];
+                    return [4 /*yield*/, axios.get("/user/readCookie")];
                 case 2:
                     responseUser = _a.sent();
                     role = responseUser.data.user.role;
@@ -64,7 +65,7 @@ function getAllProducts() {
                     }
                     else {
                         if (data.allStores)
-                            renderAllProductsUser(data.allStores.allProducts, responseUser);
+                            renderAllProductsUser(data.allStores.allProducts, responseUser, store);
                     }
                     return [2 /*return*/];
             }
@@ -100,38 +101,51 @@ function renderAllProductsAdmin(allProducts) {
         });
     });
 }
-function renderAllProductsUser(allProducts, responseUser) {
+function renderAllProductsUser(allProducts, responseUser, store) {
     return __awaiter(this, void 0, void 0, function () {
-        var html, rootProducts, store, btnAdd, addCart;
+        var html, rootProducts, btnAdd, addCart, btnSeeCart, seeCart, data;
         var _this = this;
         return __generator(this, function (_a) {
-            html = "";
-            rootProducts = document.querySelector('#rootCarts');
-            store = location.search.substr(1).split("=")[2];
-            btnAdd = document.querySelector('.btn-add');
-            btnAdd.style.display = 'none';
-            html += "<div class=\"carrito\">\n                    <span>Carrito<i class=\"fas fa-shopping-cart\"></i><span>\n                    <span class=\"addCart\" style=\"color:brown\">0</span>  \n                    <button onclick='toCarrito(event)' class=\"btn-sent-cart\" disabled>See Cart</button>\n                </div>\n                <div class=\"rootCarts__productsUser\">";
-            allProducts.forEach(function (products) { return __awaiter(_this, void 0, void 0, function () {
-                return __generator(this, function (_a) {
-                    switch (_a.label) {
-                        case 0:
-                            if (!(products.quantity <= 0)) return [3 /*break*/, 2];
-                            return [4 /*yield*/, axios["delete"]("product/deleteProduct/" + products.id)];
-                        case 1:
-                            _a.sent();
-                            return [3 /*break*/, 3];
-                        case 2:
-                            html += "\n                \n                <div class=\"rootCarts__productsUser__product\">\n                    \n                    <span class=\"name\">" + products.name + "</span>\n                    <span class=\"description\">" + products.description + "</span>\n                    <img src=\"" + products.image + "\" alt=\"" + products.name + "\" class=\"image\" style = \"width:200px; height:200px\" onclick='sendProduct(\"" + products.id + "\")'>\n\n                    <span class=\"stock\">\n                            Count: <input type=\"number\" id=\"" + products.id + "\" class=\"count\" name=\"countproducts\" value=\"1\" min=\"1\" max=\"" + products.quantity + "\">\n                    </span>\n                    <span class=\"price\">Price: \u20AA " + products.price + "</span>\n                    <button class=\"btnadduser" + products.id + " btn-cart\" onclick='addProductCart(\"" + products.id + "\",\"" + products.name + "\",\"" + products.description + "\",\"" + products.image + "\",\"" + products.price + "\",\"" + store + "\")'>Add Cart</button>\n                </div>";
-                            _a.label = 3;
-                        case 3: return [2 /*return*/];
+            switch (_a.label) {
+                case 0:
+                    html = "";
+                    rootProducts = document.querySelector('#rootCarts');
+                    btnAdd = document.querySelector('.btn-add');
+                    btnAdd.style.display = 'none';
+                    html += "<div class=\"carrito\">\n                    <span>Carrito<i class=\"fas fa-shopping-cart\"></i><span>\n                    <span class=\"addCart\" style=\"color:brown\">0</span>  \n                    <button onclick='toCarrito(event)' class=\"btn-sent-cart\" disabled>See Cart</button>\n                </div>\n                <div class=\"rootCarts__productsUser\">";
+                    allProducts.forEach(function (products) { return __awaiter(_this, void 0, void 0, function () {
+                        return __generator(this, function (_a) {
+                            switch (_a.label) {
+                                case 0:
+                                    if (!(products.quantity <= 0)) return [3 /*break*/, 2];
+                                    return [4 /*yield*/, axios["delete"]("product/deleteProduct/" + products.id)];
+                                case 1:
+                                    _a.sent();
+                                    return [3 /*break*/, 3];
+                                case 2:
+                                    html += "\n                \n                <div class=\"rootCarts__productsUser__product\">\n                    \n                    <span class=\"name\">" + products.name + "</span>\n                    <span class=\"description\">" + products.description + "</span>\n                    <img src=\"" + products.image + "\" alt=\"" + products.name + "\" class=\"image\" style = \"width:200px; height:200px\" onclick='sendProduct(\"" + products.id + "\")'>\n\n                    <span class=\"stock\">\n                            Count: <input type=\"number\" id=\"" + products.id + "\" class=\"count\" name=\"countproducts\" value=\"1\" min=\"1\" max=\"" + products.quantity + "\">\n                    </span>\n                    <span class=\"price\">Price: \u20AA " + products.price + "</span>\n                    <button class=\"btnadduser" + products.id + " btn-cart\" onclick='addProductCart(\"" + products.id + "\",\"" + products.name + "\",\"" + products.description + "\",\"" + products.image + "\",\"" + products.price + "\",\"" + store + "\")'>Add Cart</button>\n                </div>";
+                                    _a.label = 3;
+                                case 3: return [2 /*return*/];
+                            }
+                        });
+                    }); });
+                    rootProducts.innerHTML = html;
+                    addCart = document.querySelector('.addCart');
+                    btnSeeCart = document.querySelector('.btn-sent-cart');
+                    return [4 /*yield*/, axios.get("/user/seeCartStore/" + store)];
+                case 1:
+                    seeCart = _a.sent();
+                    data = seeCart.data;
+                    if (data.cart.length > 0) {
+                        addCart.innerText = "" + data.cart.length;
+                        btnSeeCart.disabled = false;
+                        // 
                     }
-                });
-            }); });
-            rootProducts.innerHTML = html;
-            addCart = document.querySelector('.addCart');
-            console.log(responseUser.data.user);
-            addCart.innerText = "" + responseUser.data.user.cart.length;
-            return [2 /*return*/];
+                    else {
+                        btnSeeCart.disabled = true;
+                    }
+                    return [2 /*return*/];
+            }
         });
     });
 }
@@ -164,7 +178,8 @@ function readURL(input) {
 }
 function toCarrito(event) {
     event.preventDefault();
-    window.location.href = 'cart.html';
+    var store = location.search.substr(1).split("=")[2];
+    window.location.href = "cart.html?store=" + store;
 }
 function returnLoginPage() {
     window.location.href = 'login.html';

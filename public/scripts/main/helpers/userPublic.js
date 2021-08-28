@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 function addProductCart(id, name, description, image, price, store) {
     return __awaiter(this, void 0, void 0, function () {
-        var btnSeeCart, inputCount, number, addCart, total, date, dateString, addCartForNow, responseUser, idUser, count, response, ok;
+        var btnSeeCart, inputCount, number, addCart, total, date, dateString, addCartForNow, seeCart, data, count, response, ok;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -45,7 +45,7 @@ function addProductCart(id, name, description, image, price, store) {
                     inputCount = document.getElementById("" + id);
                     number = inputCount.value;
                     addCart = document.querySelector('.addCart');
-                    total = +number * price;
+                    total = +number * +price;
                     date = new Date();
                     dateString = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
                     addCartForNow = {
@@ -54,17 +54,17 @@ function addProductCart(id, name, description, image, price, store) {
                         name: name,
                         description: description,
                         image: image,
-                        price: price,
-                        number: number,
-                        total: total,
+                        price: +price,
+                        number: +number,
+                        total: +total,
                         store: store
                     };
-                    return [4 /*yield*/, axios.get('/user/readCookie')];
+                    return [4 /*yield*/, axios.get("/user/seeCartStore/" + store)];
                 case 1:
-                    responseUser = _a.sent();
-                    idUser = responseUser.data.user.id;
-                    count = responseUser.data.user.cart.length;
-                    return [4 /*yield*/, addCartPromise(addCartForNow, idUser)];
+                    seeCart = _a.sent();
+                    data = seeCart.data;
+                    count = data.cart.length;
+                    return [4 /*yield*/, addCartPromise(addCartForNow)];
                 case 2:
                     response = _a.sent();
                     ok = response.ok;
@@ -72,14 +72,17 @@ function addProductCart(id, name, description, image, price, store) {
                         count++;
                         addCart.innerText = "" + count;
                     }
+                    else {
+                        btnSeeCart.disabled = true; //dont think is necessary
+                    }
                     return [2 /*return*/];
             }
         });
     });
 }
-function addCartPromise(addCartForNow, idUser) {
+function addCartPromise(addCartForNow) {
     return new Promise(function (resolve, reject) {
-        fetch("/user/addCartForNow/" + idUser, {
+        fetch("/user/addCartForNow/", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

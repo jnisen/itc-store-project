@@ -23,21 +23,19 @@ async function getAllProducts() {
     h1.innerText = `Welcome to the ${capitalizeStore} Store`
     title[0].innerHTML = `${capitalizeStore} Store`
 
-    const responseAllProducts = await axios.get(`/store/getStore/${store}`)
+    const responseAllProducts = await axios.get(`/store/getStore/${store}`) // te dice que productos hay disponobles.
     const { data } = responseAllProducts
 
-    const responseUser = await axios.get('/user/readCookie')
+    const responseUser = await axios.get(`/user/readCookie`)
     let role = responseUser.data.user.role
 
     if (role === 'admin'){
         if (data.allStores) renderAllProductsAdmin(data.allStores.allProducts)
     } else{
-        if (data.allStores) renderAllProductsUser(data.allStores.allProducts,responseUser)
+        if (data.allStores) renderAllProductsUser(data.allStores.allProducts,responseUser,store)
     }
 
 }
-
-
 
 
 
@@ -76,10 +74,10 @@ async function renderAllProductsAdmin(allProducts:Array<Product>) {
 
 }
 
-async function renderAllProductsUser(allProducts:Array<Product>, responseUser) {
+async function renderAllProductsUser(allProducts:Array<Product>, responseUser, store) {
     let html: string = "";
     const rootProducts = document.querySelector('#rootCarts')
-    const store = location.search.substr(1).split("=")[2]
+    
     const btnAdd = document.querySelector('.btn-add') as HTMLButtonElement
 
         btnAdd.style.display = 'none'
@@ -112,14 +110,26 @@ async function renderAllProductsUser(allProducts:Array<Product>, responseUser) {
                     <button class="btnadduser${products.id} btn-cart" onclick='addProductCart("${products.id}","${products.name}","${products.description}","${products.image}","${products.price}","${store}")'>Add Cart</button>
                 </div>`
         }
-    );
+    });
 
 
     rootProducts.innerHTML = html
 
     const addCart = document.querySelector('.addCart') as HTMLElement
-    console.log(responseUser.data.user)
-    addCart.innerText = `${responseUser.data.user.cart.length}`
+    const btnSeeCart = document.querySelector('.btn-sent-cart') as HTMLButtonElement
+
+    const seeCart = await axios.get(`/user/seeCartStore/${store}`)
+    const {data} = seeCart
+
+    if (data.cart.length > 0){
+        addCart.innerText = `${data.cart.length}`
+        btnSeeCart.disabled = false
+        // 
+
+    }else{
+        btnSeeCart.disabled = true
+    }
+   
     
 
 }
@@ -153,7 +163,8 @@ function readURL(input:any): void {
 
 function toCarrito(event) {
     event.preventDefault();
-    window.location.href = 'cart.html'
+    const store = location.search.substr(1).split("=")[2]
+    window.location.href = `cart.html?store=${store}`
 }
 
 function returnLoginPage() {

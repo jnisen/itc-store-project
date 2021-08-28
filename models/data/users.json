@@ -1,1 +1,58 @@
-[{"username":"jnisen","email":"jnisen@gmail.com","password":"a1234","id":"699c1422-dd9b-474f-be1b-cb6c9b1d3375","role":"admin","store":"football"},{"username":"pepe","email":"pepe@gmail.com","password":"a","id":"e27626df-b194-46f3-baa7-02290f8e0146","role":"public","cart":[{"id":"f437d9eb-3b89-4ccb-831b-0d0944b3c8d3","date":"27/8/2021","name":"Jony","description":"asd","image":"../images/tennis/tennis1_1.jfif","price":"1","number":"9","total":9},{"id":"66a65225-11e3-4329-82c1-1d8b5b087080","date":"27/8/2021","name":"Jony","description":"asd","image":"../images/tennis/tennis2.jfif","price":"1","number":"1","total":1,"store":"tennis"},{"id":"5d4f5108-a30c-4b68-8b81-f1fcedf7f223","date":"27/8/2021","name":"Jony","description":"asd","image":"../images/tennis/tennis3.jfif","price":"1","number":"1","total":1,"store":"tennis"}],"store":"tennis","cartBuy":[{"id":"55fe54c8-e4ed-44a9-a069-733c05abb75e","date":"27/8/2021","name":"Jonya","description":"asd","image":"../images/football/gimanasiamendoza.jfif","price":"1","number":"1","total":1},{"id":"2e9249ba-eb5e-48ef-912e-0583fa3e0843","date":"27/8/2021","name":"Jonito","description":"asd","image":"../images/football/argentina.jfif","price":"12","number":"1","total":12},{"id":"4a330a07-f5fd-414c-ae15-bc70a7f5afc9","date":"27/8/2021","name":"Israel","description":"Edicion 2021","image":"../images/football/israel.jpg","price":"12","number":"9","total":108}]},{"username":"leo","email":"leo@gmail.com","password":"a1234","id":"f7b7e653-f4ad-4984-86b0-9907f33d5cf2","role":"admin","store":"football"}]
+[
+    {
+        "username": "jnisen",
+        "email": "jnisen@gmail.com",
+        "password": "a",
+        "id": "f43afab3-8840-4b10-b4ce-dbee74bb7e00",
+        "role": "admin",
+        "store": "football"
+    },
+    {
+        "username": "pepe",
+        "email": "pepe@gmail.com",
+        "password": "a",
+        "id": "2c1ecbab-9e0f-4417-9fca-3cbd642d6f22",
+        "role": "public",
+        "cart": [],
+        "store": "football",
+        "cartBuy": [
+            [
+                {
+                    "id": "0b0b8829-f8b3-484e-b613-a99d06111c7d",
+                    "date": "28/8/2021",
+                    "name": "Jony",
+                    "description": "asd",
+                    "image": "../images/football/argentina.jfif",
+                    "price": 100,
+                    "number": 1,
+                    "total": 100,
+                    "store": "football"
+                },
+                {
+                    "id": "a074641f-4e55-477c-a959-2b60de9cc4f8",
+                    "date": "28/8/2021",
+                    "name": "Jony",
+                    "description": "asd",
+                    "image": "../images/football/gimanasiamendoza.jfif",
+                    "price": 100,
+                    "number": 1,
+                    "total": 100,
+                    "store": "football"
+                }
+            ],
+            [
+                {
+                    "id": "1d4834d6-e01b-4f7a-aea9-45ba132a13b6",
+                    "date": "28/8/2021",
+                    "name": "Jony",
+                    "description": "asd",
+                    "image": "../images/football/israel.jpg",
+                    "price": 1,
+                    "number": 50,
+                    "total": 50,
+                    "store": "football"
+                }
+            ]
+        ]
+    }
+]

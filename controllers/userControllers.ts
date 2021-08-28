@@ -52,33 +52,32 @@ export function getEmail(req, res){
 
 export function addCartForNow(req, res){
     const allUsers = new Users();
-    allUsers.addCart(req.params.idUser, req.body)
+    allUsers.addCart(req.id, req.body)
     res.send({ok:true})
 }
 
 export function editCartNow(req, res){
     const allUsers = new Users();
-    const cartUser = allUsers.editCar(req.params.idUser, req.body, req.params.idProduct)
-    res.send(cartUser)
+    const cart = allUsers.editCar(req.id, req.body, req.params.idProduct)
+    res.send(cart)
 }
 
-export function getAllCart(req, res){
-    const allUsers = new Users();
-    const user = allUsers.findUserById(req.params.idUser);
-    res.send({cart:user.cart})
-}
+// export function getAllCart(req, res){
+//     const allUsers = new Users();
+//     const user = allUsers.findUserById(req.params.idUser);
+//     res.send({cart:user.cart})
+// }
 
 export function deleteProductOnCart(req, res){
     const allUsers = new Users();
-    const {id, idUser} = req.params;
-    const user = allUsers.deleteProductOnCart(id, idUser)
-    res.send({ok:"Delete Product",cart:user.cart})
+    const {id, store} = req.params;
+    const cart = allUsers.deleteProductOnCart(id, req.id,store)
+    res.send({ok:"Delete Product",cart:cart})
 }
 
 export function buyCart(req, res){
     const allUsers = new Users();
-    const {idUser} = req.params;
-    const user = allUsers.findUserById(idUser)
+    const user = allUsers.findUserById(req.id)
 
     const date = new Date();
     const dateString = date.getDate()  + "/" + (date.getMonth()+1) + "/" + date.getFullYear()
@@ -86,18 +85,26 @@ export function buyCart(req, res){
     const newCart = {
         id:uuidv4(),
         date:dateString,
-        cart:user.cart
+        cart:user.cart,
+        store: req.params.store,
     }
 
      const allProducts = new Products()
 
-      allProducts.editProductCart(user.cart)
+    allProducts.editProductCart(user.cart)
     
-      addCart(newCart)    
+    addCart(newCart)    
 
-       removeStock(user.cart, user.store)
+    removeStock(user.cart, user.store)
 
-     allUsers.buyCart(idUser)
+     allUsers.buyCart(req.id)
 
     res.send({"ok":"Felicidades por su compra"})
+}
+
+export function seeCartStore(req, res){
+    const allUsers = new Users();
+    const cart = allUsers.findCartByStore(req.params.store, req.id)
+    res.send({cart:cart})
+
 }

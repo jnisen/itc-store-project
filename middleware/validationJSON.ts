@@ -54,8 +54,7 @@ export function isThereProductOnDB(req, res, next){
 export function isThereSamProductOnCart(req, res, next){
     try {
         const allUsers: any = readAllUsers()
-        const {idUser} = req.params
-        const getCart = allUsers.find(user => user.id === idUser).cart;
+        const getCart = allUsers.find(user => user.id === req.id).cart;
         const findProduct = getCart.some(product => product.id === req.body.id);
         if(findProduct) throw new Error('Product already picked')
         next()

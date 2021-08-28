@@ -1,5 +1,6 @@
 import { readAllUsers } from '../models/user'
 import { readAllProducts } from '../models/products'
+import { readAllCarts } from '../models/carts'
 
 export function isUser(req, res, next) {
     try {
@@ -30,10 +31,14 @@ export function isUserExist(req, res, next) {
 export function isProductExist(req, res, next) {
     try {
         const { image } = req.body;
+        const {store} = req.params
+        const imagePath = `../images/${store}/${image.split('\\')[2]}`
         const allProducts: any = readAllProducts()
-        const productExist = allProducts.find(product => product.image === image)
-        if (productExist) throw new Error('Product already exists')
-        next()
+        const productExist = allProducts.find(product => product.image === imagePath)
+        
+        console.log(req.image)
+       // if (productExist) throw new Error('Product already exists')
+        //next()
     } catch (e) {
         res.status(400).send({ error: `${e.message}` }); //cliente error
     }
@@ -73,4 +78,13 @@ export function isThereStock(req, res, next){
     } catch (e) {
         res.status(400).send({ error: `${e.message}` }); //cliente error
     }
+}
+
+
+export function readProduct(req, res, next){
+    const allProducts: any = readAllProducts()
+    const {id} = req.params
+    const getProduct = allProducts.find(product => product.id === id)
+    req.image = getProduct.image
+    next()
 }

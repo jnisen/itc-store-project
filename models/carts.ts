@@ -6,12 +6,15 @@ export class Cart {
   id: string
   cart: Array<Products>
   date: Date
+  store:string
 }
+
+
 
 export const readAllCarts = () => {
   try {
-    const stores = fs.readFileSync(allCartsJSON);
-    return JSON.parse(stores);
+    const allCarts = fs.readFileSync(allCartsJSON);
+    return JSON.parse(allCarts);
   } catch (error) {
     console.error(error);
   }
@@ -24,6 +27,19 @@ export function addCart(newCart) {
   writeAllCarts(allCarts)
 }
 
+export function seeAllCartsStore(store){
+  const allCarts = readAllCarts()
+  const carts = []
+  allCarts.forEach(cart => {
+    cart.cart.forEach(cartsbuys => {
+        carts.push(cartsbuys)
+    });
+  })
+  return carts
+
+}
+
 export function writeAllCarts(writeToJSON) {
   fs.writeFileSync(allCartsJSON, JSON.stringify(writeToJSON));
 }
+

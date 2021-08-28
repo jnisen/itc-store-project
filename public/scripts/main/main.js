@@ -61,18 +61,18 @@ function getAllProducts() {
                     role = responseUser.data.user.role;
                     if (role === 'admin') {
                         if (data.allStores)
-                            renderAllProductsAdmin(data.allStores.allProducts);
+                            renderAllProductsAdmin(data.allStores.allProducts, store);
                     }
                     else {
                         if (data.allStores)
-                            renderAllProductsUser(data.allStores.allProducts, responseUser, store);
+                            renderAllProductsUser(data.allStores.allProducts, store);
                     }
                     return [2 /*return*/];
             }
         });
     });
 }
-function renderAllProductsAdmin(allProducts) {
+function renderAllProductsAdmin(allProducts, store) {
     return __awaiter(this, void 0, void 0, function () {
         var html, rootProducts, btnAdd;
         var _this = this;
@@ -83,25 +83,27 @@ function renderAllProductsAdmin(allProducts) {
             btnAdd.style.display = 'block';
             btnAdd.style.margin = '2em auto';
             btnAdd.style.cursor = 'pointer';
+            html += "\n            <button class=\"btn-historial\" onclick ='seeHistorial(\"" + store + "\")'>Historial</button>\n    <div class = \"rootProducts__admin\">";
             allProducts.forEach(function (products) { return __awaiter(_this, void 0, void 0, function () {
                 return __generator(this, function (_a) {
-                    html += "\n                <div class=\"rootProducts__productsAdmin\">\n                     <img src=\"" + products.image + "\" alt=\"" + products.name + "\" class=\"image\" style = \"width:200px; height:200px\" onclick='sendProduct(\"" + products.id + "\")'>   \n                             <span class=\"name\">" + products.name + "</span>\n                             <span class=\"description\">" + products.description + "</span>";
+                    html += "\n                <div class=\"rootProducts__admin__products\">\n                     <img src=\"" + products.image + "\" alt=\"" + products.name + "\" class=\"image\" style = \"width:200px; height:200px\" onclick='sendProduct(\"" + products.id + "\")'>   \n                             <span class=\"name\">" + products.name + "</span>\n                             <span class=\"description\">" + products.description + "</span>";
                     if (products.quantity === 0) {
                         html += "            <span class=\"stock red\">Stock: " + products.quantity + "</span>";
                     }
                     else {
                         html += "            <span class=\"stock green\">Stock: " + products.quantity + "</span>";
                     }
-                    html += "     \n                             <span class=\"price\">Price: \u20AA " + products.price + "</span>\n                            <i class=\"fas fa-user-edit edit\" onclick='findProduct(\"" + products.id + "\")'></i>\n                            <i class=\"fas fa-trash delete\" onclick='deleteProduct(\"" + products.id + "\")'></i> \n                        \n                </div>";
+                    html += "     \n                             <span class=\"price\">Price: \u20AA " + products.price + "</span>\n                            <i class=\"fas fa-user-edit edit\" onclick='findProduct(\"" + products.id + "\")'></i>\n                            <i class=\"fas fa-trash delete\" onclick='deleteProduct(\"" + products.id + "\")'></i> \n                        \n                </div>\n                ";
                     return [2 /*return*/];
                 });
             }); });
+            html += "</div>";
             rootProducts.innerHTML = html;
             return [2 /*return*/];
         });
     });
 }
-function renderAllProductsUser(allProducts, responseUser, store) {
+function renderAllProductsUser(allProducts, store) {
     return __awaiter(this, void 0, void 0, function () {
         var html, rootProducts, btnAdd, addCart, btnSeeCart, seeCart, data;
         var _this = this;
@@ -115,18 +117,10 @@ function renderAllProductsUser(allProducts, responseUser, store) {
                     html += "<div class=\"carrito\">\n                    <span>Carrito<i class=\"fas fa-shopping-cart\"></i><span>\n                    <span class=\"addCart\" style=\"color:brown\">0</span>  \n                    <button onclick='toCarrito(event)' class=\"btn-sent-cart\" disabled>See Cart</button>\n                </div>\n                <div class=\"rootCarts__productsUser\">";
                     allProducts.forEach(function (products) { return __awaiter(_this, void 0, void 0, function () {
                         return __generator(this, function (_a) {
-                            switch (_a.label) {
-                                case 0:
-                                    if (!(products.quantity <= 0)) return [3 /*break*/, 2];
-                                    return [4 /*yield*/, axios["delete"]("product/deleteProduct/" + products.id)];
-                                case 1:
-                                    _a.sent();
-                                    return [3 /*break*/, 3];
-                                case 2:
-                                    html += "\n                \n                <div class=\"rootCarts__productsUser__product\">\n                    \n                    <span class=\"name\">" + products.name + "</span>\n                    <span class=\"description\">" + products.description + "</span>\n                    <img src=\"" + products.image + "\" alt=\"" + products.name + "\" class=\"image\" style = \"width:200px; height:200px\" onclick='sendProduct(\"" + products.id + "\")'>\n\n                    <span class=\"stock\">\n                            Count: <input type=\"number\" id=\"" + products.id + "\" class=\"count\" name=\"countproducts\" value=\"1\" min=\"1\" max=\"" + products.quantity + "\">\n                    </span>\n                    <span class=\"price\">Price: \u20AA " + products.price + "</span>\n                    <button class=\"btnadduser" + products.id + " btn-cart\" onclick='addProductCart(\"" + products.id + "\",\"" + products.name + "\",\"" + products.description + "\",\"" + products.image + "\",\"" + products.price + "\",\"" + store + "\")'>Add Cart</button>\n                </div>";
-                                    _a.label = 3;
-                                case 3: return [2 /*return*/];
+                            if (products.quantity > 0) {
+                                html += "\n                \n                <div class=\"rootCarts__productsUser__product\">\n                    \n                    <span class=\"name\">" + products.name + "</span>\n                    <span class=\"description\">" + products.description + "</span>\n                    <img src=\"" + products.image + "\" alt=\"" + products.name + "\" class=\"image\" style = \"width:200px; height:200px\" onclick='sendProduct(\"" + products.id + "\")'>\n\n                    <span class=\"stock\">\n                            Count: <input type=\"number\" id=\"" + products.id + "\" class=\"count\" name=\"countproducts\" value=\"1\" min=\"1\" max=\"" + products.quantity + "\">\n                    </span>\n                    <span class=\"price\">Price: \u20AA " + products.price + "</span>\n                    <button class=\"btnadduser" + products.id + " btn-cart\" onclick='addProductCart(\"" + products.id + "\",\"" + products.name + "\",\"" + products.description + "\",\"" + products.image + "\",\"" + products.price + "\",\"" + store + "\")'>Add Cart</button>\n                </div>";
                             }
+                            return [2 /*return*/];
                         });
                     }); });
                     rootProducts.innerHTML = html;

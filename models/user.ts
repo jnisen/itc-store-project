@@ -45,7 +45,11 @@ export class Users{
 
     addCart(id:string, body){
       const user = this.findUserById(id);
-      user.cart.push(body);
+      const newBody ={
+        ...body, 
+        username:user.username
+      }
+      user.cart.push(newBody);
       this.writeAllUsers()
 
     }

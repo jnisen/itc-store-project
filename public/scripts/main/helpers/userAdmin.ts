@@ -161,3 +161,10 @@ async function searchProduct(ev) {
     }
 
 }
+
+async function seeHistorial(store:string){
+    
+
+    window.location.href = `historial.html?store=${store}`
+    
+}

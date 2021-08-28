@@ -15,4 +15,6 @@ var productRoute = require('./routes/productRoute');
 app.use('/product', productRoute);
 var storeRoute = require('./routes/storeRoute');
 app.use('/store', storeRoute);
+var cartRoute = require('./routes/cartRoute');
+app.use('/cart', cartRoute);
 app.listen(port, function () { return console.log('app Listening on port', port); });

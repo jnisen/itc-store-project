@@ -60,11 +60,6 @@ function editCartNow(req, res) {
     res.send(cart);
 }
 exports.editCartNow = editCartNow;
-// export function getAllCart(req, res){
-//     const allUsers = new Users();
-//     const user = allUsers.findUserById(req.params.idUser);
-//     res.send({cart:user.cart})
-// }
 function deleteProductOnCart(req, res) {
     var allUsers = new user_1.Users();
     var _a = req.params, id = _a.id, store = _a.store;

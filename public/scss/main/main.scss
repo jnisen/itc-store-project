@@ -91,10 +91,7 @@ header {
 
 .rootProducts {
   margin: 1.5em 0;
-  display: grid;
-  grid-template-columns: repeat(3, 300px);
-  justify-content: center;
-  row-gap: 5em;
+
 
   .btn--add {
     display: block;
@@ -102,69 +99,75 @@ header {
     cursor: pointer;
   }
 
-  &__productsAdmin {
-    border: 1px solid blue;
-    padding: 0.5em;
+  &__admin {
     display: grid;
+    grid-template-columns: repeat(3, 300px);
     justify-content: center;
-    grid-template-columns: 100px 100px;
-    grid-template-rows: auto;
-    grid-template-areas:
-      "name name"
-      "description description"
-      "image image"
-      "stock price"
-      "edit delete";
+    row-gap: 5em;
 
-    .name {
-      grid-area: name;
-      text-align: center;
-      font-size: 2rem;
-    }
+    &__products {
+      border: 1px solid blue;
+      padding: 0.5em;
+      display: grid;
+      justify-content: center;
+      grid-template-columns: 100px 100px;
+      grid-template-rows: auto;
+      grid-template-areas:
+        "name name"
+        "description description"
+        "image image"
+        "stock price"
+        "edit delete";
 
-    .description {
-      grid-area: description;
-      text-align: center;
-      margin-bottom: 0.5em;
-    }
+      .name {
+        grid-area: name;
+        text-align: center;
+        font-size: 2rem;
+      }
 
-    .image {
-      grid-area: image;
-      text-align: center;
-      margin-bottom: 0.5em;
-    }
+      .description {
+        grid-area: description;
+        text-align: center;
+        margin-bottom: 0.5em;
+      }
 
-    .stock {
-      grid-area: stock;
-      text-align: center;
-      margin-bottom: 0.5em;
-    }
+      .image {
+        grid-area: image;
+        text-align: center;
+        margin-bottom: 0.5em;
+      }
 
-    .price {
-      grid-area: price;
-      text-align: center;
-    }
+      .stock {
+        grid-area: stock;
+        text-align: center;
+        margin-bottom: 0.5em;
+      }
 
-    .edit {
-      grid-area: edit;
-      text-align: center;
-      margin-bottom: 0.5em;
-    }
+      .price {
+        grid-area: price;
+        text-align: center;
+      }
 
-    .delete {
-      grid-area: delete;
-      text-align: center;
+      .edit {
+        grid-area: edit;
+        text-align: center;
+        margin-bottom: 0.5em;
+      }
+
+      .delete {
+        grid-area: delete;
+        text-align: center;
+      }
     }
   }
-
 }
 
-.green{
-  color:green;
+.green {
+  color: green;
 }
 
-.red{
-  color:red;
+.red {
+  color: red;
 }
 
 .rootCarts {

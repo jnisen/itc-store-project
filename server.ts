@@ -25,6 +25,9 @@ app.use('/product',productRoute)
 const storeRoute = require('./routes/storeRoute')
 app.use('/store',storeRoute)
 
+const cartRoute = require('./routes/cartRoute')
+app.use('/cart',cartRoute)
+
 
 
 app.listen(port, ()=> console.log('app Listening on port', port))

@@ -1,6 +1,6 @@
 "use strict";
 exports.__esModule = true;
-exports.isThereStock = exports.isThereSamProductOnCart = exports.isThereProductOnDB = exports.isProductExist = exports.isUserExist = exports.isUser = void 0;
+exports.readProduct = exports.isThereStock = exports.isThereSamProductOnCart = exports.isThereProductOnDB = exports.isProductExist = exports.isUserExist = exports.isUser = void 0;
 var user_1 = require("../models/user");
 var products_1 = require("../models/products");
 function isUser(req, res, next) {
@@ -36,12 +36,14 @@ function isUserExist(req, res, next) {
 exports.isUserExist = isUserExist;
 function isProductExist(req, res, next) {
     try {
-        var image_1 = req.body.image;
+        var image = req.body.image;
+        var store = req.params.store;
+        var imagePath_1 = "../images/" + store + "/" + image.split('\\')[2];
         var allProducts = products_1.readAllProducts();
-        var productExist = allProducts.find(function (product) { return product.image === image_1; });
-        if (productExist)
-            throw new Error('Product already exists');
-        next();
+        var productExist = allProducts.find(function (product) { return product.image === imagePath_1; });
+        console.log(req.image);
+        // if (productExist) throw new Error('Product already exists')
+        //next()
     }
     catch (e) {
         res.status(400).send({ error: "" + e.message }); //cliente error
@@ -89,3 +91,11 @@ function isThereStock(req, res, next) {
     }
 }
 exports.isThereStock = isThereStock;
+function readProduct(req, res, next) {
+    var allProducts = products_1.readAllProducts();
+    var id = req.params.id;
+    var getProduct = allProducts.find(function (product) { return product.id === id; });
+    req.image = getProduct.image;
+    next();
+}
+exports.readProduct = readProduct;

@@ -217,3 +217,11 @@ function searchProduct(ev) {
         });
     });
 }
+function seeHistorial(store) {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            window.location.href = "historial.html?store=" + store;
+            return [2 /*return*/];
+        });
+    });
+}

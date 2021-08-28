@@ -1,4 +1,15 @@
 "use strict";
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 exports.__esModule = true;
 exports.Users = exports.User = exports.readAllUsers = void 0;
 var fs = require("fs");
@@ -30,7 +41,8 @@ var Users = /** @class */ (function () {
     }
     Users.prototype.addCart = function (id, body) {
         var user = this.findUserById(id);
-        user.cart.push(body);
+        var newBody = __assign(__assign({}, body), { username: user.username });
+        user.cart.push(newBody);
         this.writeAllUsers();
     };
     Users.prototype.addNewUser = function (user) {

@@ -6,14 +6,14 @@ import {addNewProduct,deleteProduct,getProduct, editProduct,searchProduct} from 
 
 //middleware
 import {validateProduct,imageExist} from '../middleware/validationSchema'
-import {isProductExist,isThereProductOnDB} from '../middleware/validationJSON'
+import {isProductExist,isThereProductOnDB,readProduct} from '../middleware/validationJSON'
 
 //schema
 import {schemaProduct} from '../schemas/allSchemas';
 
 router.post('/addNewProduct/:store', validateProduct(schemaProduct),imageExist,isProductExist,addNewProduct)
        .delete('/deleteProduct/:id', deleteProduct)
-       .get('/getProduct/:id',getProduct)
+       .get('/getProduct/:id',readProduct, getProduct)
        .put('/editProduct/:idProduct/:store',validateProduct(schemaProduct),imageExist,isProductExist,editProduct)
        .get('/searchProduct/:store/:searchProduct', isThereProductOnDB, searchProduct)
 

@@ -30,16 +30,16 @@ async function getAllProducts() {
     let role = responseUser.data.user.role
 
     if (role === 'admin'){
-        if (data.allStores) renderAllProductsAdmin(data.allStores.allProducts)
+        if (data.allStores) renderAllProductsAdmin(data.allStores.allProducts,store)
     } else{
-        if (data.allStores) renderAllProductsUser(data.allStores.allProducts,responseUser,store)
+        if (data.allStores) renderAllProductsUser(data.allStores.allProducts,store)
     }
 
 }
 
 
 
-async function renderAllProductsAdmin(allProducts:Array<Product>) {
+async function renderAllProductsAdmin(allProducts:Array<Product>,store) {
     let html: string = "";
 
     const rootProducts = document.querySelector('#rootProducts')
@@ -49,11 +49,14 @@ async function renderAllProductsAdmin(allProducts:Array<Product>) {
     btnAdd.style.margin = '2em auto'
     btnAdd.style.cursor = 'pointer'
    
+    html += `
+            <button class="btn-historial" onclick ='seeHistorial("${store}")'>Historial</button>
+    <div class = "rootProducts__admin">`
 
     allProducts.forEach(async products => {
 
             html += `
-                <div class="rootProducts__productsAdmin">
+                <div class="rootProducts__admin__products">
                      <img src="${products.image}" alt="${products.name}" class="image" style = "width:200px; height:200px" onclick='sendProduct("${products.id}")'>   
                              <span class="name">${products.name}</span>
                              <span class="description">${products.description}</span>`
@@ -67,19 +70,21 @@ async function renderAllProductsAdmin(allProducts:Array<Product>) {
                             <i class="fas fa-user-edit edit" onclick='findProduct("${products.id}")'></i>
                             <i class="fas fa-trash delete" onclick='deleteProduct("${products.id}")'></i> 
                         
-                </div>`   
+                </div>
+                `   
     });
 
+    html+=`</div>`
     rootProducts.innerHTML = html
 
 }
 
-async function renderAllProductsUser(allProducts:Array<Product>, responseUser, store) {
+async function renderAllProductsUser(allProducts:Array<Product>, store) {
     let html: string = "";
     const rootProducts = document.querySelector('#rootCarts')
     
     const btnAdd = document.querySelector('.btn-add') as HTMLButtonElement
-
+   
         btnAdd.style.display = 'none'
         html += `<div class="carrito">
                     <span>Carrito<i class="fas fa-shopping-cart"></i><span>
@@ -91,9 +96,9 @@ async function renderAllProductsUser(allProducts:Array<Product>, responseUser, s
 
     allProducts.forEach(async products => {
 
-        if (products.quantity <= 0) {
-            await axios.delete(`product/deleteProduct/${products.id}`)
-        } else {
+        if (products.quantity > 0) {
+           
+       
 
             html += `
                 

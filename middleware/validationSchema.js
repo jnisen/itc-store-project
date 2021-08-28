@@ -35,7 +35,6 @@ function validateProduct(schema) {
 exports.validateProduct = validateProduct;
 function imageExist(req, res, next) {
     var image = req.body.image;
-    console.log((image.split('/')[3]));
     if (image.split('/')[3] === 'undefined')
         res.status(404).send({ error: "Check you file input" });
     else

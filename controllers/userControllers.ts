@@ -62,12 +62,6 @@ export function editCartNow(req, res){
     res.send(cart)
 }
 
-// export function getAllCart(req, res){
-//     const allUsers = new Users();
-//     const user = allUsers.findUserById(req.params.idUser);
-//     res.send({cart:user.cart})
-// }
-
 export function deleteProductOnCart(req, res){
     const allUsers = new Users();
     const {id, store} = req.params;
@@ -86,7 +80,8 @@ export function buyCart(req, res){
         id:uuidv4(),
         date:dateString,
         cart:user.cart,
-        store: req.params.store,
+        store: req.params.store
+        
     }
 
      const allProducts = new Products()

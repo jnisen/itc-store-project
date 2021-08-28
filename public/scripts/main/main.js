@@ -79,11 +79,7 @@ function renderAllProductsAdmin(allProducts, store) {
         return __generator(this, function (_a) {
             html = "";
             rootProducts = document.querySelector('#rootProducts');
-            btnAdd = document.querySelector('.btn-add');
-            btnAdd.style.display = 'block';
-            btnAdd.style.margin = '2em auto';
-            btnAdd.style.cursor = 'pointer';
-            html += "\n            <button class=\"btn-historial\" onclick ='seeHistorial(\"" + store + "\")'>Historial</button>\n    <div class = \"rootProducts__admin\">";
+            html += " <div class=\"actions\">\n                    <input type=\"button\" value=\"Add Product\" class=\"btn-add\"  onclick ='openModal()'>\n                    <input type=\"button\" value=\"Historial\" class=\"btn-historial\" onclick ='seeHistorial(\"" + store + "\")'>\n              </div>\n    <div class = \"rootProducts__admin\">";
             allProducts.forEach(function (products) { return __awaiter(_this, void 0, void 0, function () {
                 return __generator(this, function (_a) {
                     html += "\n                <div class=\"rootProducts__admin__products\">\n                     <img src=\"" + products.image + "\" alt=\"" + products.name + "\" class=\"image\" style = \"width:200px; height:200px\" onclick='sendProduct(\"" + products.id + "\")'>   \n                             <span class=\"name\">" + products.name + "</span>\n                             <span class=\"description\">" + products.description + "</span>";
@@ -99,21 +95,21 @@ function renderAllProductsAdmin(allProducts, store) {
             }); });
             html += "</div>";
             rootProducts.innerHTML = html;
+            btnAdd = document.querySelector('.btn-add');
+            btnAdd.style.display = 'block';
             return [2 /*return*/];
         });
     });
 }
 function renderAllProductsUser(allProducts, store) {
     return __awaiter(this, void 0, void 0, function () {
-        var html, rootProducts, btnAdd, addCart, btnSeeCart, seeCart, data;
+        var html, rootProducts, addCart, btnSeeCart, seeCart, data;
         var _this = this;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     html = "";
                     rootProducts = document.querySelector('#rootCarts');
-                    btnAdd = document.querySelector('.btn-add');
-                    btnAdd.style.display = 'none';
                     html += "<div class=\"carrito\">\n                    <span>Carrito<i class=\"fas fa-shopping-cart\"></i><span>\n                    <span class=\"addCart\" style=\"color:brown\">0</span>  \n                    <button onclick='toCarrito(event)' class=\"btn-sent-cart\" disabled>See Cart</button>\n                </div>\n                <div class=\"rootCarts__productsUser\">";
                     allProducts.forEach(function (products) { return __awaiter(_this, void 0, void 0, function () {
                         return __generator(this, function (_a) {

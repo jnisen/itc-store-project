@@ -1,18 +1,21 @@
+@import url("http://fonts.googleapis.com/css2?family=Poppins&display=swap");
 * {
-  box-sizing: border-box;
-  padding: 0;
   margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
 }
 
 body {
   background-color: lightgray;
 }
-body .container {
+
+.container {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   place-items: center;
 }
-body .container__store {
+.container__store {
   border-radius: 15px;
   width: 300px;
   height: 200px;
@@ -22,16 +25,34 @@ body .container__store {
   justify-content: center;
   align-items: center;
 }
-body .container__store span {
+.container__store span {
   color: white;
   font-size: x-large;
   font-weight: bold;
 }
-body .container__store__1 {
+.container__store__1 {
   background-image: url("https://images.squarespace-cdn.com/content/v1/5cb59a50049079446d94461b/1572873393727-C9QEQP2XI0KYV17EUNFG/27.jpg?format=1500w");
   background-size: cover;
 }
-body .container__store__2 {
+.container__store__2 {
   background-image: url("https://cdn.europosters.eu/image/1300/art-photo/tennis-i101827.jpg");
   background-size: cover;
+}
+
+#btn-return {
+  margin-right: 1em;
+  width: 5%;
+  height: 40px;
+  border: none;
+  border-radius: 10px;
+  transform: translate(-1%);
+  cursor: pointer;
+  color: black;
+  background: linear-gradient(to right, #414eff, #2be6ff);
+  transition: all 0.4s;
+}
+
+#btn-return:hover {
+  transform: translate(-1%, 5%);
+  box-shadow: 0 0 10px #ff416d65;
 }

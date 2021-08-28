@@ -23,12 +23,13 @@ function renderProduct(data) {
 
     const {name, description, image, quantity, price} = data.Product
 
-    html+= `<div>
-    <span>${name}</span>
-    <span>${description}</span>
-            <img src="${image}" width="400" height="400" alt="${name}">
-            <span>${quantity}</span>
-            <span>${price}</span>
+    html+= `<img src="${image}" width="400" height="400" alt="${name}" class="name">
+            <div class="rootProduct__info">
+            <span class="name">Name: ${name}</span>
+            <span class="description">Description: ${description}</span>
+            <span class="price">Price: ₪ ${price}</span>
+            <span class="quantity">Stock: ${quantity}</span>
+            </div>
             </div>`
 
     rootProducts.innerHTML = html

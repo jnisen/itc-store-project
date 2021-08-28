@@ -44,13 +44,12 @@ async function renderAllProductsAdmin(allProducts:Array<Product>,store) {
 
     const rootProducts = document.querySelector('#rootProducts')
 
-    const btnAdd = document.querySelector('.btn-add') as HTMLButtonElement
-    btnAdd.style.display = 'block'
-    btnAdd.style.margin = '2em auto'
-    btnAdd.style.cursor = 'pointer'
+    
    
-    html += `
-            <button class="btn-historial" onclick ='seeHistorial("${store}")'>Historial</button>
+    html += ` <div class="actions">
+                    <input type="button" value="Add Product" class="btn-add"  onclick ='openModal()'>
+                    <input type="button" value="Historial" class="btn-historial" onclick ='seeHistorial("${store}")'>
+              </div>
     <div class = "rootProducts__admin">`
 
     allProducts.forEach(async products => {
@@ -77,15 +76,15 @@ async function renderAllProductsAdmin(allProducts:Array<Product>,store) {
     html+=`</div>`
     rootProducts.innerHTML = html
 
+    const btnAdd = document.querySelector('.btn-add') as HTMLButtonElement
+    btnAdd.style.display = 'block'
+
 }
 
 async function renderAllProductsUser(allProducts:Array<Product>, store) {
     let html: string = "";
     const rootProducts = document.querySelector('#rootCarts')
     
-    const btnAdd = document.querySelector('.btn-add') as HTMLButtonElement
-   
-        btnAdd.style.display = 'none'
         html += `<div class="carrito">
                     <span>Carrito<i class="fas fa-shopping-cart"></i><span>
                     <span class="addCart" style="color:brown">0</span>  

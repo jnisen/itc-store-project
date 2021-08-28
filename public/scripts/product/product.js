@@ -60,7 +60,7 @@ function renderProduct(data) {
     var rootProducts = document.querySelector('#rootProduct');
     var html = '';
     var _a = data.Product, name = _a.name, description = _a.description, image = _a.image, quantity = _a.quantity, price = _a.price;
-    html += "<div>\n    <span>" + name + "</span>\n    <span>" + description + "</span>\n            <img src=\"" + image + "\" width=\"400\" height=\"400\" alt=\"" + name + "\">\n            <span>" + quantity + "</span>\n            <span>" + price + "</span>\n            </div>";
+    html += "<img src=\"" + image + "\" width=\"400\" height=\"400\" alt=\"" + name + "\" class=\"name\">\n            <div class=\"rootProduct__info\">\n            <span class=\"name\">Name: " + name + "</span>\n            <span class=\"description\">Description: " + description + "</span>\n            <span class=\"price\">Price: \u20AA " + price + "</span>\n            <span class=\"quantity\">Stock: " + quantity + "</span>\n            </div>\n            </div>";
     rootProducts.innerHTML = html;
 }
 function returnHomePage() {

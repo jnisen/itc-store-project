@@ -1,6 +1,6 @@
 "use strict";
 exports.__esModule = true;
-exports.readProduct = exports.isThereStock = exports.isThereSamProductOnCart = exports.isThereProductOnDB = exports.isProductExist = exports.isUserExist = exports.isUser = void 0;
+exports.isThereStock = exports.isThereSamProductOnCart = exports.isThereProductOnDB = exports.isProductExist = exports.isUserExist = exports.isUser = void 0;
 var user_1 = require("../models/user");
 var products_1 = require("../models/products");
 function isUser(req, res, next) {
@@ -37,13 +37,16 @@ exports.isUserExist = isUserExist;
 function isProductExist(req, res, next) {
     try {
         var image = req.body.image;
-        var store = req.params.store;
+        var _a = req.params, store = _a.store, idProduct_1 = _a.idProduct;
         var imagePath_1 = "../images/" + store + "/" + image.split('\\')[2];
         var allProducts = products_1.readAllProducts();
-        var productExist = allProducts.find(function (product) { return product.image === imagePath_1; });
-        console.log(req.image);
-        // if (productExist) throw new Error('Product already exists')
-        //next()
+        var oldImage = allProducts.find(function (product) { return product.id === idProduct_1; }).image;
+        if (imagePath_1 !== oldImage) {
+            var productExist = allProducts.find(function (product) { return product.image === imagePath_1; });
+            if (productExist)
+                throw new Error('Product already exists');
+        }
+        next();
     }
     catch (e) {
         res.status(400).send({ error: "" + e.message }); //cliente error
@@ -80,8 +83,8 @@ exports.isThereSamProductOnCart = isThereSamProductOnCart;
 function isThereStock(req, res, next) {
     try {
         var allProducts = products_1.readAllProducts();
-        var idProduct_1 = req.params.idProduct;
-        var getProduct = allProducts.find(function (product) { return product.id === idProduct_1; });
+        var idProduct_2 = req.params.idProduct;
+        var getProduct = allProducts.find(function (product) { return product.id === idProduct_2; });
         if (req.body.number > getProduct.quantity)
             throw new Error('We dont have enough stock');
         next();
@@ -91,11 +94,3 @@ function isThereStock(req, res, next) {
     }
 }
 exports.isThereStock = isThereStock;
-function readProduct(req, res, next) {
-    var allProducts = products_1.readAllProducts();
-    var id = req.params.id;
-    var getProduct = allProducts.find(function (product) { return product.id === id; });
-    req.image = getProduct.image;
-    next();
-}
-exports.readProduct = readProduct;

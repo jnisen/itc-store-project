@@ -31,14 +31,15 @@ export function isUserExist(req, res, next) {
 export function isProductExist(req, res, next) {
     try {
         const { image } = req.body;
-        const {store} = req.params
+        const {store, idProduct} = req.params
         const imagePath = `../images/${store}/${image.split('\\')[2]}`
         const allProducts: any = readAllProducts()
-        const productExist = allProducts.find(product => product.image === imagePath)
-        
-        console.log(req.image)
-       // if (productExist) throw new Error('Product already exists')
-        //next()
+        const oldImage = allProducts.find(product => product.id === idProduct).image
+        if(imagePath!==oldImage){
+            const productExist = allProducts.find(product => product.image === imagePath)
+            if(productExist) throw new Error('Product already exists')
+        }
+        next()
     } catch (e) {
         res.status(400).send({ error: `${e.message}` }); //cliente error
     }
@@ -80,11 +81,3 @@ export function isThereStock(req, res, next){
     }
 }
 
-
-export function readProduct(req, res, next){
-    const allProducts: any = readAllProducts()
-    const {id} = req.params
-    const getProduct = allProducts.find(product => product.id === id)
-    req.image = getProduct.image
-    next()
-}

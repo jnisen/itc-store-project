@@ -104,6 +104,10 @@ async function findProduct(id: string) {
 
 async function editProduct() {
 
+    // const response = await axios.get(`product/getProduct/${id}`)
+    // const { data } = response
+    // const oldImage = data.Product.image
+
     const inputName = document.querySelector('#name') as HTMLInputElement
     const inputDescription = <HTMLElement>document.querySelector('#description') as HTMLInputElement
     const inputStock = <HTMLElement>document.querySelector('#quantity') as HTMLInputElement
@@ -121,7 +125,7 @@ async function editProduct() {
     }
     const store = location.search.substr(1).split("=")[2]
 
-    const response = await editProductPromise(editProduct, store)
+    const response = await editProductPromise(editProduct, store,)
     swal(`${response.ok}`, "", "success")
 
     getAllProducts()

@@ -1,46 +1,51 @@
 async function addProductCart(id, name, description, image, price, store) {
 
-    const btnSeeCart = document.querySelector('.btn-sent-cart') as HTMLButtonElement;
+    try {
 
-    btnSeeCart.disabled = false
+        const btnSeeCart = document.querySelector('.btn-sent-cart') as HTMLButtonElement;
+
+        btnSeeCart.disabled = false
+
+        const inputCount = document.getElementById(`${id}`) as HTMLInputElement;
+        const number = inputCount.value
+
+        const addCart = document.querySelector('.addCart') as HTMLElement
+
+        let total = +number * +price
+
+        const date = new Date();
+        const dateString = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear()
+
+        const addCartForNow = {
+            id: id,
+            date: dateString,
+            name: name,
+            description: description,
+            image: image,
+            price: +price,
+            number: +number,
+            total: +total,
+            store: store,
+        }
+
+        const seeCart = await axios.get(`/user/seeCartStore/${store}`)
+        const { data } = seeCart
+
+        let count = data.cart.length
 
 
-    const inputCount = document.getElementById(`${id}`) as HTMLInputElement;
-    const number = inputCount.value
+        const response: any = await addCartPromise(addCartForNow)
+        const { ok } = response
 
-    const addCart = document.querySelector('.addCart') as HTMLElement
+        if (ok) {
+            count++;
+            addCart.innerText = `${count}`
+        } else {
+            btnSeeCart.disabled = true
+        }
 
-    let total = +number * +price
-
-    const date = new Date();
-    const dateString = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear()
-
-    const addCartForNow = {
-        id: id,
-        date: dateString,
-        name: name,
-        description: description,
-        image: image,
-        price: +price,
-        number: +number,
-        total: +total,
-        store: store,
-    }
-
-    const seeCart = await axios.get(`/user/seeCartStore/${store}`)
-    const { data } = seeCart
-
-    let count = data.cart.length
-
-
-    const response: any = await addCartPromise(addCartForNow)
-    const { ok } = response
-
-    if (ok) {
-        count++;
-        addCart.innerText = `${count}`
-    } else {
-        btnSeeCart.disabled = true //dont think is necessary
+    } catch (e) {
+        alert(e)
     }
 
 }

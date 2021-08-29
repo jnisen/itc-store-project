@@ -4,24 +4,29 @@ btnReturn.addEventListener('click', returnMainPage)
 
 async function getCart(event) {
     event.preventDefault();
+    try {
+        const store = location.search.substr(1).split("=")[1]
 
-    const store = location.search.substr(1).split("=")[1]
+        const seeCart = await axios.get(`/user/seeCartStore/${store}`)
+        const { data } = seeCart
 
-    const seeCart = await axios.get(`/user/seeCartStore/${store}`)
-    const { data } = seeCart
-
-    renderCart(data.cart)
+        renderCart(data.cart)
+    } catch (e) {
+        alert(e)
+    }
 }
 
 function renderCart(data) {
 
     const cartRoot = document.querySelector('#cartRoot') as HTMLElement
 
-    let totalCart: number = 0;
+    try {
 
-    let html: string = ''
-    if (data.length > 0) {
-        html += `<div class="cartRoot__table"><table id="cart">
+        let totalCart: number = 0;
+
+        let html: string = ''
+        if (data.length > 0) {
+            html += `<div class="cartRoot__table"><table id="cart">
         <thead>
     <tr>
         <th>Image</th>
@@ -36,13 +41,13 @@ function renderCart(data) {
     <tbody>`
 
 
-        data.forEach(cart => {
+            data.forEach(cart => {
 
-            const { id, name, description, image, number, price, total } = cart
+                const { id, name, description, image, number, price, total } = cart
 
-            totalCart += number * price
+                totalCart += number * price
 
-            html += `<tr>
+                html += `<tr>
                       <td> <img src="${image}" alt="${name}" style = "width:70px; height:70px"</td>
                         <td>${name}</td>
                         <td>${description}</td>
@@ -52,9 +57,9 @@ function renderCart(data) {
                         <td><i class="fa fa-edit btn-edit" onclick='editQuantityCart("${id}","${number}")' title="Edit Item" style="cursor:pointer"></i></td>   
                         <td><i class="fa fa-trash" onclick='deleteProductOnCart("${id}")' title="Delete Item" style="cursor:pointer"></i></td>   
                  </tr> `
-        });
+            });
 
-        html += `       </tbody>
+            html += `       </tbody>
                     <tfoot>
                             <tr>
                         <th id="total" colspan="5" style="text-align:right;">Total :</th>
@@ -71,13 +76,15 @@ function renderCart(data) {
 
 
 
-    } else {
-        setInterval(function () { returnMainPage() }, 1000);
+        } else {
+            setInterval(function () { returnMainPage() }, 1000);
 
+        }
+
+        cartRoot.innerHTML = html
+    } catch (e) {
+        alert(e)
     }
-
-    cartRoot.innerHTML = html
-
 }
 
 
@@ -85,15 +92,18 @@ function renderCart(data) {
 
 async function returnMainPage() {
 
-    const responseUser = await axios.get('/user/readCookie')
-    const { data } = responseUser
+    try {
+        const responseUser = await axios.get('/user/readCookie')
+        const { data } = responseUser
 
-    const email = data.user.email
-    const store = data.user.store
+        const email = data.user.email
+        const store = data.user.store
 
-    const location = window.location.origin
-    window.location.replace(`${location}/main.html?email=${email}?store=${store}`)
-
+        const location = window.location.origin
+        window.location.replace(`${location}/main.html?email=${email}?store=${store}`)
+    } catch (e) {
+        alert(e)
+    }
     // window.location.href = `http://localhost:3000/main.html?email=${email}?store=${store}`
 
 

@@ -6,11 +6,19 @@ const btnEdit = <HTMLButtonElement>document.querySelector('.btn-edit')
 modalClose.addEventListener('click', closeModal)
 
 function openModal() {
-    bgModal.classList.add('bg-active')
-    btnEdit.style.display = 'none'
-    btnModalInput.style.display = 'block'
+    try {
+        bgModal.classList.add('bg-active')
+        btnEdit.style.display = 'none'
+        btnModalInput.style.display = 'block'
+    } catch (e) {
+        alert(e)
+    }
 }
 
 function closeModal() {
-    bgModal.classList.remove('bg-active')
+    try {
+        bgModal.classList.remove('bg-active')
+    } catch (e) {
+        alert(e)
+    }
 }

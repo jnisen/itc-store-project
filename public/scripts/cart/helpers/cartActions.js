@@ -36,89 +36,100 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 function deleteProductOnCart(id) {
     return __awaiter(this, void 0, void 0, function () {
-        var store;
+        var store_1;
         var _this = this;
         return __generator(this, function (_a) {
-            store = location.search.substr(1).split("=")[1];
-            swal({
-                title: "Do you want to delete this product?",
-                text: "Once deleted, you will not be able to recover this imaginary file!",
-                icon: "warning",
-                buttons: {
-                    cancel: true,
-                    confirm: "Confirm"
-                },
-                dangerMode: true
-            })
-                .then(function (isConfirm) { return __awaiter(_this, void 0, void 0, function () {
-                var response, data, ok, cart;
-                return __generator(this, function (_a) {
-                    switch (_a.label) {
-                        case 0:
-                            if (!isConfirm) return [3 /*break*/, 2];
-                            return [4 /*yield*/, axios["delete"]("/user/deleteProductOnCart/" + id + "/" + store)];
-                        case 1:
-                            response = _a.sent();
-                            data = response.data;
-                            ok = data.ok, cart = data.cart;
-                            swal("" + ok, "", "success");
-                            renderCart(cart);
-                            return [3 /*break*/, 3];
-                        case 2:
-                            swal("Delete Cancelled!", "", "success");
-                            _a.label = 3;
-                        case 3: return [2 /*return*/];
-                    }
-                });
-            }); });
+            try {
+                store_1 = location.search.substr(1).split("=")[1];
+                swal({
+                    title: "Do you want to delete this product?",
+                    text: "Once deleted, you will not be able to recover this imaginary file!",
+                    icon: "warning",
+                    buttons: {
+                        cancel: true,
+                        confirm: "Confirm"
+                    },
+                    dangerMode: true
+                })
+                    .then(function (isConfirm) { return __awaiter(_this, void 0, void 0, function () {
+                    var response, data, ok, cart;
+                    return __generator(this, function (_a) {
+                        switch (_a.label) {
+                            case 0:
+                                if (!isConfirm) return [3 /*break*/, 2];
+                                return [4 /*yield*/, axios["delete"]("/user/deleteProductOnCart/" + id + "/" + store_1)];
+                            case 1:
+                                response = _a.sent();
+                                data = response.data;
+                                ok = data.ok, cart = data.cart;
+                                swal("" + ok, "", "success");
+                                renderCart(cart);
+                                return [3 /*break*/, 3];
+                            case 2:
+                                swal("Delete Cancelled!", "", "success");
+                                _a.label = 3;
+                            case 3: return [2 /*return*/];
+                        }
+                    });
+                }); });
+            }
+            catch (e) {
+                alert(e);
+            }
             return [2 /*return*/];
         });
     });
 }
 function editQuantityCart(id, number) {
     return __awaiter(this, void 0, void 0, function () {
-        var store;
+        var store_2;
         var _this = this;
         return __generator(this, function (_a) {
-            store = location.search.substr(1).split("=")[1];
-            swal("You have " + number + " , change the quantity here:", {
-                content: "input",
-                buttons: {
-                    cancel: true,
-                    confirm: "Confirm"
-                }
-            }).then(function (value) { return __awaiter(_this, void 0, void 0, function () {
-                var newNumber, response;
-                return __generator(this, function (_a) {
-                    switch (_a.label) {
-                        case 0:
-                            if (!(value === null)) return [3 /*break*/, 1];
-                            swal("Edit Cancelled!", "", "success");
-                            return [3 /*break*/, 3];
-                        case 1:
-                            newNumber = {
-                                number: +value,
-                                store: store
-                            };
-                            return [4 /*yield*/, editCartPromise(id, newNumber)];
-                        case 2:
-                            response = _a.sent();
-                            renderCart(response);
-                            _a.label = 3;
-                        case 3: return [2 /*return*/];
+            try {
+                store_2 = location.search.substr(1).split("=")[1];
+                swal("You have " + number + " , change the quantity here:", {
+                    content: "input",
+                    buttons: {
+                        cancel: true,
+                        confirm: "Confirm"
                     }
-                });
-            }); });
+                }).then(function (value) { return __awaiter(_this, void 0, void 0, function () {
+                    var newNumber, response;
+                    return __generator(this, function (_a) {
+                        switch (_a.label) {
+                            case 0:
+                                if (!(value === null)) return [3 /*break*/, 1];
+                                swal("Edit Cancelled!", "", "success");
+                                return [3 /*break*/, 3];
+                            case 1:
+                                newNumber = {
+                                    number: +value,
+                                    store: store_2
+                                };
+                                return [4 /*yield*/, editCartPromise(id, newNumber)];
+                            case 2:
+                                response = _a.sent();
+                                renderCart(response);
+                                _a.label = 3;
+                            case 3: return [2 /*return*/];
+                        }
+                    });
+                }); });
+            }
+            catch (e) {
+                alert(e);
+            }
             return [2 /*return*/];
         });
     });
 }
 function buyCart() {
     return __awaiter(this, void 0, void 0, function () {
-        var store, response;
+        var store, response, e_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
+                    _a.trys.push([0, 2, , 3]);
                     store = location.search.substr(1).split("=")[1];
                     return [4 /*yield*/, buyCartPromise(store)];
                 case 1:
@@ -132,7 +143,12 @@ function buyCart() {
                         window.location.replace(location + "/login.html");
                         // window.location.href = 'login.html'
                     }, 2000);
-                    return [2 /*return*/];
+                    return [3 /*break*/, 3];
+                case 2:
+                    e_1 = _a.sent();
+                    alert(e_1);
+                    return [3 /*break*/, 3];
+                case 3: return [2 /*return*/];
             }
         });
     });

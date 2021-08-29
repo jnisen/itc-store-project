@@ -40,40 +40,57 @@ btnReturn.addEventListener('click', returnMainPage);
 btnGraph.addEventListener('click', sendGraph);
 function getHistorial(ev) {
     return __awaiter(this, void 0, void 0, function () {
-        var store, response;
+        var store, response, e_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     ev.preventDefault();
+                    _a.label = 1;
+                case 1:
+                    _a.trys.push([1, 3, , 4]);
                     store = location.search.substr(1).split("=")[1];
                     return [4 /*yield*/, axios.get("cart/historialCart/" + store)];
-                case 1:
+                case 2:
                     response = _a.sent();
                     renderAllCartsStore(response.data.allCarts);
-                    return [2 /*return*/];
+                    return [3 /*break*/, 4];
+                case 3:
+                    e_1 = _a.sent();
+                    alert(e_1);
+                    return [3 /*break*/, 4];
+                case 4: return [2 /*return*/];
             }
         });
     });
 }
 function renderAllCartsStore(allCarts) {
-    var html = '';
-    var historialRoot = document.querySelector('#historialRoot');
-    var totalStore = 0;
-    html += "<div class=\"historial__table\"><table id=\"historial\">\n        <thead>\n    <tr>\n        <th>Date</th>\n        <th>Buyer</th>\n        <th>Image</th>\n        <th>Name</th>\n        <th>Description</th>\n        <th>SubTotal</th>\n    <tr>\n    </thead>\n    <tbody>";
-    allCarts.forEach(function (cart) {
-        var date = cart.date, name = cart.name, description = cart.description, image = cart.image, total = cart.total, username = cart.username;
-        totalStore += total;
-        html += "<tr>\n                    <td>" + date + "</td>\n                    <td>" + username + "</td>\n                      <td> <img src=\"" + image + "\" alt=\"" + name + "\" style = \"width:70px; height:70px\"</td>\n                        <td>" + name + "</td>\n                        <td>" + description + "</td>\n                        <td>\u20AA " + total + "</td>   \n                 </tr> ";
-    });
-    html += "       </tbody>\n                    <tfoot>\n                            <tr>\n                        <th id=\"total\" colspan=\"5\" style=\"text-align:right;\">Total :</th>\n                             <td> \u20AA " + totalStore + "</td>\n                         </tr>\n                    </tfoot>\n                    </table>\n                 </div>";
-    historialRoot.innerHTML = html;
+    try {
+        var html_1 = '';
+        var historialRoot = document.querySelector('#historialRoot');
+        if (!historialRoot)
+            throw new Error('I wont be able to draw');
+        var totalStore_1 = 0;
+        html_1 += "<div class=\"historial__table\"><table id=\"historial\">\n        <thead>\n    <tr>\n        <th>Date</th>\n        <th>Buyer</th>\n        <th>Image</th>\n        <th>Name</th>\n        <th>Description</th>\n        <th>SubTotal</th>\n    <tr>\n    </thead>\n    <tbody>";
+        allCarts.forEach(function (cart) {
+            var date = cart.date, name = cart.name, description = cart.description, image = cart.image, total = cart.total, username = cart.username;
+            totalStore_1 += total;
+            html_1 += "<tr>\n                    <td>" + date + "</td>\n                    <td>" + username + "</td>\n                      <td> <img src=\"" + image + "\" alt=\"" + name + "\" style = \"width:70px; height:70px\"</td>\n                        <td>" + name + "</td>\n                        <td>" + description + "</td>\n                        <td>\u20AA " + total + "</td>   \n                 </tr> ";
+        });
+        html_1 += "       </tbody>\n                    <tfoot>\n                            <tr>\n                        <th id=\"total\" colspan=\"5\" style=\"text-align:right;\">Total :</th>\n                             <td> \u20AA " + totalStore_1 + "</td>\n                         </tr>\n                    </tfoot>\n                    </table>\n                 </div>";
+        historialRoot.innerHTML = html_1;
+    }
+    catch (e) {
+        alert(e);
+    }
 }
 function returnMainPage() {
     return __awaiter(this, void 0, void 0, function () {
-        var responseUser, data, email, store, location;
+        var responseUser, data, email, store, location, e_2;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, axios.get('/user/readCookie')];
+                case 0:
+                    _a.trys.push([0, 2, , 3]);
+                    return [4 /*yield*/, axios.get('/user/readCookie')];
                 case 1:
                     responseUser = _a.sent();
                     data = responseUser.data;
@@ -81,7 +98,12 @@ function returnMainPage() {
                     store = data.user.store;
                     location = window.location.origin;
                     window.location.replace(location + "/main.html?email=" + email + "?store=" + store);
-                    return [2 /*return*/];
+                    return [3 /*break*/, 3];
+                case 2:
+                    e_2 = _a.sent();
+                    alert(e_2);
+                    return [3 /*break*/, 3];
+                case 3: return [2 /*return*/];
             }
         });
     });
@@ -90,8 +112,13 @@ function sendGraph() {
     return __awaiter(this, void 0, void 0, function () {
         var location;
         return __generator(this, function (_a) {
-            location = window.location.origin;
-            window.location.replace(location + "/graph.html");
+            try {
+                location = window.location.origin;
+                window.location.replace(location + "/graph.html");
+            }
+            catch (e) {
+                alert(e);
+            }
             return [2 /*return*/];
         });
     });

@@ -65,7 +65,7 @@ function renderPage(ev) {
 }
 function sendToMainSports(ev) {
     return __awaiter(this, void 0, void 0, function () {
-        var store_1, response, params, emailUser_1, responseAllProducts, data, responseUser, role, localhost_1, e_1;
+        var store_1, response, params, emailUser_1, responseAllProducts, data, responseUser, role, e_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -94,20 +94,18 @@ function sendToMainSports(ev) {
                 case 4:
                     responseUser = _a.sent();
                     role = responseUser.data.user.role;
-                    localhost_1 = window.location.origin;
                     if (role === 'public') {
                         if (data.allStores === undefined)
                             throw new Error('No stock available');
                         swal("" + response.data.ok, { icon: "success", button: false });
                         setInterval(function () {
-                            // window.location.href = `main.html?email=${emailUser}?store=${store.store}`
-                            window.location.replace(localhost_1 + "/main.html?email=" + emailUser_1 + "?store=" + store_1.store);
+                            window.location.href = "main.html?email=" + emailUser_1 + "?store=" + store_1.store;
                         }, 1000);
                     }
                     else {
+                        swal("" + response.data.ok, { icon: "success", button: false });
                         setInterval(function () {
-                            // window.location.href = `main.html?email=${emailUser}?store=${store.store}`
-                            window.location.replace(localhost_1 + "/main.html?email=" + emailUser_1 + "?store=" + store_1.store);
+                            window.location.href = "main.html?email=" + emailUser_1 + "?store=" + store_1.store;
                         }, 1000);
                     }
                     return [3 /*break*/, 6];
@@ -121,7 +119,5 @@ function sendToMainSports(ev) {
     });
 }
 function returnLoginPage() {
-    var localhost = window.location.origin;
-    window.location.replace(localhost + "/login.html");
-    // window.location.href = 'login.html'
+    window.location.href = 'login.html';
 }

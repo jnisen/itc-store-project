@@ -13,28 +13,27 @@
     <title></title>
 </head>
 
-<body id="body-main" class="body" onload="getAllProducts(event)">
+<body id="body-main" class ="body" onload="getAllProducts(event)">
     <header>
-        <h1 class="h1"></h1>
+        <h1 class = "h1"></h1>
         <input type="button" value="Log Out" id="btn-return">
         <label for="search">Search Product Name:</label>
         <input type="search" name="search" id="search">
     </header>
-
+   
     <div id="rootProducts" class="rootProducts"></div>
     <div id="rootCarts" class="rootCarts"></div>
 
     <div class="modal-bg">
         <div class="modal">
-            <form id="main" class="main">
+            <form id="main" class="main"> 
                 <label for="name">Name</label>
                 <input type="text" name="name" id="name" placeholder="Enter name">
                 <label for="description">Description</label>
                 <input type="text" name="description" id="description" placeholder="Enter description">
                 <label for="image">Image</label>
-                <input type="file" name="image" id="image" onchange="readURL(this)" ;>
-                <img src="https://ih1.redbubble.net/image.1066412296.0216/pp,840x830-pad,1000x1000,f8f8f8.u1.jpg" alt=""
-                    id='img' width="100" height="100" height="" />
+                <input type="file" name="image" id="image" onchange="readURL(this)";>
+                <img src="https://ih1.redbubble.net/image.1066412296.0216/pp,840x830-pad,1000x1000,f8f8f8.u1.jpg" alt="" id='img' width="100" height="100" height=""/>
                 <label for="quantity">Quantity</label>
                 <input type="number" name="quantity" id="quantity" min="1" value="1">
                 <label for="price">Price (in ₪)</label>
@@ -46,15 +45,15 @@
         </div>
     </div>
 
-
+   
     <script src="../scripts/main/helpers/userAdmin.js""></script>
-    <script src=" ../scripts/main/helpers/productPromise.js"></script>
+    <script src="../scripts/main/helpers/productPromise.js"></script>
     <script src="../scripts/main/main.js"></script>
     <script src="../scripts/main/helpers/modal.js"></script>
     <script src="../scripts//main/helpers/userPublic.js"></script>
+    
 
-
-
+  
 </body>
 
 </html>

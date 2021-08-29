@@ -94,7 +94,7 @@ export function buyCart(req, res) {
 
     allUsers.buyCart(req.id)
 
-    res.send({ "ok": "Felicidades por su compra" })
+    res.send({ "ok": "Congrats for your buy 🤩 " })
 }
 
 export function seeCartStore(req, res) {

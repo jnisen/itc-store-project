@@ -1,6 +1,6 @@
 "use strict";
 exports.__esModule = true;
-exports.isThereStock = exports.isThereSamProductOnCart = exports.isThereProductOnDB = exports.isProductExist = exports.isUserExist = exports.isUser = void 0;
+exports.isProductExistAdd = exports.isThereStock = exports.isThereSamProductOnCart = exports.isThereProductOnDB = exports.isProductExistEdit = exports.isUserExist = exports.isUser = void 0;
 var user_1 = require("../models/user");
 var products_1 = require("../models/products");
 function isUser(req, res, next) {
@@ -34,7 +34,7 @@ function isUserExist(req, res, next) {
     }
 }
 exports.isUserExist = isUserExist;
-function isProductExist(req, res, next) {
+function isProductExistEdit(req, res, next) {
     try {
         var image = req.body.image;
         var _a = req.params, store = _a.store, idProduct_1 = _a.idProduct;
@@ -52,7 +52,7 @@ function isProductExist(req, res, next) {
         res.status(400).send({ error: "" + e.message }); //cliente error
     }
 }
-exports.isProductExist = isProductExist;
+exports.isProductExistEdit = isProductExistEdit;
 function isThereProductOnDB(req, res, next) {
     try {
         var allProducts = products_1.readAllProducts();
@@ -94,3 +94,24 @@ function isThereStock(req, res, next) {
     }
 }
 exports.isThereStock = isThereStock;
+function isProductExistAdd(req, res, next) {
+    try {
+        var image = req.body.image;
+        var store = req.params.store;
+        var imagePath_2 = (image.includes(store)) ? image : "../images/" + store + "/" + image.split('\\')[2];
+        var allProducts = products_1.readAllProducts();
+        var oldImage = allProducts.find(function (product) { return product.image === imagePath_2; });
+        if (oldImage === undefined) {
+            next();
+        }
+        else {
+            if (imagePath_2 === oldImage.image)
+                throw new Error('Product already exists');
+        }
+        next();
+    }
+    catch (e) {
+        res.status(400).send({ error: "" + e.message });
+    }
+}
+exports.isProductExistAdd = isProductExistAdd;

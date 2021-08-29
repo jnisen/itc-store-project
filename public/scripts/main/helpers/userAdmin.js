@@ -72,7 +72,7 @@ function addProductOnDom(ev) {
                     ok = response.ok, allProducts = response.allProducts;
                     swal("" + ok, "", "success");
                     bgModal.classList.remove('bg-active');
-                    renderAllProductsAdmin(allProducts);
+                    renderAllProductsAdmin(allProducts, store);
                     return [2 /*return*/];
             }
         });

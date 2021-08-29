@@ -5,12 +5,22 @@ var btnLogin = document.querySelector("#btn-login");
 btnRegister.addEventListener("click", goRegisterPage);
 btnLogin.addEventListener("click", goLoginPage);
 function goRegisterPage() {
-    var location = window.location.origin;
-    window.location.replace(location + "/register.html");
+    try {
+        var location = window.location.origin;
+        window.location.replace(location + "/register.html");
+    }
+    catch (e) {
+        alert(e);
+    }
     // window.location.href = 'register.html'
 }
 function goLoginPage() {
-    var location = window.location.origin;
-    window.location.replace(location + "/login.html");
+    try {
+        var location = window.location.origin;
+        window.location.replace(location + "/login.html");
+    }
+    catch (e) {
+        alert(e);
+    }
     // window.location.href = 'login.html'
 }

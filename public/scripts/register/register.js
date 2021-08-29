@@ -79,12 +79,22 @@ function addNewUser(ev) {
     });
 }
 function goToLoginPage() {
-    var localhost = window.location.origin;
-    window.location.replace(localhost + "/login.html");
+    try {
+        var localhost = window.location.origin;
+        window.location.replace(localhost + "/login.html");
+    }
+    catch (e) {
+        alert(e);
+    }
     // window.location.href = 'login.html'; 
 }
 function returnHomePage() {
-    var localhost = window.location.origin;
-    window.location.replace(localhost + "/index.html");
+    try {
+        var localhost = window.location.origin;
+        window.location.replace(localhost + "/index.html");
+    }
+    catch (e) {
+        alert(e);
+    }
     // window.location.href = 'index.html'
 }

@@ -15,7 +15,7 @@ exports.addNewProduct = addNewProduct;
 function deleteProduct(req, res) {
     var store = allListProducts.deleteProduct(req.params.id);
     store_1.deleteProductToStore(req.params.id, store);
-    res.send({ ok: 'Producto Eliminado' });
+    res.send({ ok: 'Producto Delete' });
 }
 exports.deleteProduct = deleteProduct;
 function getProduct(req, res) {
@@ -26,7 +26,7 @@ exports.getProduct = getProduct;
 function editProduct(req, res) {
     allListProducts.editProduct(req.params.idProduct, req.params.store, req.body);
     store_1.editProductToStore(req.params.idProduct, req.params.store, req.body);
-    res.send({ ok: 'Producto Editado' });
+    res.send({ ok: 'Producto Edit' });
 }
 exports.editProduct = editProduct;
 function searchProduct(req, res) {

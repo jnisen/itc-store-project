@@ -52,9 +52,9 @@ async function enterToMainStores(ev) {
 
 
 function returnHomePage() {
-
-    const location = window.location.origin
-    window.location.replace(`${location}/register.html`)
-
+    try {
+        const location = window.location.origin
+        window.location.replace(`${location}/register.html`)
+    } catch (e) { alert(e) }
     // window.location.href = 'register.html'
 }

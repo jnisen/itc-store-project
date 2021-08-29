@@ -7,15 +7,18 @@ btnRegister.addEventListener("click", goRegisterPage)
 btnLogin.addEventListener("click", goLoginPage)
 
 function goRegisterPage() {
-    const location = window.location.origin
-    window.location.replace(`${location}/register.html`)
+    try {
+        const location = window.location.origin
+        window.location.replace(`${location}/register.html`)
+    } catch (e) { alert(e) }
     // window.location.href = 'register.html'
 }
 
 function goLoginPage() {
-
-    const location = window.location.origin
-    window.location.replace(`${location}/login.html`)
+    try {
+        const location = window.location.origin
+        window.location.replace(`${location}/login.html`)
+    } catch (e) { alert(e) }
     // window.location.href = 'login.html'
 }
 

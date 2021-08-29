@@ -39,51 +39,78 @@ var btnReturn = document.querySelector("#btn-return");
 btnReturn.addEventListener("click", returHistorial);
 function getGraph(ev) {
     return __awaiter(this, void 0, void 0, function () {
-        var store, response;
+        var store, response, e_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     ev.preventDefault();
+                    _a.label = 1;
+                case 1:
+                    _a.trys.push([1, 3, , 4]);
                     store = location.search.substr(1).split("=")[1];
                     return [4 /*yield*/, axios.get("cart/historialCart/" + store)];
-                case 1:
+                case 2:
                     response = _a.sent();
                     renderGraph(response.data.allCarts);
-                    return [2 /*return*/];
+                    return [3 /*break*/, 4];
+                case 3:
+                    e_1 = _a.sent();
+                    alert(e_1);
+                    return [3 /*break*/, 4];
+                case 4: return [2 /*return*/];
             }
         });
     });
 }
 function renderGraph(data) {
-    var arrayTotal = [];
-    var products = [];
-    var res = Array.from(data.reduce(function (m, _a) {
-        var name = _a.name, total = _a.total;
-        return m.set(name, (m.get(name) || 0) + total);
-    }, new Map), function (_a) {
-        var name = _a[0], total = _a[1];
-        return ({ name: name, total: total });
-    });
-    res.forEach(function (element) {
-        products.push(element.name);
-        arrayTotal.push(element.total);
-    });
-    var ctx = document.getElementById('myChart').getContext('2d');
-    var chart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: products,
-            datasets: [{
-                    label: 'Sales Graph by Product in ₪',
-                    backgroundColor: ['rgb(0,191,255)', 'rgba(75, 192, 192, 1)'],
-                    borderColor: 'rgb(255, 99, 132)',
-                    data: arrayTotal
-                }]
-        },
-        options: {}
-    });
+    try {
+        var arrayTotal_1 = [];
+        var products_1 = [];
+        var res = Array.from(data.reduce(function (m, _a) {
+            var name = _a.name, total = _a.total;
+            return m.set(name, (m.get(name) || 0) + total);
+        }, new Map), function (_a) {
+            var name = _a[0], total = _a[1];
+            return ({ name: name, total: total });
+        });
+        res.forEach(function (element) {
+            products_1.push(element.name);
+            arrayTotal_1.push(element.total);
+        });
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: products_1,
+                datasets: [{
+                        label: 'Sales Graph by Product in ₪',
+                        backgroundColor: ['rgb(0,191,255)', 'rgba(75, 192, 192, 1)'],
+                        borderColor: 'rgb(255, 99, 132)',
+                        data: arrayTotal_1
+                    }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                            display: true,
+                            ticks: {
+                                suggestedMin: 0
+                            }
+                        }]
+                }
+            }
+        });
+    }
+    catch (e) {
+        alert(e);
+    }
 }
 function returHistorial() {
-    var location = window.location.origin;
-    window.location.replace(location + "/historial.html");
+    try {
+        var location = window.location.origin;
+        window.location.replace(location + "/historial.html");
+    }
+    catch (e) {
+        alert(e);
+    }
 }

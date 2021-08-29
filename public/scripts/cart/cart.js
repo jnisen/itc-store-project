@@ -38,46 +38,61 @@ var btnReturn = document.querySelector('.btn-return');
 btnReturn.addEventListener('click', returnMainPage);
 function getCart(event) {
     return __awaiter(this, void 0, void 0, function () {
-        var store, seeCart, data;
+        var store, seeCart, data, e_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     event.preventDefault();
+                    _a.label = 1;
+                case 1:
+                    _a.trys.push([1, 3, , 4]);
                     store = location.search.substr(1).split("=")[1];
                     return [4 /*yield*/, axios.get("/user/seeCartStore/" + store)];
-                case 1:
+                case 2:
                     seeCart = _a.sent();
                     data = seeCart.data;
                     renderCart(data.cart);
-                    return [2 /*return*/];
+                    return [3 /*break*/, 4];
+                case 3:
+                    e_1 = _a.sent();
+                    alert(e_1);
+                    return [3 /*break*/, 4];
+                case 4: return [2 /*return*/];
             }
         });
     });
 }
 function renderCart(data) {
     var cartRoot = document.querySelector('#cartRoot');
-    var totalCart = 0;
-    var html = '';
-    if (data.length > 0) {
-        html += "<div class=\"cartRoot__table\"><table id=\"cart\">\n        <thead>\n    <tr>\n        <th>Image</th>\n        <th>Name</th>\n        <th>Description</th>\n        <th>Quantity</th>\n        <th>Price</th>\n        <th>SubTotal</th>\n        <th><th>\n    <tr>\n    </thead>\n    <tbody>";
-        data.forEach(function (cart) {
-            var id = cart.id, name = cart.name, description = cart.description, image = cart.image, number = cart.number, price = cart.price, total = cart.total;
-            totalCart += number * price;
-            html += "<tr>\n                      <td> <img src=\"" + image + "\" alt=\"" + name + "\" style = \"width:70px; height:70px\"</td>\n                        <td>" + name + "</td>\n                        <td>" + description + "</td>\n                        <td>" + number + "</td>\n                        <td>\u20AA " + price + "</td>\n                        <td>\u20AA " + total + "</td>\n                        <td><i class=\"fa fa-edit btn-edit\" onclick='editQuantityCart(\"" + id + "\",\"" + number + "\")' title=\"Edit Item\" style=\"cursor:pointer\"></i></td>   \n                        <td><i class=\"fa fa-trash\" onclick='deleteProductOnCart(\"" + id + "\")' title=\"Delete Item\" style=\"cursor:pointer\"></i></td>   \n                 </tr> ";
-        });
-        html += "       </tbody>\n                    <tfoot>\n                            <tr>\n                        <th id=\"total\" colspan=\"5\" style=\"text-align:right;\">Total :</th>\n                             <td> \u20AA " + totalCart + "</td>\n                            <th colspan=\"2\" ></th>\n                         </tr>\n                    </tfoot>\n                    </table>\n                 </div>\n                    <div class=\"cartRoot__finalstep\">\n                        <button onclick='buyCart()'>Buy Cart</button>\n                 </div>";
+    try {
+        var totalCart_1 = 0;
+        var html_1 = '';
+        if (data.length > 0) {
+            html_1 += "<div class=\"cartRoot__table\"><table id=\"cart\">\n        <thead>\n    <tr>\n        <th>Image</th>\n        <th>Name</th>\n        <th>Description</th>\n        <th>Quantity</th>\n        <th>Price</th>\n        <th>SubTotal</th>\n        <th><th>\n    <tr>\n    </thead>\n    <tbody>";
+            data.forEach(function (cart) {
+                var id = cart.id, name = cart.name, description = cart.description, image = cart.image, number = cart.number, price = cart.price, total = cart.total;
+                totalCart_1 += number * price;
+                html_1 += "<tr>\n                      <td> <img src=\"" + image + "\" alt=\"" + name + "\" style = \"width:70px; height:70px\"</td>\n                        <td>" + name + "</td>\n                        <td>" + description + "</td>\n                        <td>" + number + "</td>\n                        <td>\u20AA " + price + "</td>\n                        <td>\u20AA " + total + "</td>\n                        <td><i class=\"fa fa-edit btn-edit\" onclick='editQuantityCart(\"" + id + "\",\"" + number + "\")' title=\"Edit Item\" style=\"cursor:pointer\"></i></td>   \n                        <td><i class=\"fa fa-trash\" onclick='deleteProductOnCart(\"" + id + "\")' title=\"Delete Item\" style=\"cursor:pointer\"></i></td>   \n                 </tr> ";
+            });
+            html_1 += "       </tbody>\n                    <tfoot>\n                            <tr>\n                        <th id=\"total\" colspan=\"5\" style=\"text-align:right;\">Total :</th>\n                             <td> \u20AA " + totalCart_1 + "</td>\n                            <th colspan=\"2\" ></th>\n                         </tr>\n                    </tfoot>\n                    </table>\n                 </div>\n                    <div class=\"cartRoot__finalstep\">\n                        <button onclick='buyCart()'>Buy Cart</button>\n                 </div>";
+        }
+        else {
+            setInterval(function () { returnMainPage(); }, 1000);
+        }
+        cartRoot.innerHTML = html_1;
     }
-    else {
-        setInterval(function () { returnMainPage(); }, 1000);
+    catch (e) {
+        alert(e);
     }
-    cartRoot.innerHTML = html;
 }
 function returnMainPage() {
     return __awaiter(this, void 0, void 0, function () {
-        var responseUser, data, email, store, location;
+        var responseUser, data, email, store, location, e_2;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, axios.get('/user/readCookie')];
+                case 0:
+                    _a.trys.push([0, 2, , 3]);
+                    return [4 /*yield*/, axios.get('/user/readCookie')];
                 case 1:
                     responseUser = _a.sent();
                     data = responseUser.data;
@@ -85,7 +100,12 @@ function returnMainPage() {
                     store = data.user.store;
                     location = window.location.origin;
                     window.location.replace(location + "/main.html?email=" + email + "?store=" + store);
-                    return [2 /*return*/];
+                    return [3 /*break*/, 3];
+                case 2:
+                    e_2 = _a.sent();
+                    alert(e_2);
+                    return [3 /*break*/, 3];
+                case 3: return [2 /*return*/];
             }
         });
     });

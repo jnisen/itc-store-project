@@ -36,10 +36,11 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 function addProductCart(id, name, description, image, price, store) {
     return __awaiter(this, void 0, void 0, function () {
-        var btnSeeCart, inputCount, number, addCart, total, date, dateString, addCartForNow, seeCart, data, count, response, ok;
+        var btnSeeCart, inputCount, number, addCart, total, date, dateString, addCartForNow, seeCart, data, count, response, ok, e_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
+                    _a.trys.push([0, 3, , 4]);
                     btnSeeCart = document.querySelector('.btn-sent-cart');
                     btnSeeCart.disabled = false;
                     inputCount = document.getElementById("" + id);
@@ -73,9 +74,14 @@ function addProductCart(id, name, description, image, price, store) {
                         addCart.innerText = "" + count;
                     }
                     else {
-                        btnSeeCart.disabled = true; //dont think is necessary
+                        btnSeeCart.disabled = true;
                     }
-                    return [2 /*return*/];
+                    return [3 /*break*/, 4];
+                case 3:
+                    e_1 = _a.sent();
+                    alert(e_1);
+                    return [3 /*break*/, 4];
+                case 4: return [2 /*return*/];
             }
         });
     });

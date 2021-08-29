@@ -91,7 +91,12 @@ function enterToMainStores(ev) {
     });
 }
 function returnHomePage() {
-    var location = window.location.origin;
-    window.location.replace(location + "/register.html");
+    try {
+        var location = window.location.origin;
+        window.location.replace(location + "/register.html");
+    }
+    catch (e) {
+        alert(e);
+    }
     // window.location.href = 'register.html'
 }

@@ -39,13 +39,21 @@ async function addNewUser(ev) {
 
 
 function goToLoginPage() {
-    const localhost = window.location.origin
-    window.location.replace(`${localhost}/login.html`)
+    try {
+        const localhost = window.location.origin
+        window.location.replace(`${localhost}/login.html`)
+    } catch (e) {
+        alert(e)
+    }
     // window.location.href = 'login.html'; 
 }
 
 function returnHomePage() {
-    const localhost = window.location.origin
-    window.location.replace(`${localhost}/index.html`)
+    try {
+        const localhost = window.location.origin
+        window.location.replace(`${localhost}/index.html`)
+    } catch (e) {
+        alert(e)
+    }
     // window.location.href = 'index.html'
 }

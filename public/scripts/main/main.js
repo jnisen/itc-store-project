@@ -40,26 +40,30 @@ var btnReturn = document.querySelector("#btn-return");
 btnReturn.addEventListener("click", returnLoginPage);
 function getAllProducts() {
     return __awaiter(this, void 0, void 0, function () {
-        var h1, title, store, capitalizeStore, responseAllProducts, data, responseUser, role;
+        var h1, title, store, capitalizeStore, responseAllProducts, data, responseUser, role, rootProducts, html, e_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
+                    _a.trys.push([0, 3, , 4]);
                     h1 = document.querySelector('.h1');
                     title = document.getElementsByTagName('title');
                     store = location.search.substr(1).split("=")[2];
                     capitalizeStore = store.charAt(0).toUpperCase() + store.slice(1);
                     h1.innerText = "Welcome to the " + capitalizeStore + " Store";
                     title[0].innerHTML = capitalizeStore + " Store";
-                    return [4 /*yield*/, axios.get("/store/getStore/" + store)]; // te dice que productos hay disponobles.
+                    return [4 /*yield*/, axios.get("/store/getStore/" + store)];
                 case 1:
-                    responseAllProducts = _a.sent() // te dice que productos hay disponobles.
-                    ;
+                    responseAllProducts = _a.sent();
                     data = responseAllProducts.data;
                     return [4 /*yield*/, axios.get("/user/readCookie")];
                 case 2:
                     responseUser = _a.sent();
                     role = responseUser.data.user.role;
+                    rootProducts = document.querySelector('#rootProducts');
                     if (role === 'admin') {
+                        html = '';
+                        html += " <div class=\"actions\">\n                        <input type=\"button\" value=\"Add Product\" class=\"btn-add\"  onclick ='openModal()'>\n                        <input type=\"button\" value=\"Historial\" class=\"btn-historial\" onclick ='seeHistorial(\"" + store + "\")'>\n                  </div>";
+                        rootProducts.innerHTML = html;
                         if (data.allStores)
                             renderAllProductsAdmin(data.allStores.allProducts, store);
                     }
@@ -67,59 +71,74 @@ function getAllProducts() {
                         if (data.allStores)
                             renderAllProductsUser(data.allStores.allProducts, store);
                     }
-                    return [2 /*return*/];
+                    return [3 /*break*/, 4];
+                case 3:
+                    e_1 = _a.sent();
+                    alert(e_1);
+                    return [3 /*break*/, 4];
+                case 4: return [2 /*return*/];
             }
         });
     });
 }
 function renderAllProductsAdmin(allProducts, store) {
     return __awaiter(this, void 0, void 0, function () {
-        var html, rootProducts, btnAdd;
+        var html_1, rootProducts, btnAdd;
         var _this = this;
         return __generator(this, function (_a) {
-            html = "";
-            rootProducts = document.querySelector('#rootProducts');
-            html += " <div class=\"actions\">\n                    <input type=\"button\" value=\"Add Product\" class=\"btn-add\"  onclick ='openModal()'>\n                    <input type=\"button\" value=\"Historial\" class=\"btn-historial\" onclick ='seeHistorial(\"" + store + "\")'>\n              </div>\n    <div class = \"rootProducts__admin\">";
-            allProducts.forEach(function (products) { return __awaiter(_this, void 0, void 0, function () {
-                return __generator(this, function (_a) {
-                    html += "\n                <div class=\"rootProducts__admin__products\">\n                     <img src=\"" + products.image + "\" alt=\"" + products.name + "\" class=\"image\" style = \"width:200px; height:200px\" onclick='sendProduct(\"" + products.id + "\")'>   \n                             <span class=\"name\">" + products.name + "</span>\n                             <span class=\"description\">" + products.description + "</span>";
-                    if (products.quantity === 0) {
-                        html += "            <span class=\"stock red\">Stock: " + products.quantity + "</span>";
-                    }
-                    else {
-                        html += "            <span class=\"stock green\">Stock: " + products.quantity + "</span>";
-                    }
-                    html += "     \n                             <span class=\"price\">Price: \u20AA " + products.price + "</span>\n                            <i class=\"fas fa-user-edit edit\" onclick='findProduct(\"" + products.id + "\")'></i>\n                            <i class=\"fas fa-trash delete\" onclick='deleteProduct(\"" + products.id + "\")'></i> \n                        \n                </div>\n                ";
-                    return [2 /*return*/];
-                });
-            }); });
-            html += "</div>";
-            rootProducts.innerHTML = html;
-            btnAdd = document.querySelector('.btn-add');
-            btnAdd.style.display = 'block';
+            try {
+                html_1 = "";
+                rootProducts = document.querySelector('#rootProducts');
+                if (!rootProducts)
+                    throw new Error("I wont be able to draw");
+                html_1 += " <div class=\"actions\">\n                    <input type=\"button\" value=\"Add Product\" class=\"btn-add\"  onclick ='openModal()'>\n                    <input type=\"button\" value=\"Historial\" class=\"btn-historial\" onclick ='seeHistorial(\"" + store + "\")'>\n              </div>\n    <div class = \"rootProducts__admin\">";
+                allProducts.forEach(function (products) { return __awaiter(_this, void 0, void 0, function () {
+                    return __generator(this, function (_a) {
+                        html_1 += "\n                <div class=\"rootProducts__admin__products\">\n                     <img src=\"" + products.image + "\" alt=\"" + products.name + "\" class=\"image\" style = \"width:200px; height:200px\" onclick='sendProduct(\"" + products.id + "\")'>   \n                             <span class=\"name\">" + products.name + "</span>\n                             <span class=\"description\">" + products.description + "</span>";
+                        if (products.quantity === 0) {
+                            html_1 += "            <span class=\"stock red\">Stock: " + products.quantity + "</span>";
+                        }
+                        else {
+                            html_1 += "            <span class=\"stock green\">Stock: " + products.quantity + "</span>";
+                        }
+                        html_1 += "     \n                             <span class=\"price\">Price: \u20AA " + products.price + "</span>\n                            <i class=\"fas fa-user-edit edit\" onclick='findProduct(\"" + products.id + "\")'></i>\n                            <i class=\"fas fa-trash delete\" onclick='deleteProduct(\"" + products.id + "\")'></i> \n                        \n                </div>\n                ";
+                        return [2 /*return*/];
+                    });
+                }); });
+                html_1 += "</div>";
+                rootProducts.innerHTML = html_1;
+                btnAdd = document.querySelector('.btn-add');
+                btnAdd.style.display = 'block';
+            }
+            catch (e) {
+                alert(e);
+            }
             return [2 /*return*/];
         });
     });
 }
 function renderAllProductsUser(allProducts, store) {
     return __awaiter(this, void 0, void 0, function () {
-        var html, rootProducts, addCart, btnSeeCart, seeCart, data;
+        var html_2, rootProducts, addCart, btnSeeCart, seeCart, data, e_2;
         var _this = this;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    html = "";
+                    _a.trys.push([0, 2, , 3]);
+                    html_2 = "";
                     rootProducts = document.querySelector('#rootCarts');
-                    html += "<div class=\"carrito\">\n                    <span>Carrito<i class=\"fas fa-shopping-cart\"></i><span>\n                    <span class=\"addCart\" style=\"color:brown\">0</span>  \n                    <button onclick='toCarrito(event)' class=\"btn-sent-cart\" disabled>See Cart</button>\n                </div>\n                <div class=\"rootCarts__productsUser\">";
+                    if (!rootProducts)
+                        throw new Error("I wont be able to draw");
+                    html_2 += "<div class=\"carrito\">\n                    <span>Carrito<i class=\"fas fa-shopping-cart\"></i><span>\n                    <span class=\"addCart\" style=\"color:brown\">0</span>  \n                    <button onclick='toCarrito(event)' class=\"btn-sent-cart\" disabled>See Cart</button>\n                </div>\n                <div class=\"rootCarts__productsUser\">";
                     allProducts.forEach(function (products) { return __awaiter(_this, void 0, void 0, function () {
                         return __generator(this, function (_a) {
                             if (products.quantity > 0) {
-                                html += "\n                \n                <div class=\"rootCarts__productsUser__product\">\n                    \n                    <span class=\"name\">" + products.name + "</span>\n                    <span class=\"description\">" + products.description + "</span>\n                    <img src=\"" + products.image + "\" alt=\"" + products.name + "\" class=\"image\" style = \"width:200px; height:200px\" onclick='sendProduct(\"" + products.id + "\")'>\n\n                    <span class=\"stock\">\n                            Count: <input type=\"number\" id=\"" + products.id + "\" class=\"count\" name=\"countproducts\" value=\"1\" min=\"1\" max=\"" + products.quantity + "\">\n                    </span>\n                    <span class=\"price\">Price: \u20AA " + products.price + "</span>\n                    <button class=\"btnadduser" + products.id + " btn-cart\" onclick='addProductCart(\"" + products.id + "\",\"" + products.name + "\",\"" + products.description + "\",\"" + products.image + "\",\"" + products.price + "\",\"" + store + "\")'>Add Cart</button>\n                </div>";
+                                html_2 += "\n                \n                <div class=\"rootCarts__productsUser__product\">\n                    \n                    <span class=\"name\">" + products.name + "</span>\n                    <span class=\"description\">" + products.description + "</span>\n                    <img src=\"" + products.image + "\" alt=\"" + products.name + "\" class=\"image\" style = \"width:200px; height:200px\" onclick='sendProduct(\"" + products.id + "\")'>\n\n                    <span class=\"stock\">\n                            Count: <input type=\"number\" id=\"" + products.id + "\" class=\"count\" name=\"countproducts\" value=\"1\" min=\"1\" max=\"" + products.quantity + "\">\n                    </span>\n                    <span class=\"price\">Price: \u20AA " + products.price + "</span>\n                    <button class=\"btnadduser" + products.id + " btn-cart\" onclick='addProductCart(\"" + products.id + "\",\"" + products.name + "\",\"" + products.description + "\",\"" + products.image + "\",\"" + products.price + "\",\"" + store + "\")'>Add Cart</button>\n                </div>";
                             }
                             return [2 /*return*/];
                         });
                     }); });
-                    rootProducts.innerHTML = html;
+                    rootProducts.innerHTML = html_2;
                     addCart = document.querySelector('.addCart');
                     btnSeeCart = document.querySelector('.btn-sent-cart');
                     return [4 /*yield*/, axios.get("/user/seeCartStore/" + store)];
@@ -133,7 +152,12 @@ function renderAllProductsUser(allProducts, store) {
                     else {
                         btnSeeCart.disabled = true;
                     }
-                    return [2 /*return*/];
+                    return [3 /*break*/, 3];
+                case 2:
+                    e_2 = _a.sent();
+                    alert(e_2);
+                    return [3 /*break*/, 3];
+                case 3: return [2 /*return*/];
             }
         });
     });
@@ -142,9 +166,14 @@ function sendProduct(id) {
     return __awaiter(this, void 0, void 0, function () {
         var store, localhost;
         return __generator(this, function (_a) {
-            store = location.search.substr(1).split("=")[2];
-            localhost = window.location.origin;
-            window.location.replace(localhost + "/product.html?id=" + id + "?store=" + store);
+            try {
+                store = location.search.substr(1).split("=")[2];
+                localhost = window.location.origin;
+                window.location.replace(localhost + "/product.html?id=" + id + "?store=" + store);
+            }
+            catch (e) {
+                alert(e);
+            }
             return [2 /*return*/];
         });
     });
@@ -168,13 +197,23 @@ function readURL(input) {
 }
 function toCarrito(event) {
     event.preventDefault();
-    var store = location.search.substr(1).split("=")[2];
-    var localhost = window.location.origin;
-    window.location.replace(localhost + "/cart.html?store=" + store);
+    try {
+        var store = location.search.substr(1).split("=")[2];
+        var localhost = window.location.origin;
+        window.location.replace(localhost + "/cart.html?store=" + store);
+    }
+    catch (e) {
+        alert(e);
+    }
     // window.location.href = `cart.html?store=${store}`
 }
 function returnLoginPage() {
-    var localhost = window.location.origin;
-    window.location.replace(localhost + "/login.html");
+    try {
+        var localhost = window.location.origin;
+        window.location.replace(localhost + "/login.html");
+    }
+    catch (e) {
+        alert(e);
+    }
     // window.location.href = 'login.html'
 }

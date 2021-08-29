@@ -83,7 +83,7 @@ function buyCart(req, res) {
     carts_1.addCart(newCart);
     store_1.removeStock(user.cart, user.store);
     allUsers.buyCart(req.id);
-    res.send({ "ok": "Felicidades por su compra" });
+    res.send({ "ok": "Congrats for your buy 🤩 " });
 }
 exports.buyCart = buyCart;
 function seeCartStore(req, res) {

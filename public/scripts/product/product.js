@@ -39,36 +39,51 @@ var btnReturn = document.querySelector("#btn-return");
 btnReturn.addEventListener("click", returnHomePage);
 function getProduct(ev) {
     return __awaiter(this, void 0, void 0, function () {
-        var pathId, id, response, data;
+        var pathId, id, response, data, err_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     ev.preventDefault();
+                    _a.label = 1;
+                case 1:
+                    _a.trys.push([1, 3, , 4]);
                     pathId = location.search.substr(1).split("=")[1];
                     id = pathId.split("?")[0];
                     return [4 /*yield*/, axios.get("product/getProduct/" + id)];
-                case 1:
+                case 2:
                     response = _a.sent();
                     data = response.data;
                     renderProduct(data);
-                    return [2 /*return*/];
+                    return [3 /*break*/, 4];
+                case 3:
+                    err_1 = _a.sent();
+                    alert(err_1);
+                    return [3 /*break*/, 4];
+                case 4: return [2 /*return*/];
             }
         });
     });
 }
 function renderProduct(data) {
-    var rootProducts = document.querySelector('#rootProduct');
-    var html = '';
-    var _a = data.Product, name = _a.name, description = _a.description, image = _a.image, quantity = _a.quantity, price = _a.price;
-    html += "<img src=\"" + image + "\" width=\"400\" height=\"400\" alt=\"" + name + "\" class=\"name\">\n            <div class=\"rootProduct__info\">\n            <span class=\"name\">Name: " + name + "</span>\n            <span class=\"description\">Description: " + description + "</span>\n            <span class=\"price\">Price: \u20AA " + price + "</span>\n            <span class=\"quantity\">Stock: " + quantity + "</span>\n            </div>\n            </div>";
-    rootProducts.innerHTML = html;
+    try {
+        var rootProducts = document.querySelector('#rootProduct');
+        var html = '';
+        if (!rootProducts)
+            throw new Error('I wont be able to draw the product');
+        var _a = data.Product, name = _a.name, description = _a.description, image = _a.image, quantity = _a.quantity, price = _a.price;
+        html += "<img src=\"" + image + "\" width=\"400\" height=\"400\" alt=\"" + name + "\" class=\"name\">\n            <div class=\"rootProduct__info\">\n            <span class=\"name\">Name: " + name + "</span>\n            <span class=\"description\">Description: " + description + "</span>\n            <span class=\"price\">Price: \u20AA " + price + "</span>\n            <span class=\"quantity\">Stock: " + quantity + "</span>\n            </div>\n            </div>";
+        rootProducts.innerHTML = html;
+    }
+    catch (e) {
+    }
 }
 function returnHomePage() {
     return __awaiter(this, void 0, void 0, function () {
-        var store, response, data, localhost;
+        var store, response, data, localhost, e_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
+                    _a.trys.push([0, 2, , 3]);
                     store = location.search.substr(1).split("=")[2];
                     return [4 /*yield*/, axios.get('/user/readCookie')];
                 case 1:
@@ -76,7 +91,12 @@ function returnHomePage() {
                     data = response.data;
                     localhost = window.location.origin;
                     window.location.replace(localhost + "/main.html?email=" + data.user.email + "?store=" + store);
-                    return [2 /*return*/];
+                    return [3 /*break*/, 3];
+                case 2:
+                    e_1 = _a.sent();
+                    alert(e_1);
+                    return [3 /*break*/, 3];
+                case 3: return [2 /*return*/];
             }
         });
     });

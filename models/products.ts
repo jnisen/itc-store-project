@@ -19,7 +19,7 @@ export class Product {
   id: string;
   name: string;
   description: string;
-  image: string; 
+  image: string;
   price: number;
   quantity: number;
   store: string;
@@ -58,19 +58,19 @@ export class Products {
     const product = this.findProductById(id)
     product.name = body.name;
     product.description = body.description;
-    product.image = `../images/${store}/${body.image.split('\\')[2]}` 
+    product.image = `../images/${store}/${body.image.split('\\')[2]}`
     product.quantity = body.quantity;
     product.price = body.price;
     this.writeProduct();
   }
 
-    editProductCart(cartBuy){
-      cartBuy.forEach(cart => {
-        const product = this.allProducts.find(product => product.id === cart.id);
-        product.quantity-= +cart.number
-      });
-     this.writeProduct();
-    }
+  editProductCart(cartBuy) {
+    cartBuy.forEach(cart => {
+      const product = this.allProducts.find(product => product.id === cart.id);
+      product.quantity -= +cart.number
+    });
+    this.writeProduct();
+  }
 
   findProductById(id: string): Product {
     const product = this.allProducts.find(product => product.id === id);
@@ -82,7 +82,7 @@ export class Products {
     return findStore
   }
 
-  searchProduct(searchTermReg:any, store: string) {
+  searchProduct(searchTermReg: any, store: string) {
     const findStore = this.findStore(store)
     const productName = findStore.filter(elem => searchTermReg.test(elem.name))
     return productName

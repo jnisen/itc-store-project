@@ -1,1 +1,114 @@
-[{"username":"jnisen","email":"jnisen@gmail.com","password":"a","id":"ea1cf215-12f2-490a-a76b-2898a68f3f49","role":"admin","store":"football"},{"username":"pepe","email":"pepe@gmail.com","password":"a","id":"2fc3c2ad-3108-4a68-8c3f-757deec550c1","role":"public","cart":[],"store":"football","cartBuy":[[{"id":"ef8520ca-8e25-4334-9db5-699759a9861e","date":"28/8/2021","name":"Gimnasia","description":"Edicion 2020","image":"../images/football/gimanasiamendoza.jfif","price":12,"number":6,"total":72,"store":"football","username":"pepe"}],[{"id":"ef8520ca-8e25-4334-9db5-699759a9861e","date":"28/8/2021","name":"Gimnasia","description":"Edicion 2020","image":"../images/football/gimanasiamendoza.jfif","price":12,"number":3,"total":36,"store":"football","username":"pepe"}],[{"id":"ef8520ca-8e25-4334-9db5-699759a9861e","date":"28/8/2021","name":"Gimnasia","description":"Edicion 2020","image":"../images/football/gimanasiamendoza.jfif","price":12,"number":1,"total":12,"store":"football","username":"pepe"}]]},{"username":"eric","email":"eric@gmail.com","password":"a","id":"98b7c258-15de-4e2c-9f62-f705be7d03d1","role":"public","cart":[],"store":"football","cartBuy":[[{"id":"d93ab053-639a-4b8a-ba8d-65cdc095cbd2","date":"28/8/2021","name":"Israel","description":"Edicion 2020","image":"../images/football/israel.jpg","price":50,"number":1,"total":50,"store":"football","username":"eric"},{"id":"ef8520ca-8e25-4334-9db5-699759a9861e","date":"28/8/2021","name":"Gimnasia","description":"Edicion 2020","image":"../images/football/gimanasiamendoza.jfif","price":12,"number":7,"total":84,"store":"football","username":"eric"}]]}]
+[
+    {
+        "username": "jnisen",
+        "email": "jnisen@gmail.com",
+        "password": "a",
+        "id": "ea1cf215-12f2-490a-a76b-2898a68f3f49",
+        "role": "admin",
+        "store": "football"
+    },
+    {
+        "username": "pepe",
+        "email": "pepe@gmail.com",
+        "password": "a",
+        "id": "2fc3c2ad-3108-4a68-8c3f-757deec550c1",
+        "role": "public",
+        "cart": [],
+        "store": "football",
+        "cartBuy": [
+            [
+                {
+                    "id": "ef8520ca-8e25-4334-9db5-699759a9861e",
+                    "date": "28/8/2021",
+                    "name": "Gimnasia",
+                    "description": "Edicion 2020",
+                    "image": "../images/football/gimanasiamendoza.jfif",
+                    "price": 12,
+                    "number": 6,
+                    "total": 72,
+                    "store": "football",
+                    "username": "pepe"
+                }
+            ],
+            [
+                {
+                    "id": "ef8520ca-8e25-4334-9db5-699759a9861e",
+                    "date": "28/8/2021",
+                    "name": "Gimnasia",
+                    "description": "Edicion 2020",
+                    "image": "../images/football/gimanasiamendoza.jfif",
+                    "price": 12,
+                    "number": 3,
+                    "total": 36,
+                    "store": "football",
+                    "username": "pepe"
+                }
+            ],
+            [
+                {
+                    "id": "ef8520ca-8e25-4334-9db5-699759a9861e",
+                    "date": "28/8/2021",
+                    "name": "Gimnasia",
+                    "description": "Edicion 2020",
+                    "image": "../images/football/gimanasiamendoza.jfif",
+                    "price": 12,
+                    "number": 1,
+                    "total": 12,
+                    "store": "football",
+                    "username": "pepe"
+                }
+            ],
+            [
+                {
+                    "id": "a054b8ab-5852-48bb-a27f-ae6d36f7a0d4",
+                    "date": "29/8/2021",
+                    "name": "Leeds",
+                    "description": "Edicion 2021",
+                    "image": "../images/football/leeds.jfif",
+                    "price": 12,
+                    "number": 6,
+                    "total": 72,
+                    "store": "football",
+                    "username": "pepe"
+                }
+            ]
+        ]
+    },
+    {
+        "username": "eric",
+        "email": "eric@gmail.com",
+        "password": "a",
+        "id": "98b7c258-15de-4e2c-9f62-f705be7d03d1",
+        "role": "public",
+        "cart": [],
+        "store": "football",
+        "cartBuy": [
+            [
+                {
+                    "id": "d93ab053-639a-4b8a-ba8d-65cdc095cbd2",
+                    "date": "28/8/2021",
+                    "name": "Israel",
+                    "description": "Edicion 2020",
+                    "image": "../images/football/israel.jpg",
+                    "price": 50,
+                    "number": 1,
+                    "total": 50,
+                    "store": "football",
+                    "username": "eric"
+                },
+                {
+                    "id": "ef8520ca-8e25-4334-9db5-699759a9861e",
+                    "date": "28/8/2021",
+                    "name": "Gimnasia",
+                    "description": "Edicion 2020",
+                    "image": "../images/football/gimanasiamendoza.jfif",
+                    "price": 12,
+                    "number": 7,
+                    "total": 84,
+                    "store": "football",
+                    "username": "eric"
+                }
+            ]
+        ]
+    }
+]

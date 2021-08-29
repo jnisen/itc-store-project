@@ -16,7 +16,7 @@ async function addNewUser(ev) {
         password = password.value
         repassword = repassword.value
 
-        if(password !== repassword) throw new Error("Your password and repassword are not the same")
+        if (password !== repassword) throw new Error("Your password and repassword are not the same")
 
         const newUser = {
             username: username,
@@ -27,8 +27,8 @@ async function addNewUser(ev) {
 
         const response: any = await addRegisterPromise(newUser)
         const { ok } = response
-        swal(`${ok}`,'now you can log in', "success")
-        
+        swal(`${ok}`, 'now you can log in', "success")
+
         const btnSwalButton = <HTMLButtonElement>document.querySelector(".swal-button")
         btnSwalButton.addEventListener("click", goToLoginPage)
 
@@ -38,10 +38,14 @@ async function addNewUser(ev) {
 }
 
 
-function goToLoginPage(){
-    window.location.href = 'login.html'; 
+function goToLoginPage() {
+    const localhost = window.location.origin
+    window.location.replace(`${localhost}/login.html`)
+    // window.location.href = 'login.html'; 
 }
 
 function returnHomePage() {
-    window.location.href = 'index.html'
+    const localhost = window.location.origin
+    window.location.replace(`${localhost}/index.html`)
+    // window.location.href = 'index.html'
 }

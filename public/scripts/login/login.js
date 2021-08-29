@@ -41,7 +41,7 @@ btnReturn.addEventListener("click", returnHomePage);
 form.addEventListener("submit", enterToMainStores);
 function enterToMainStores(ev) {
     return __awaiter(this, void 0, void 0, function () {
-        var _a, email_1, password, repassword, loginUser, response, ok, user_1, e_1;
+        var _a, email_1, password, repassword, loginUser, response, ok, user_1, location_1, e_1;
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
@@ -67,21 +67,23 @@ function enterToMainStores(ev) {
                         icon: "success",
                         button: false
                     });
+                    location_1 = window.location.origin;
+                    //window.location.href = `main.html?email=${email}?store=${user.store}`
                     if (user_1.role === "admin") {
                         setInterval(function () {
                             if (user_1.store)
-                                window.location.href = "main.html?email=" + email_1 + "?store=" + user_1.store;
+                                window.location.replace(location_1 + "/main.html?email=" + email_1 + "?store=" + user_1.store);
                             else
-                                window.location.href = "stores.html?email=" + email_1;
+                                window.location.replace(location_1 + "/stores.html?email=" + email_1);
                         }, 1000);
                     }
                     else {
-                        setInterval(function () { window.location.href = "stores.html?email=" + email_1; }, 2000);
+                        setInterval(function () { window.location.replace(location_1 + "/stores.html?email=" + email_1); }, 1000);
                     }
                     return [3 /*break*/, 4];
                 case 3:
                     e_1 = _b.sent();
-                    alert(e_1);
+                    swal('Oops!', "" + e_1, "error");
                     return [3 /*break*/, 4];
                 case 4: return [2 /*return*/];
             }
@@ -89,5 +91,7 @@ function enterToMainStores(ev) {
     });
 }
 function returnHomePage() {
-    window.location.href = 'register.html';
+    var location = window.location.origin;
+    window.location.replace(location + "/register.html");
+    // window.location.href = 'register.html'
 }

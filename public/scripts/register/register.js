@@ -79,8 +79,12 @@ function addNewUser(ev) {
     });
 }
 function goToLoginPage() {
-    window.location.href = 'login.html';
+    var localhost = window.location.origin;
+    window.location.replace(localhost + "/login.html");
+    // window.location.href = 'login.html'; 
 }
 function returnHomePage() {
-    window.location.href = 'index.html';
+    var localhost = window.location.origin;
+    window.location.replace(localhost + "/index.html");
+    // window.location.href = 'index.html'
 }

@@ -3,7 +3,7 @@ const btnTrash = <HTMLElement>document.querySelector('.main__products__product--
 const btnOpenModalToEdit = <HTMLElement>document.querySelector('.main__products__product--actions--edit')
 const btnEdit = <HTMLButtonElement>document.querySelector('.btn-edit')
 const inputSearch = <HTMLInputElement>document.querySelector('#search')
-const bgModal =  document.querySelector('.modal-bg')
+const bgModal = document.querySelector('.modal-bg')
 
 form.addEventListener('submit', addProductOnDom)
 btnEdit.addEventListener('click', editProduct)
@@ -36,12 +36,12 @@ async function addProductOnDom(ev) {
     const response: any = await addProductPromise(addNewProduct, store)
     const { ok, allProducts } = response
     swal(`${ok}`, "", "success")
-    
+
     bgModal.classList.remove('bg-active')
-    
+
     renderAllProductsAdmin(allProducts)
 
-   
+
 }
 
 
@@ -153,12 +153,12 @@ async function searchProduct(ev) {
             getAllProducts()
         }
 
-    } else{
+    } else {
 
         if (searchProduct.length > 0) {
             const response = await axios.get(`product/searchProduct/${store}/${searchProduct}`)
-            if (response.data.length === 1) renderAllProductsUser([response.data.allProducts],responseUser)
-            else renderAllProductsUser(response.data.allProducts,responseUser)
+            if (response.data.length === 1) renderAllProductsUser([response.data.allProducts], responseUser)
+            else renderAllProductsUser(response.data.allProducts, responseUser)
         } else {
             getAllProducts()
         }
@@ -166,9 +166,9 @@ async function searchProduct(ev) {
 
 }
 
-async function seeHistorial(store:string){
-    
+async function seeHistorial(store: string) {
+
 
     window.location.href = `historial.html?store=${store}`
-    
+
 }

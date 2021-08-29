@@ -165,7 +165,11 @@ function buyCart() {
                         icon: "success",
                         button: false
                     });
-                    setInterval(function () { window.location.href = 'login.html'; }, 2000);
+                    setInterval(function () {
+                        var location = window.location.origin;
+                        window.location.replace(location + "/login.html");
+                        // window.location.href = 'login.html'
+                    }, 2000);
                     return [2 /*return*/];
             }
         });
@@ -205,7 +209,7 @@ function editCartPromise(idProduct, newNumber) {
 }
 function returnMainPage() {
     return __awaiter(this, void 0, void 0, function () {
-        var responseUser, data, email, store;
+        var responseUser, data, email, store, location;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0: return [4 /*yield*/, axios.get('/user/readCookie')];
@@ -214,7 +218,8 @@ function returnMainPage() {
                     data = responseUser.data;
                     email = data.user.email;
                     store = data.user.store;
-                    window.location.href = "http://localhost:3000/main.html?email=" + email + "?store=" + store;
+                    location = window.location.origin;
+                    window.location.replace(location + "/main.html?email=" + email + "?store=" + store);
                     return [2 /*return*/];
             }
         });

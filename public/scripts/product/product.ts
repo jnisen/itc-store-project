@@ -19,11 +19,11 @@ async function getProduct(ev) {
 function renderProduct(data) {
 
     const rootProducts = document.querySelector('#rootProduct') as HTMLDivElement
-    let html:string = ''
+    let html: string = ''
 
-    const {name, description, image, quantity, price} = data.Product
+    const { name, description, image, quantity, price } = data.Product
 
-    html+= `<img src="${image}" width="400" height="400" alt="${name}" class="name">
+    html += `<img src="${image}" width="400" height="400" alt="${name}" class="name">
             <div class="rootProduct__info">
             <span class="name">Name: ${name}</span>
             <span class="description">Description: ${description}</span>
@@ -40,8 +40,9 @@ function renderProduct(data) {
 async function returnHomePage() {
     const store = location.search.substr(1).split("=")[2]
     const response = await axios.get('/user/readCookie')
-    const {data} = response
-   window.location.href = `main.html?email=${data.user.email}?store=${store}`
+    const { data } = response
+    const localhost = window.location.origin
+    window.location.replace(`${localhost}/main.html?email=${data.user.email}?store=${store}`)
+    //    window.location.href = `main.html?email=${data.user.email}?store=${store}`
 }
 
-//http://localhost:3000/main.html?email=jnisen@gmail.com?store=football

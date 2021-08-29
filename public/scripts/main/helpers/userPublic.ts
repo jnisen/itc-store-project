@@ -24,24 +24,24 @@ async function addProductCart(id, name, description, image, price, store) {
         price: +price,
         number: +number,
         total: +total,
-        store:store,
+        store: store,
     }
 
     const seeCart = await axios.get(`/user/seeCartStore/${store}`)
-    const {data} = seeCart
-    
+    const { data } = seeCart
+
     let count = data.cart.length
 
 
-    const response:any = await addCartPromise(addCartForNow)
-    const {ok} = response
+    const response: any = await addCartPromise(addCartForNow)
+    const { ok } = response
 
     if (ok) {
         count++;
-         addCart.innerText = `${count}`
-    }else{
-         btnSeeCart.disabled = true //dont think is necessary
-     }
+        addCart.innerText = `${count}`
+    } else {
+        btnSeeCart.disabled = true //dont think is necessary
+    }
 
 }
 

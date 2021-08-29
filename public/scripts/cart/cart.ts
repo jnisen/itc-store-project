@@ -1,4 +1,4 @@
-const btnReturn  = document.querySelector('.btn-return');
+const btnReturn = document.querySelector('.btn-return');
 
 btnReturn.addEventListener('click', returnMainPage)
 
@@ -6,18 +6,18 @@ async function getCart(event) {
     event.preventDefault();
 
     const store = location.search.substr(1).split("=")[1]
-   
-    const seeCart = await axios.get(`/user/seeCartStore/${store}`)
-    const {data} = seeCart
 
-    renderCart(data.cart) 
+    const seeCart = await axios.get(`/user/seeCartStore/${store}`)
+    const { data } = seeCart
+
+    renderCart(data.cart)
 }
 
 function renderCart(data) {
 
     const cartRoot = document.querySelector('#cartRoot') as HTMLElement
 
-    let totalCart:number = 0;
+    let totalCart: number = 0;
 
     let html: string = ''
     if (data.length > 0) {
@@ -40,7 +40,7 @@ function renderCart(data) {
 
             const { id, name, description, image, number, price, total } = cart
 
-            totalCart += number * price 
+            totalCart += number * price
 
             html += `<tr>
                       <td> <img src="${image}" alt="${name}" style = "width:70px; height:70px"</td>
@@ -69,11 +69,11 @@ function renderCart(data) {
                  </div>`
 
 
-       
+
 
     } else {
-        setInterval(function(){returnMainPage()}, 1000);
-        
+        setInterval(function () { returnMainPage() }, 1000);
+
     }
 
     cartRoot.innerHTML = html
@@ -104,7 +104,6 @@ async function deleteProductOnCart(id) {
                 const { ok, cart } = data
                 swal(`${ok}`, "", "success")
                 renderCart(cart)
-                //si el cart esta vacio, vuelva a la pagina de atras
             } else {
                 swal("Delete Cancelled!", "", "success");
             }
@@ -112,8 +111,8 @@ async function deleteProductOnCart(id) {
 }
 
 
-async function editQuantityCart(id:string, number:string){
-    
+async function editQuantityCart(id: string, number: string) {
+
     const store = location.search.substr(1).split("=")[1]
 
     swal(`You have ${number} , change the quantity here:`, {
@@ -122,20 +121,20 @@ async function editQuantityCart(id:string, number:string){
             cancel: true,
             confirm: "Confirm"
         },
-      }).then(async (value) => {
-        if(value === null){
+    }).then(async (value) => {
+        if (value === null) {
             swal("Edit Cancelled!", "", "success");
-        }else{
+        } else {
 
             const newNumber = {
-                number:+value,
-                store:store,
+                number: +value,
+                store: store,
 
             }
             const response = await editCartPromise(id, newNumber)
             renderCart(response)
-    }
-      });
+        }
+    });
 }
 
 
@@ -150,9 +149,13 @@ async function buyCart() {
         button: false,
     });
 
-    setInterval(function(){window.location.href = 'login.html'}, 2000);
+    setInterval(function () {
+        const location = window.location.origin
+        window.location.replace(`${location}/login.html`)
+        // window.location.href = 'login.html'
+    }, 2000);
 
-   
+
 }
 
 
@@ -190,15 +193,18 @@ function editCartPromise(idProduct, newNumber) {
 }
 
 
-async function returnMainPage(){
-    
+async function returnMainPage() {
+
     const responseUser = await axios.get('/user/readCookie')
-    const {data} = responseUser
-    
+    const { data } = responseUser
+
     const email = data.user.email
     const store = data.user.store
 
-    window.location.href = `http://localhost:3000/main.html?email=${email}?store=${store}`
+    const location = window.location.origin
+    window.location.replace(`${location}/main.html?email=${email}?store=${store}`)
+
+    // window.location.href = `http://localhost:3000/main.html?email=${email}?store=${store}`
 
 
 }

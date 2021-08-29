@@ -30,23 +30,31 @@ async function enterToMainStores(ev) {
             button: false,
         });
 
-        if(user.role === "admin") {
+        const location = window.location.origin
+
+        //window.location.href = `main.html?email=${email}?store=${user.store}`
+
+        if (user.role === "admin") {
             setInterval(function () {
-                if (user.store) window.location.href = `main.html?email=${email}?store=${user.store}`
-                else window.location.href = `stores.html?email=${email}`
+                if (user.store) window.location.replace(`${location}/main.html?email=${email}?store=${user.store}`)
+                else window.location.replace(`${location}/stores.html?email=${email}`)
             }, 1000);
-        }else{
-            setInterval(function(){ window.location.href = `stores.html?email=${email}` }, 2000);
+        } else {
+            setInterval(function () { window.location.replace(`${location}/stores.html?email=${email}`) }, 1000);
         }
 
 
     } catch (e) {
-        alert(e)
+        swal('Oops!', `${e}`, `error`)
     }
 }
 
 
 
 function returnHomePage() {
-    window.location.href = 'register.html'
+
+    const location = window.location.origin
+    window.location.replace(`${location}/register.html`)
+
+    // window.location.href = 'register.html'
 }

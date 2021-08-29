@@ -7,10 +7,15 @@ btnRegister.addEventListener("click", goRegisterPage)
 btnLogin.addEventListener("click", goLoginPage)
 
 function goRegisterPage() {
-    window.location.href = 'register.html'
+    const location = window.location.origin
+    window.location.replace(`${location}/register.html`)
+    // window.location.href = 'register.html'
 }
 
 function goLoginPage() {
-    window.location.href = 'login.html'
+
+    const location = window.location.origin
+    window.location.replace(`${location}/login.html`)
+    // window.location.href = 'login.html'
 }
 

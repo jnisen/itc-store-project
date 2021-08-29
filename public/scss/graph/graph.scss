@@ -1,0 +1,25 @@
+@import url('http://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+#btn-return {
+    width: 5%;
+    height: 40px;
+    border: none;
+    border-radius: 10px;
+    transform: translate(-1%);
+    cursor: pointer;
+    color: black;
+    background: linear-gradient(to right, #414eff, #2be6ff);
+    transition: all .4s;
+}
+
+#btn-return:hover {
+    transform: translate(-1%, 5%);
+    box-shadow: 0 0 10px #ff416d65;
+}

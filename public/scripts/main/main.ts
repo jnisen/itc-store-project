@@ -5,8 +5,8 @@ const btnReturn = <HTMLElement>document.querySelector("#btn-return")
 btnReturn.addEventListener("click", returnLoginPage)
 
 
-interface Product{
-    id:string;
+interface Product {
+    id: string;
     name: string,
     description: string,
     image: string,
@@ -29,23 +29,23 @@ async function getAllProducts() {
     const responseUser = await axios.get(`/user/readCookie`)
     let role = responseUser.data.user.role
 
-    if (role === 'admin'){
-        if (data.allStores) renderAllProductsAdmin(data.allStores.allProducts,store)
-    } else{
-        if (data.allStores) renderAllProductsUser(data.allStores.allProducts,store)
+    if (role === 'admin') {
+        if (data.allStores) renderAllProductsAdmin(data.allStores.allProducts, store)
+    } else {
+        if (data.allStores) renderAllProductsUser(data.allStores.allProducts, store)
     }
 
 }
 
 
 
-async function renderAllProductsAdmin(allProducts:Array<Product>,store) {
+async function renderAllProductsAdmin(allProducts: Array<Product>, store) {
     let html: string = "";
 
     const rootProducts = document.querySelector('#rootProducts')
 
-    
-   
+
+
     html += ` <div class="actions">
                     <input type="button" value="Add Product" class="btn-add"  onclick ='openModal()'>
                     <input type="button" value="Historial" class="btn-historial" onclick ='seeHistorial("${store}")'>
@@ -54,26 +54,26 @@ async function renderAllProductsAdmin(allProducts:Array<Product>,store) {
 
     allProducts.forEach(async products => {
 
-            html += `
+        html += `
                 <div class="rootProducts__admin__products">
                      <img src="${products.image}" alt="${products.name}" class="image" style = "width:200px; height:200px" onclick='sendProduct("${products.id}")'>   
                              <span class="name">${products.name}</span>
                              <span class="description">${products.description}</span>`
-              if (products.quantity === 0){
-                html += `            <span class="stock red">Stock: ${products.quantity}</span>`
-              } else {
-                html += `            <span class="stock green">Stock: ${products.quantity}</span>`
-              }              
-                 html += `     
+        if (products.quantity === 0) {
+            html += `            <span class="stock red">Stock: ${products.quantity}</span>`
+        } else {
+            html += `            <span class="stock green">Stock: ${products.quantity}</span>`
+        }
+        html += `     
                              <span class="price">Price: ₪ ${products.price}</span>
                             <i class="fas fa-user-edit edit" onclick='findProduct("${products.id}")'></i>
                             <i class="fas fa-trash delete" onclick='deleteProduct("${products.id}")'></i> 
                         
                 </div>
-                `   
+                `
     });
 
-    html+=`</div>`
+    html += `</div>`
     rootProducts.innerHTML = html
 
     const btnAdd = document.querySelector('.btn-add') as HTMLButtonElement
@@ -81,23 +81,23 @@ async function renderAllProductsAdmin(allProducts:Array<Product>,store) {
 
 }
 
-async function renderAllProductsUser(allProducts:Array<Product>, store) {
+async function renderAllProductsUser(allProducts: Array<Product>, store) {
     let html: string = "";
     const rootProducts = document.querySelector('#rootCarts')
-    
-        html += `<div class="carrito">
+
+    html += `<div class="carrito">
                     <span>Carrito<i class="fas fa-shopping-cart"></i><span>
                     <span class="addCart" style="color:brown">0</span>  
                     <button onclick='toCarrito(event)' class="btn-sent-cart" disabled>See Cart</button>
                 </div>
                 <div class="rootCarts__productsUser">`
-    
+
 
     allProducts.forEach(async products => {
 
         if (products.quantity > 0) {
-           
-       
+
+
 
             html += `
                 
@@ -123,30 +123,30 @@ async function renderAllProductsUser(allProducts:Array<Product>, store) {
     const btnSeeCart = document.querySelector('.btn-sent-cart') as HTMLButtonElement
 
     const seeCart = await axios.get(`/user/seeCartStore/${store}`)
-    const {data} = seeCart
+    const { data } = seeCart
 
-    if (data.cart.length > 0){
+    if (data.cart.length > 0) {
         addCart.innerText = `${data.cart.length}`
         btnSeeCart.disabled = false
-        // 
 
-    }else{
+    } else {
         btnSeeCart.disabled = true
     }
-   
-    
+
 
 }
 
 
 async function sendProduct(id: string) {
     const store = location.search.substr(1).split("=")[2]
-    window.location.href = `product.html?id=${id}?store=${store}`
+    const localhost = window.location.origin
+    window.location.replace(`${localhost}/product.html?id=${id}?store=${store}`)
+    // window.location.href = `product.html?id=${id}?store=${store}`
 }
 
 //Read URL
 
-function readURL(input:any): void {
+function readURL(input: any): void {
     const image = document.querySelector('#img') as HTMLImageElement
     if (input.files && input.files[0]) {
         let reader: FileReader = new FileReader();
@@ -168,9 +168,13 @@ function readURL(input:any): void {
 function toCarrito(event) {
     event.preventDefault();
     const store = location.search.substr(1).split("=")[2]
-    window.location.href = `cart.html?store=${store}`
+    const localhost = window.location.origin
+    window.location.replace(`${localhost}/cart.html?store=${store}`)
+    // window.location.href = `cart.html?store=${store}`
 }
 
 function returnLoginPage() {
-    window.location.href = 'login.html'
+    const localhost = window.location.origin
+    window.location.replace(`${localhost}/login.html`)
+    // window.location.href = 'login.html'
 }

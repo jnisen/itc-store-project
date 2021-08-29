@@ -1,6 +1,6 @@
-import {seeAllCartsStore} from '../models/carts'
+import { seeAllCartsStore } from '../models/carts'
 
-export function historialCart(req,res){
+export function historialCart(req, res) {
     const getAllCartsHistorial = seeAllCartsStore(req.params.store)
-    res.send({allCarts:getAllCartsHistorial})
+    res.send({ allCarts: getAllCartsHistorial })
 }

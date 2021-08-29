@@ -65,7 +65,7 @@ function renderProduct(data) {
 }
 function returnHomePage() {
     return __awaiter(this, void 0, void 0, function () {
-        var store, response, data;
+        var store, response, data, localhost;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -74,10 +74,10 @@ function returnHomePage() {
                 case 1:
                     response = _a.sent();
                     data = response.data;
-                    window.location.href = "main.html?email=" + data.user.email + "?store=" + store;
+                    localhost = window.location.origin;
+                    window.location.replace(localhost + "/main.html?email=" + data.user.email + "?store=" + store);
                     return [2 /*return*/];
             }
         });
     });
 }
-//http://localhost:3000/main.html?email=jnisen@gmail.com?store=football

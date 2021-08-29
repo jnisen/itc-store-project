@@ -1,6 +1,8 @@
-const btnReturn  = document.querySelector('.btn-return');
+const btnReturn = document.querySelector('.btn-return');
+const btnGraph = document.querySelector('.btn-graph');
 
 btnReturn.addEventListener('click', returnMainPage)
+btnGraph.addEventListener('click', sendGraph)
 
 
 async function getHistorial(ev) {
@@ -12,18 +14,15 @@ async function getHistorial(ev) {
 
     renderAllCartsStore(response.data.allCarts)
 
-    
-
-
 
 }
 
-function renderAllCartsStore(allCarts){
-    let html:string =''
+function renderAllCartsStore(allCarts) {
+    let html: string = ''
     const historialRoot = document.querySelector('#historialRoot')
 
-    let totalStore:number = 0
-    
+    let totalStore: number = 0
+
     html += `<div class="historial__table"><table id="historial">
         <thead>
     <tr>
@@ -40,11 +39,11 @@ function renderAllCartsStore(allCarts){
 
     allCarts.forEach(cart => {
 
-            const { date, name, description, image, total, username} = cart
+        const { date, name, description, image, total, username } = cart
 
-            totalStore += total 
+        totalStore += total
 
-            html += `<tr>
+        html += `<tr>
                     <td>${date}</td>
                     <td>${username}</td>
                       <td> <img src="${image}" alt="${name}" style = "width:70px; height:70px"</td>
@@ -52,9 +51,9 @@ function renderAllCartsStore(allCarts){
                         <td>${description}</td>
                         <td>₪ ${total}</td>   
                  </tr> `
-        });
+    });
 
-        html += `       </tbody>
+    html += `       </tbody>
                     <tfoot>
                             <tr>
                         <th id="total" colspan="5" style="text-align:right;">Total :</th>
@@ -66,21 +65,29 @@ function renderAllCartsStore(allCarts){
 
 
 
-                 historialRoot.innerHTML = html
+    historialRoot.innerHTML = html
 
 
 }
 
 
-async function returnMainPage(){
-    
+async function returnMainPage() {
+
     const responseUser = await axios.get('/user/readCookie')
-    const {data} = responseUser
-    
+    const { data } = responseUser
+
     const email = data.user.email
     const store = data.user.store
 
-    window.location.href = `http://localhost:3000/main.html?email=${email}?store=${store}`
+    const location = window.location.origin
+    window.location.replace(`${location}/main.html?email=${email}?store=${store}`)
 
+    // window.location.href = `http://localhost:3000/main.html?email=${email}?store=${store}`
 
+}
+
+async function sendGraph() {
+
+    const location = window.location.origin
+    window.location.replace(`${location}/graph.html`)
 }

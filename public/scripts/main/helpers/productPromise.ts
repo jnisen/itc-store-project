@@ -10,7 +10,7 @@ function addProductPromise(newProduct, store) {
             if (res.status === 200 && res.ok) {
                 return res.json().then(product => { resolve(product) });
             } else {
-                return res.json().then(product => { swal ( 'Oops!',`${product.error}` , `error`) })
+                return res.json().then(product => { swal('Oops!', `${product.error}`, `error`) })
             }
         })
     })
@@ -28,7 +28,7 @@ function editProductPromise(editProduct, store) {
             if (res.status === 200 && res.ok) {
                 return res.json().then(product => { resolve(product) });
             } else {
-                return res.json().then(product => { swal ( 'Oops!',`${product.error}` , `error`) })
+                return res.json().then(product => { swal('Oops!', `${product.error}`, `error`) })
             }
         })
     })

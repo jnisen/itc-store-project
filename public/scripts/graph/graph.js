@@ -34,11 +34,10 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var btnReturn = document.querySelector('.btn-return');
-var btnGraph = document.querySelector('.btn-graph');
-btnReturn.addEventListener('click', returnMainPage);
-btnGraph.addEventListener('click', sendGraph);
-function getHistorial(ev) {
+//btn
+var btnReturn = document.querySelector("#btn-return");
+btnReturn.addEventListener("click", returHistorial);
+function getGraph(ev) {
     return __awaiter(this, void 0, void 0, function () {
         var store, response;
         return __generator(this, function (_a) {
@@ -49,50 +48,42 @@ function getHistorial(ev) {
                     return [4 /*yield*/, axios.get("cart/historialCart/" + store)];
                 case 1:
                     response = _a.sent();
-                    renderAllCartsStore(response.data.allCarts);
+                    renderGraph(response.data.allCarts);
                     return [2 /*return*/];
             }
         });
     });
 }
-function renderAllCartsStore(allCarts) {
-    var html = '';
-    var historialRoot = document.querySelector('#historialRoot');
-    var totalStore = 0;
-    html += "<div class=\"historial__table\"><table id=\"historial\">\n        <thead>\n    <tr>\n        <th>Date</th>\n        <th>Buyer</th>\n        <th>Image</th>\n        <th>Name</th>\n        <th>Description</th>\n        <th>SubTotal</th>\n    <tr>\n    </thead>\n    <tbody>";
-    allCarts.forEach(function (cart) {
-        var date = cart.date, name = cart.name, description = cart.description, image = cart.image, total = cart.total, username = cart.username;
-        totalStore += total;
-        html += "<tr>\n                    <td>" + date + "</td>\n                    <td>" + username + "</td>\n                      <td> <img src=\"" + image + "\" alt=\"" + name + "\" style = \"width:70px; height:70px\"</td>\n                        <td>" + name + "</td>\n                        <td>" + description + "</td>\n                        <td>\u20AA " + total + "</td>   \n                 </tr> ";
+function renderGraph(data) {
+    var arrayTotal = [];
+    var products = [];
+    var res = Array.from(data.reduce(function (m, _a) {
+        var name = _a.name, total = _a.total;
+        return m.set(name, (m.get(name) || 0) + total);
+    }, new Map), function (_a) {
+        var name = _a[0], total = _a[1];
+        return ({ name: name, total: total });
     });
-    html += "       </tbody>\n                    <tfoot>\n                            <tr>\n                        <th id=\"total\" colspan=\"5\" style=\"text-align:right;\">Total :</th>\n                             <td> \u20AA " + totalStore + "</td>\n                         </tr>\n                    </tfoot>\n                    </table>\n                 </div>";
-    historialRoot.innerHTML = html;
-}
-function returnMainPage() {
-    return __awaiter(this, void 0, void 0, function () {
-        var responseUser, data, email, store, location;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0: return [4 /*yield*/, axios.get('/user/readCookie')];
-                case 1:
-                    responseUser = _a.sent();
-                    data = responseUser.data;
-                    email = data.user.email;
-                    store = data.user.store;
-                    location = window.location.origin;
-                    window.location.replace(location + "/main.html?email=" + email + "?store=" + store);
-                    return [2 /*return*/];
-            }
-        });
+    res.forEach(function (element) {
+        products.push(element.name);
+        arrayTotal.push(element.total);
+    });
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var chart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: products,
+            datasets: [{
+                    label: 'Sales Graph by Product in ₪',
+                    backgroundColor: ['rgb(0,191,255)', 'rgba(75, 192, 192, 1)'],
+                    borderColor: 'rgb(255, 99, 132)',
+                    data: arrayTotal
+                }]
+        },
+        options: {}
     });
 }
-function sendGraph() {
-    return __awaiter(this, void 0, void 0, function () {
-        var location;
-        return __generator(this, function (_a) {
-            location = window.location.origin;
-            window.location.replace(location + "/graph.html");
-            return [2 /*return*/];
-        });
-    });
+function returHistorial() {
+    var location = window.location.origin;
+    window.location.replace(location + "/historial.html");
 }

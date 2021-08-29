@@ -6,7 +6,7 @@ export class Cart {
   id: string
   cart: Array<Products>
   date: Date
-  store:string
+  store: string
 }
 
 
@@ -27,12 +27,12 @@ export function addCart(newCart) {
   writeAllCarts(allCarts)
 }
 
-export function seeAllCartsStore(store){
+export function seeAllCartsStore(store) {
   const allCarts = readAllCarts()
   const carts = []
   allCarts.forEach(cart => {
     cart.cart.forEach(cartsbuys => {
-        carts.push(cartsbuys)
+      carts.push(cartsbuys)
     });
   })
   return carts

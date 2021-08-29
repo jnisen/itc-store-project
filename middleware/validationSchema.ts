@@ -40,8 +40,8 @@ export function validateProduct(schema) {
 
 
 export function imageExist(req, res, next) {
-    const {image} = req.body
-    if (image.split('/')[3] === 'undefined') res.status(404).send({ error: `Check you file input`})
+    const { image } = req.body
+    if (image.split('/')[3] === 'undefined') res.status(404).send({ error: `Check you file input` })
     else next()
 }
 

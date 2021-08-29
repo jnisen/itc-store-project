@@ -12,6 +12,6 @@ export function readCookie(req, res, next) {
         req.id = decoded
         next()
     } catch (e) {
-        res.status(500).send({ error: `${e}` }); 
+        res.status(500).send({ error: `${e}` });
     }
 }

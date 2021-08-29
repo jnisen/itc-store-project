@@ -129,7 +129,6 @@ function renderAllProductsUser(allProducts, store) {
                     if (data.cart.length > 0) {
                         addCart.innerText = "" + data.cart.length;
                         btnSeeCart.disabled = false;
-                        // 
                     }
                     else {
                         btnSeeCart.disabled = true;
@@ -141,10 +140,11 @@ function renderAllProductsUser(allProducts, store) {
 }
 function sendProduct(id) {
     return __awaiter(this, void 0, void 0, function () {
-        var store;
+        var store, localhost;
         return __generator(this, function (_a) {
             store = location.search.substr(1).split("=")[2];
-            window.location.href = "product.html?id=" + id + "?store=" + store;
+            localhost = window.location.origin;
+            window.location.replace(localhost + "/product.html?id=" + id + "?store=" + store);
             return [2 /*return*/];
         });
     });
@@ -169,8 +169,12 @@ function readURL(input) {
 function toCarrito(event) {
     event.preventDefault();
     var store = location.search.substr(1).split("=")[2];
-    window.location.href = "cart.html?store=" + store;
+    var localhost = window.location.origin;
+    window.location.replace(localhost + "/cart.html?store=" + store);
+    // window.location.href = `cart.html?store=${store}`
 }
 function returnLoginPage() {
-    window.location.href = 'login.html';
+    var localhost = window.location.origin;
+    window.location.replace(localhost + "/login.html");
+    // window.location.href = 'login.html'
 }
